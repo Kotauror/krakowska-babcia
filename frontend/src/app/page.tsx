@@ -66,10 +66,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Featured Posts */}
+      {/* Latest Posts */}
       <section>
         <h2 className="text-3xl font-bold text-gray-900 mb-8">
-          Featured Stories
+          Latest Stories
         </h2>
         {loading ? (
           <div className="text-center py-12">

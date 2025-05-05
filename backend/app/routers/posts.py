@@ -11,7 +11,6 @@ from app.models.post import Post
 from app.models.post_image import PostImage
 from app.schemas.post import Post as PostSchema, PostCreate, PostUpdate, PostImage as PostImageSchema
 from PIL import Image
-import json
 
 router = APIRouter()
 
@@ -32,6 +31,15 @@ def list_posts(
     db: Session = Depends(get_db)
 ):
     posts = db.query(Post).offset(skip).limit(limit).all()
+    
+    # Convert string URLs to dictionaries in content_images
+    for post in posts:
+        if isinstance(post.content_images, list):
+            post.content_images = [
+                {"url": img} if isinstance(img, str) else img
+                for img in post.content_images
+            ]
+    
     return posts
 
 @router.post("/posts", response_model=PostSchema)
