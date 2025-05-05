@@ -16,4 +16,5 @@ class Post(Base):
     
     # Relationships
     author = relationship("User", back_populates="posts")
-    images = relationship("PostImage", back_populates="post", cascade="all, delete-orphan") 
+    images = relationship("PostImage", back_populates="post", cascade="all, delete-orphan")
+    featured_status = relationship("FeaturedPost", back_populates="post", uselist=False) 
