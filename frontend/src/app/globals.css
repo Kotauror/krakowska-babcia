@@ -1,4 +1,7 @@
 @import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   --background: #ffffff;
@@ -23,4 +26,24 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Fix for markdown editor dark mode */
+[data-color-mode="light"] {
+  --color-canvas-default: #ffffff;
+  --color-border-default: #d0d7de;
+  --color-fg-default: #24292f;
+  --color-fg-muted: #57606a;
+  --color-neutral-muted: rgba(175, 184, 193, 0.2);
+  --color-accent-fg: #0969da;
+  --color-accent-emphasis: #0969da;
+  --color-attention-subtle: #fff8c5;
+  --color-danger-fg: #cf222e;
+  --color-done-fg: #8250df;
+  --color-done-emphasis: #8250df;
+  --color-severe-fg: #9a6700;
+  --color-success-fg: #116329;
+  --color-success-emphasis: #116329;
+  --color-warning-fg: #9a6700;
+  --color-warning-emphasis: #9a6700;
 }

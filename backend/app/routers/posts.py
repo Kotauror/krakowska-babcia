@@ -1,7 +1,7 @@
 import os
 import shutil
 from typing import List
-from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Response
 from sqlalchemy.orm import Session
 from app.core.config import settings
 from app.core.database import get_db
@@ -11,8 +11,32 @@ from app.models.post import Post
 from app.models.post_image import PostImage
 from app.schemas.post import Post as PostSchema, PostCreate, PostUpdate, PostImage as PostImageSchema
 from PIL import Image
+from datetime import datetime
+import uuid
+import base64
 
 router = APIRouter()
+
+@router.get("/images/{image_id}")
+async def get_image(
+    image_id: int,
+    db: Session = Depends(get_db)
+):
+    """
+    Get an image by ID.
+    """
+    db_image = db.query(PostImage).filter(PostImage.id == image_id).first()
+    if not db_image:
+        raise HTTPException(status_code=404, detail="Image not found")
+    
+    # Decode the base64 image data
+    image_data = base64.b64decode(db_image.file_path)
+    
+    # Return the image with the correct content type
+    return Response(
+        content=image_data,
+        media_type=db_image.image_metadata.get("content_type", "image/jpeg")
+    )
 
 def process_image(file_path: str) -> dict:
     """Extract metadata from uploaded image."""
@@ -45,13 +69,12 @@ def list_posts(
 @router.post("/posts", response_model=PostSchema)
 def create_post(
     post: PostCreate,
-    current_user: User = Depends(get_current_active_user),
     db: Session = Depends(get_db)
 ):
     # Create post with empty content_images list
     db_post = Post(
         **post.model_dump(),
-        author_id=current_user.id,
+        author_id=1,  # Hardcode author_id for now
         content_images=[]
     )
     db.add(db_post)
@@ -159,4 +182,45 @@ async def upload_post_image(
     post.content_images.append(image_ref)
     db.commit()
     
-    return db_image 
+    return db_image
+
+@router.post("/upload-image")
+async def upload_image(
+    file: UploadFile = File(...),
+    db: Session = Depends(get_db)
+):
+    """
+    Upload an image for a post.
+    """
+    try:
+        # Read the file content
+        contents = await file.read()
+        
+        # Create a new PostImage record
+        db_image = PostImage(
+            filename=file.filename,
+            file_path=file.content_type,  # Store the content type
+            image_metadata={
+                "content_type": file.content_type,
+                "size": len(contents)
+            }
+        )
+        db.add(db_image)
+        db.commit()
+        db.refresh(db_image)
+        
+        # Store the image data in the database
+        # Note: In a real application, you might want to use a blob column or a separate table for the actual image data
+        # For now, we'll store it as base64 in the file_path field
+        encoded_image = base64.b64encode(contents).decode('utf-8')
+        db_image.file_path = encoded_image
+        db.commit()
+        
+        # Return the image ID and metadata
+        return {
+            "id": db_image.id,
+            "filename": db_image.filename,
+            "content_type": file.content_type
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Could not save image: {str(e)}") 

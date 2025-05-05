@@ -1,19 +1,35 @@
-'use client';
+"use client";
 
-import { useQuery } from '@tanstack/react-query';
-import { api } from '@/lib/api';
-import { Post } from '@/types';
-import Link from 'next/link';
-import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { api } from "@/lib/api";
+import { Post } from "@/types";
+import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { useState } from "react";
+import AddPostModal from "@/components/AddPostModal";
 
 export default function AdminPage() {
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const queryClient = useQueryClient();
+
   const { data: posts, isLoading, error } = useQuery<Post[]>({
-    queryKey: ['posts'],
+    queryKey: ["posts"],
     queryFn: async () => {
-      const { data } = await api.get('/posts');
+      const { data } = await api.get("/posts");
       return data;
     },
   });
+
+  const handleDelete = async (postId: number) => {
+    if (!confirm("Are you sure you want to delete this post?")) return;
+
+    try {
+      await api.delete(`/posts/${postId}`);
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
+    } catch (error) {
+      console.error("Error deleting post:", error);
+      alert("Error deleting post. Please try again.");
+    }
+  };
 
   if (isLoading) {
     return (
@@ -26,7 +42,9 @@ export default function AdminPage() {
   if (error) {
     return (
       <div className="text-center py-12">
-        <p className="text-red-600">Error loading posts. Please try again later.</p>
+        <p className="text-red-600">
+          Error loading posts. Please try again later.
+        </p>
       </div>
     );
   }
@@ -37,7 +55,7 @@ export default function AdminPage() {
         <h1 className="text-3xl font-bold">Manage Posts</h1>
         <button
           className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
-          onClick={() => {/* TODO: Open create post modal */}}
+          onClick={() => setIsAddModalOpen(true)}
         >
           Add New Post
         </button>
@@ -65,10 +83,14 @@ export default function AdminPage() {
             {posts?.map((post) => (
               <tr key={post.id} className="hover:bg-gray-50">
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm font-medium text-gray-900">{post.title}</div>
+                  <div className="text-sm font-medium text-gray-900">
+                    {post.title}
+                  </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-500">{post.author.full_name}</div>
+                  <div className="text-sm text-gray-500">
+                    {post.author.full_name}
+                  </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-500">
@@ -78,13 +100,15 @@ export default function AdminPage() {
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                   <div className="flex space-x-3">
                     <button
-                      onClick={() => {/* TODO: Handle edit */}}
+                      onClick={() => {
+                        /* TODO: Handle edit */
+                      }}
                       className="text-blue-600 hover:text-blue-900"
                     >
                       <PencilIcon className="h-5 w-5" />
                     </button>
                     <button
-                      onClick={() => {/* TODO: Handle delete */}}
+                      onClick={() => handleDelete(post.id)}
                       className="text-red-600 hover:text-red-900"
                     >
                       <TrashIcon className="h-5 w-5" />
@@ -96,6 +120,14 @@ export default function AdminPage() {
           </tbody>
         </table>
       </div>
+
+      <AddPostModal
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+        onSuccess={() => {
+          queryClient.invalidateQueries({ queryKey: ["posts"] });
+        }}
+      />
     </div>
   );
-} 
+}

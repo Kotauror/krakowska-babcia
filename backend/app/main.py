@@ -1,7 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from app.core.config import settings
 from app.routers import posts, users, auth, featured_posts
+import os
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
@@ -17,6 +19,12 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Create static directory if it doesn't exist
+os.makedirs(settings.STATIC_DIR, exist_ok=True)
+
+# Mount static files
+app.mount("/static", StaticFiles(directory=settings.STATIC_DIR), name="static")
 
 # Include routers
 app.include_router(auth.router, prefix=settings.API_V1_STR, tags=["auth"])
