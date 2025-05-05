@@ -11,12 +11,15 @@ export interface Post {
   content: string;
   content_images: Array<{
     url: string;
-    alt_text?: string;
-    caption?: string;
+    alt: string;
   }>;
   created_at: string;
   updated_at: string;
-  author: User;
+  author: {
+    id: number;
+    username: string;
+    full_name: string;
+  };
 }
 
 export interface FeaturedPost {
