@@ -41,7 +41,7 @@ def create_featured_post(
     if existing:
         raise HTTPException(status_code=400, detail="Post is already featured")
     
-    db_featured_post = FeaturedPost(**featured_post.model_dump())
+    db_featured_post = FeaturedPost(**featured_post.dict())
     db.add(db_featured_post)
     db.commit()
     db.refresh(db_featured_post)

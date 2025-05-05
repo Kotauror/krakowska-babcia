@@ -6,12 +6,17 @@ import { Post } from "@/types";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import AddPostModal from "@/components/AddPostModal";
+import Link from "next/link";
 
 export default function AdminPage() {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const queryClient = useQueryClient();
 
-  const { data: posts, isLoading, error } = useQuery<Post[]>({
+  const {
+    data: posts,
+    isLoading,
+    error,
+  } = useQuery<Post[]>({
     queryKey: ["posts"],
     queryFn: async () => {
       const { data } = await api.get("/posts");
@@ -83,9 +88,12 @@ export default function AdminPage() {
             {posts?.map((post) => (
               <tr key={post.id} className="hover:bg-gray-50">
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm font-medium text-gray-900">
+                  <Link
+                    href={`/posts/${post.id}`}
+                    className="text-sm font-medium text-blue-600 hover:text-blue-900"
+                  >
                     {post.title}
-                  </div>
+                  </Link>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-500">
