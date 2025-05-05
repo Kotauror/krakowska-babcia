@@ -27,27 +27,19 @@ export default function AddPostModal({
     try {
       const formData = new FormData();
       formData.append("file", file);
-      formData.append(
-        "upload_preset",
-        process.env.NEXT_PUBLIC_CLOUDINARY_PRESET || ""
-      );
 
-      const response = await fetch(
-        `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
-
-      const data = await response.json();
+      const response = await api.post("/upload-image", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
       // Insert the image markdown at cursor position
       const editor = editorRef.current?.textarea;
       if (editor) {
         const start = editor.selectionStart;
         const end = editor.selectionEnd;
-        const markdown = `![${file.name}](${data.secure_url})`;
+        const markdown = `![${file.name}](${response.data.url})`;
         const newContent =
           content.substring(0, start) + markdown + content.substring(end);
         setContent(newContent);

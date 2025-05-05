@@ -2,6 +2,7 @@ from pydantic_settings import BaseSettings
 from typing import Optional
 import os
 from dotenv import load_dotenv
+from pathlib import Path
 
 load_dotenv()
 
@@ -31,7 +32,15 @@ class Settings(BaseSettings):
     BASE_DIR: str = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     STATIC_DIR: str = os.path.join(BASE_DIR, "static")
     
+    # Cloudinary settings
+    CLOUDINARY_CLOUD_NAME: str = os.getenv("CLOUDINARY_CLOUD_NAME", "")
+    CLOUDINARY_API_KEY: str = os.getenv("CLOUDINARY_API_KEY", "")
+    CLOUDINARY_API_SECRET: str = os.getenv("CLOUDINARY_API_SECRET", "")
+    CLOUDINARY_UPLOAD_PRESET: str = os.getenv("CLOUDINARY_UPLOAD_PRESET", "")
+    CLOUDINARY_FOLDER: str = os.getenv("CLOUDINARY_FOLDER", "blog")
+    
     class Config:
         case_sensitive = True
+        env_file = ".env"
 
 settings = Settings() 

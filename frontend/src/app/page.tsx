@@ -32,7 +32,7 @@ function PostCard({ post }: { post: Post }) {
           </Link>
         </h3>
         <div className="text-gray-600 mb-4">
-          <p>By {post.author.full_name}</p>
+          {/* <p>By {post.author.username}</p> */}
           <p>{format(new Date(post.created_at), "MMMM d, yyyy")}</p>
         </div>
         <div className="prose prose-sm max-w-none line-clamp-3">

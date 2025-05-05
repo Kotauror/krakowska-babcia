@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from app.core.config import settings
-from app.routers import posts, users, auth, featured_posts
+from app.routers import posts, users, auth, featured_posts, upload
 import os
 
 app = FastAPI(
@@ -31,6 +31,7 @@ app.include_router(auth.router, prefix=settings.API_V1_STR, tags=["auth"])
 app.include_router(users.router, prefix=settings.API_V1_STR, tags=["users"])
 app.include_router(posts.router, prefix=settings.API_V1_STR, tags=["posts"])
 app.include_router(featured_posts.router, prefix=settings.API_V1_STR, tags=["featured-posts"])
+app.include_router(upload.router, prefix="/api/v1")
 
 @app.get("/")
 async def root():

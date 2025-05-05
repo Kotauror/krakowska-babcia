@@ -16,17 +16,6 @@ def list_featured_posts(
 ):
     """List all active featured posts"""
     featured_posts = db.query(FeaturedPost).filter(FeaturedPost.is_active == True).all()
-    
-    # Format content_images for each post
-    for featured_post in featured_posts:
-        if featured_post.post.content_images is None:
-            featured_post.post.content_images = []
-        elif isinstance(featured_post.post.content_images, list):
-            featured_post.post.content_images = [
-                {"url": img} if isinstance(img, str) else img
-                for img in featured_post.post.content_images
-            ]
-    
     return featured_posts
 
 @router.post("/featured-posts", response_model=FeaturedPostSchema)
