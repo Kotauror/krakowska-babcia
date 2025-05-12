@@ -9,6 +9,7 @@ export interface Post {
   id: number;
   title: string;
   content: string;
+  slug: string;
   content_images: Array<{
     url: string;
     alt: string;

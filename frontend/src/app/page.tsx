@@ -28,7 +28,7 @@ function PostCard({ post }: { post: Post }) {
       )}
       <div className="p-6">
         <h3 className="text-2xl font-bold mb-2">
-          <Link href={`/posts/${post.id}`} className="hover:text-blue-600">
+          <Link href={`/posts/${post.slug}`} className="hover:text-blue-600">
             {post.title}
           </Link>
         </h3>
@@ -83,7 +83,7 @@ export default function Home() {
           <h2 className="text-3xl font-bold mb-6">Ostatnie Wpisy</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {posts?.map((post: Post) => (
-              <PostCard key={post.id} post={post} />
+              <PostCard key={post.slug} post={post} />
             ))}
           </div>
         </section>
