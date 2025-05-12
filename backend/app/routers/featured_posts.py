@@ -1,6 +1,6 @@
 from typing import List
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from app.core.database import get_db
 from app.core.security import get_current_active_user
 from app.models.user import User
@@ -15,7 +15,12 @@ def list_featured_posts(
     db: Session = Depends(get_db)
 ):
     """List all active featured posts"""
-    featured_posts = db.query(FeaturedPost).filter(FeaturedPost.is_active == True).all()
+    featured_posts = (
+        db.query(FeaturedPost)
+        .options(joinedload(FeaturedPost.post))
+        .filter(FeaturedPost.is_active == True)
+        .all()
+    )
     return featured_posts
 
 @router.post("/featured-posts", response_model=FeaturedPostSchema)
