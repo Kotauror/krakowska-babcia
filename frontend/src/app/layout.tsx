@@ -1,30 +1,30 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Nunito } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import QueryProvider from "@/providers/QueryProvider";
 
-const inter = Inter({ subsets: ["latin"] });
+const nunito = Nunito({
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
-  title: "Krakowska Babcia - Travel Blog",
-  description:
-    "A travel blog sharing stories and experiences from around the world",
+  title: "Krakowska Babcia",
+  description: "Blog podróżniczy",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html lang="en" className={nunito.className}>
+      <body className={nunito.className}>
         <QueryProvider>
-          <div className="min-h-screen bg-gray-50">
-            <Navbar />
-            <main className="">{children}</main>
-          </div>
+          <Navbar />
+          {children}
         </QueryProvider>
       </body>
     </html>
