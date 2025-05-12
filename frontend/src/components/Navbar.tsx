@@ -1,13 +1,13 @@
 'use client';
 
 import Link from "next/link";
-import { HomeIcon, MapIcon, UserIcon } from "@heroicons/react/24/outline";
+import { MapIcon, UserIcon, BookOpenIcon } from "@heroicons/react/24/outline";
 import { usePathname } from 'next/navigation';
 
 const navigation = [
-  { name: "Home", href: "/", icon: HomeIcon },
-  { name: "Destinations", href: "/destinations", icon: MapIcon },
-  { name: "About", href: "/about", icon: UserIcon },
+  { name: "Posty", href: "/destinations", icon: BookOpenIcon },
+  { name: "Mapa", href: "/map", icon: MapIcon },
+  { name: "O mnie", href: "/about", icon: UserIcon },
 ];
 
 export default function Navbar() {

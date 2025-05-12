@@ -6,6 +6,7 @@ import { format } from "date-fns";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import { Post } from "@/types";
+import Banner from "@/components/Banner";
 
 async function getPosts() {
   const response = await fetch("http://localhost:8000/api/v1/posts");
@@ -63,42 +64,31 @@ export default function Home() {
   }
 
   return (
-    <main className="container mx-auto px-4 py-8">
-      {/* Hero Section */}
-      <section className="relative bg-gray-900 text-white rounded-2xl overflow-hidden mb-12">
-        <div className="absolute inset-0 bg-gradient-to-r from-gray-900 to-gray-600 opacity-90"></div>
-        <div className="relative max-w-7xl mx-auto py-24 px-4 sm:py-32 sm:px-6 lg:px-8">
-          <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
-            Discover the World Through Stories
-          </h1>
-          <p className="mt-6 text-xl max-w-3xl">
-            Join me on a journey through fascinating destinations, local
-            experiences, and unforgettable adventures.
-          </p>
-        </div>
-      </section>
+    <div>
+      <Banner />
+      <main className="container mx-auto py-8">
+        {/* Featured Posts Section */}
+        {featuredPosts && featuredPosts.length > 0 && (
+          <section className="mb-12">
+            <h2 className="text-3xl font-bold mb-6">Ulubione Miejsca</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {featuredPosts.map((featured) => (
+                <PostCard key={featured.id} post={featured.post} />
+              ))}
+            </div>
+          </section>
+        )}
 
-      {/* Featured Posts Section */}
-      {featuredPosts && featuredPosts.length > 0 && (
-        <section className="mb-12">
-          <h2 className="text-3xl font-bold mb-6">Featured Posts</h2>
+        {/* Latest Posts Section */}
+        <section>
+          <h2 className="text-3xl font-bold mb-6">Ostatnie Wpisy</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {featuredPosts.map((featured) => (
-              <PostCard key={featured.id} post={featured.post} />
+            {posts?.map((post: Post) => (
+              <PostCard key={post.id} post={post} />
             ))}
           </div>
         </section>
-      )}
-
-      {/* Latest Posts Section */}
-      <section>
-        <h2 className="text-3xl font-bold mb-6">Latest Posts</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {posts?.map((post: Post) => (
-            <PostCard key={post.id} post={post} />
-          ))}
-        </div>
-      </section>
-    </main>
+      </main>
+    </div>
   );
 }
