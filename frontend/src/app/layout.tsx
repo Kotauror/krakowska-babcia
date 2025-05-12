@@ -12,6 +12,9 @@ const nunito = Nunito({
 export const metadata: Metadata = {
   title: "Krakowska Babcia",
   description: "Blog podróżniczy",
+  icons: {
+    icon: "/icon.png",
+  },
 };
 
 export default function RootLayout({
