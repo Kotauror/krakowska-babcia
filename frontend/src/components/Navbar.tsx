@@ -5,8 +5,8 @@ import { MapIcon, UserIcon, BookOpenIcon } from "@heroicons/react/24/outline";
 import { usePathname } from 'next/navigation';
 
 const navigation = [
-  { name: "Posty", href: "/destinations", icon: BookOpenIcon },
-  { name: "Mapa", href: "/map", icon: MapIcon },
+  { name: "Ostatnie Wpisy", href: "/destinations", icon: BookOpenIcon },
+  { name: "Mapa Miejsc", href: "/map", icon: MapIcon },
   { name: "O mnie", href: "/about", icon: UserIcon },
 ];
 
