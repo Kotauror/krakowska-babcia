@@ -3,11 +3,11 @@
 import { useFeaturedPosts } from "@/hooks/useFeaturedPosts";
 import { useApi } from "@/hooks/useApi";
 import { format } from "date-fns";
+import { pl } from "date-fns/locale";
 import Link from "next/link";
-import ReactMarkdown from "react-markdown";
 import { Post } from "@/types";
 import Banner from "@/components/Banner";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 async function getPosts() {
   const response = await fetch("http://localhost:8000/api/v1/posts");
@@ -17,52 +17,71 @@ async function getPosts() {
   return response.json();
 }
 
+// Function to extract first image URL from markdown content
+function extractFirstImageUrl(content: string): string | null {
+  const imageRegex = /!\[.*?\]\((.*?)\)/;
+  const match = content.match(imageRegex);
+  return match ? match[1] : null;
+}
+
 export function PostCard({ post }: { post: Post }) {
   const handleClick = () => {
     console.log("in handle click", window.scrollY.toString());
     sessionStorage.setItem("homeScrollPosition", window.scrollY.toString());
   };
 
+  const firstImageUrl = extractFirstImageUrl(post.content);
+  const [imageError, setImageError] = useState(false);
+
   return (
-    <article className="bg-white rounded-lg shadow-lg overflow-hidden">
-      {post.content_images?.[0]?.url && (
-        <img
-          src={post.content_images[0].url}
-          alt={post.content_images[0].alt || post.title}
-          className="w-full h-64 object-cover"
-        />
-      )}
-      <div className="p-6">
-        <h3 className="text-2xl font-bold mb-2">
-          <Link
-            href={`/posts/${post.slug}`}
-            onClick={handleClick}
-            className="hover:text-blue-600"
-          >
-            {post.title}
-          </Link>
-        </h3>
-        <div className="text-gray-600 mb-4">
-          {/* <p>By {post.author.username}</p> */}
-          <p>{format(new Date(post.created_at), "MMMM d, yyyy")}</p>
+    <Link
+      href={`/posts/${post.slug}`}
+      onClick={handleClick}
+      className="mt-4 inline-block"
+    >
+      <article className="bg-white rounded-lg shadow-lg overflow-hidden">
+        <div className="w-[400px] h-[300px] mx-auto overflow-hidden">
+          {firstImageUrl && !imageError ? (
+            <img
+              src={firstImageUrl}
+              alt={post.title}
+              className="w-full h-full object-cover object-center"
+              onError={() => setImageError(true)}
+            />
+          ) : (
+            <img
+              src="/icon.png"
+              alt="Default icon"
+              className="w-full h-full object-contain p-4"
+            />
+          )}
         </div>
-        <div className="prose prose-sm max-w-none line-clamp-3">
-          <ReactMarkdown>{post.content}</ReactMarkdown>
+        <div className="p-6">
+          <h3 className="text-2xl font-bold mb-2">
+            <Link
+              href={`/posts/${post.slug}`}
+              onClick={handleClick}
+              className="hover:text-orange-600"
+            >
+              {post.title}
+            </Link>
+          </h3>
+          <div className="text-gray-600 mb-4">
+            <p>
+              {" "}
+              {format(new Date(post.created_at), "d MMMM yyyy", {
+                locale: pl,
+              })}
+            </p>
+          </div>
         </div>
-        <Link
-          href={`/posts/${post.slug}`}
-          onClick={handleClick}
-          className="mt-4 inline-block text-blue-600 hover:text-blue-800"
-        >
-          Read more →
-        </Link>
-      </div>
-    </article>
+      </article>
+    </Link>
   );
 }
 
 export default function Home() {
-  const { data: posts, loading, error } = useApi(getPosts);
+  const { data: posts, loading, error } = useApi<Post[]>(getPosts);
   const { data: featuredPosts, isLoading: isFeaturedLoading } =
     useFeaturedPosts();
 

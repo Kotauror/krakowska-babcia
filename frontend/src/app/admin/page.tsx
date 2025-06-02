@@ -7,6 +7,8 @@ import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import FillPostModal from "@/components/FillPostModal";
 import Link from "next/link";
+import { format } from "date-fns";
+import { pl } from "date-fns/locale";
 
 export default function AdminPage() {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -140,7 +142,9 @@ export default function AdminPage() {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-500">
-                    {new Date(post.created_at).toLocaleDateString()}
+                    {format(new Date(post.created_at), "d MMMM yyyy", {
+                      locale: pl,
+                    })}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
