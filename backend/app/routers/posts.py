@@ -44,7 +44,8 @@ def create_post(
         title=post.title,
         slug=slug,
         content=post.content,
-        author_id=1  # Hardcoded for now
+        author_id=1,  # Hardcoded for now
+        destination=post.destination
     )
     db.add(db_post)
     db.commit()
@@ -81,6 +82,7 @@ def update_post(
         db_post.slug = slug
     db_post.title = post.title
     db_post.content = post.content
+    db_post.destination = post.destination
     db.commit()
     db.refresh(db_post)
     return db_post

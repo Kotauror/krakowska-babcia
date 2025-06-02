@@ -14,6 +14,7 @@ class Post(Base):
     author_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     created_at = Column(DateTime(timezone=True), nullable=False, default=lambda: datetime.now(timezone.utc))
     updated_at = Column(DateTime(timezone=True), onupdate=lambda: datetime.now(timezone.utc))
+    destination = Column(String, nullable=False)
 
     author = relationship("User", back_populates="posts")
     featured_status = relationship("FeaturedPost", back_populates="post", uselist=False)

@@ -19,6 +19,7 @@ def slugify(text: str) -> str:
 class PostBase(BaseModel):
     title: str
     content: str
+    destination: str
 
 class PostCreate(PostBase):
     def generate_slug(self) -> str:
