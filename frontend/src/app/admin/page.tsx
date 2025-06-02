@@ -36,6 +36,30 @@ export default function AdminPage() {
     }
   };
 
+  const handleFeaturedToggle = async (
+    postId: number,
+    currentStatus: boolean
+  ) => {
+    try {
+      if (!currentStatus) {
+        // Check if we already have 5 featured posts
+        const featuredCount = posts?.filter((p) => p.is_featured).length || 0;
+        if (featuredCount >= 5) {
+          alert("Mozesz dodac tylko 5 postow do wyroznionych.");
+          return;
+        }
+      }
+
+      await api.post(`/posts/${postId}/feature`, {
+        is_featured: !currentStatus,
+      });
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
+    } catch (error) {
+      console.error("Error toggling featured status:", error);
+      alert("Error updating featured status. Please try again.");
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -80,6 +104,9 @@ export default function AdminPage() {
                 Created At
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Featured
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Actions
               </th>
             </tr>
@@ -104,6 +131,16 @@ export default function AdminPage() {
                   <div className="text-sm text-gray-500">
                     {new Date(post.created_at).toLocaleDateString()}
                   </div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <input
+                    type="checkbox"
+                    checked={post.is_featured}
+                    onChange={() =>
+                      handleFeaturedToggle(post.id, post.is_featured)
+                    }
+                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                  />
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                   <div className="flex space-x-3">

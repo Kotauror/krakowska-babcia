@@ -34,6 +34,7 @@ class Post(PostBase):
     author_id: int
     created_at: datetime
     updated_at: Optional[datetime] = None
+    is_featured: bool = False
 
     
     class Config:

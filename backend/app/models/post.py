@@ -16,4 +16,8 @@ class Post(Base):
     updated_at = Column(DateTime(timezone=True), onupdate=lambda: datetime.now(timezone.utc))
 
     author = relationship("User", back_populates="posts")
-    featured_status = relationship("FeaturedPost", back_populates="post", uselist=False) 
+    featured_status = relationship("FeaturedPost", back_populates="post", uselist=False)
+
+    @property
+    def is_featured(self):
+        return self.featured_status is not None 

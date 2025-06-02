@@ -12,7 +12,7 @@ class FeaturedPostCreate(FeaturedPostBase):
 
 class FeaturedPost(FeaturedPostBase):
     id: int
-    featured_at: datetime
+    created_at: datetime
     post: Post
 
     class Config:

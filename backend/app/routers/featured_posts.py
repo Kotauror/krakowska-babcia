@@ -14,14 +14,13 @@ router = APIRouter()
 def list_featured_posts(
     db: Session = Depends(get_db)
 ):
-    """List all active featured posts"""
+    """List all featured posts"""
     featured_posts = (
         db.query(FeaturedPost)
         .options(joinedload(FeaturedPost.post))
-        .filter(FeaturedPost.is_active == True)
         .all()
     )
-    return featured_posts
+    return featured_posts 
 
 @router.post("/featured-posts", response_model=FeaturedPostSchema)
 def create_featured_post(

@@ -16,6 +16,7 @@ export interface Post {
   }>;
   created_at: string;
   updated_at: string;
+  is_featured: boolean;
   author: {
     id: number;
     username: string;
