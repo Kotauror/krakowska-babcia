@@ -17,7 +17,7 @@ async function getPosts() {
   return response.json();
 }
 
-function PostCard({ post }: { post: Post }) {
+export function PostCard({ post }: { post: Post }) {
   const handleClick = () => {
     console.log("in handle click", window.scrollY.toString());
     sessionStorage.setItem("homeScrollPosition", window.scrollY.toString());
