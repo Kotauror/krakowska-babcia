@@ -8,6 +8,7 @@ import Link from "next/link";
 import { Post } from "@/types";
 import Banner from "@/components/Banner";
 import { useEffect, useState } from "react";
+import FeaturedPostsCarousel from "@/components/FeaturedPostsCarousel";
 
 async function getPosts() {
   const response = await fetch("http://localhost:8000/api/v1/posts");
@@ -111,19 +112,15 @@ export default function Home() {
       <main className="container mx-auto py-8">
         {/* Featured Posts Section */}
         {featuredPosts && featuredPosts.length > 0 && (
-          <section className="mb-12">
+          <section className="mb-12 bg-gray-100 p-8">
             <h2 className="text-3xl font-bold mb-6">Ulubione Miejsca</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {featuredPosts.map((featured) => (
-                <PostCard key={featured.id} post={featured.post} />
-              ))}
-            </div>
+            <FeaturedPostsCarousel posts={featuredPosts.map((f) => f.post)} />
           </section>
         )}
 
         <section>
           <h2 className="text-3xl font-bold mb-6">Ostatnie Wpisy</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {posts?.map((post: Post) => (
               <PostCard key={post.slug} post={post} />
             ))}
