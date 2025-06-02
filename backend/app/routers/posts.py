@@ -31,7 +31,7 @@ def list_posts(
     limit: int = 100,
     db: Session = Depends(get_db)
 ):
-    posts = db.query(Post).options(joinedload(Post.featured_status)).offset(skip).limit(limit).all()
+    posts = db.query(Post).options(joinedload(Post.featured_status)).order_by(Post.created_at.desc()).offset(skip).limit(limit).all()
     return posts
 
 @router.post("/posts", response_model=PostSchema, status_code=status.HTTP_201_CREATED)
@@ -52,6 +52,18 @@ def create_post(
     db.refresh(db_post)
     return db_post
 
+@router.get("/posts/latest", response_model=PostSchema)
+def get_latest_post(db: Session = Depends(get_db)):
+      post = (
+          db.query(Post)
+          .order_by(Post.updated_at.desc())
+          .options(joinedload(Post.featured_status))
+          .first()
+      )
+      if not post:
+          raise HTTPException(status_code=404, detail="No posts found")
+      return post
+
 @router.get("/posts/{post_id_or_slug}", response_model=PostSchema)
 def get_post(
     post_id_or_slug: str,
@@ -66,6 +78,7 @@ def get_post(
     if not post:
         raise HTTPException(status_code=404, detail="Post not found")
     return post
+
 
 @router.put("/posts/{post_id}", response_model=PostSchema)
 def update_post(
@@ -98,6 +111,7 @@ def delete_post(
     db.delete(db_post)
     db.commit()
     return None
+
 
 @router.post("/posts/{post_id}/feature", response_model=PostSchema)
 def toggle_featured_post(

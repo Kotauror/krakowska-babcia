@@ -1,0 +1,61 @@
+import { Post } from "@/types";
+import { pl } from "date-fns/locale";
+import { format } from "date-fns";
+import Link from "next/link";
+import { useState } from "react";
+import ReactMarkdown from "react-markdown";
+
+function extractFirstImageUrl(content: string): string | null {
+  const imageRegex = /!\[.*?\]\((.*?)\)/;
+  const match = content.match(imageRegex);
+  return match ? match[1] : null;
+}
+
+function SinglePostCard({ post }: { post: Post }) {
+  const handleClick = () => {
+    console.log("in handle click", window.scrollY.toString());
+    sessionStorage.setItem("homeScrollPosition", window.scrollY.toString());
+  };
+
+  const firstImageUrl = extractFirstImageUrl(post.content);
+  const [imageError, setImageError] = useState(false);
+  return (
+    <Link
+      href={`/posts/${post.slug}`}
+      onClick={handleClick}
+      className="mt-4 inline-block w-full"
+    >
+      <div className="grid grid-cols-2 items-stretch rounded-lg overflow-hidden">
+        <div className="p-6 flex flex-col justify-between">
+          <div>
+            <div className="text-3xl font-bold mb-2">{post.title}</div>
+            <p className="text-gray-600 mb-4">
+              {format(new Date(post.created_at), "d MMMM yyyy", {
+                locale: pl,
+              })}
+            </p>
+            <ReactMarkdown>{post.content}</ReactMarkdown>
+          </div>
+        </div>
+        <div className="flex items-center justify-center">
+          {firstImageUrl && !imageError ? (
+            <img
+              src={firstImageUrl}
+              alt={post.title}
+              className="max-w-full max-h-96 object-contain"
+              onError={() => setImageError(true)}
+            />
+          ) : (
+            <img
+              src="/icon.png"
+              alt="Default icon"
+              className="max-w-full max-h-96 object-contain p-4"
+            />
+          )}
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+export default SinglePostCard;

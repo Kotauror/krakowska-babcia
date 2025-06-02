@@ -20,6 +20,7 @@ export default function FillPostModal({
   postToEdit,
 }: FillPostModalProps) {
   const [title, setTitle] = useState("");
+  const [destination, setDestination] = useState("");
   const [content, setContent] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
@@ -30,9 +31,11 @@ export default function FillPostModal({
     if (isOpen) {
       if (postToEdit) {
         setTitle(postToEdit.title);
+        setDestination(postToEdit.destination);
         setContent(postToEdit.content);
       } else {
         setTitle("");
+        setDestination("");
         setContent("");
       }
     }
@@ -85,11 +88,13 @@ export default function FillPostModal({
       if (postToEdit) {
         await api.put(`/posts/${postToEdit.id}`, {
           title,
+          destination,
           content,
         });
       } else {
         await api.post("/posts", {
           title,
+          destination,
           content,
         });
       }
@@ -138,7 +143,21 @@ export default function FillPostModal({
               required
             />
           </div>
-
+          <div>
+            <label
+              htmlFor="destination"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Destination
+            </label>
+            <input
+              type="text"
+              id="destination"
+              value={destination}
+              required
+              onChange={(e) => setDestination(e.target.value)}
+            />
+          </div>
           <div>
             <div className="flex justify-between items-center mb-2">
               <label className="block text-sm font-medium text-gray-700">

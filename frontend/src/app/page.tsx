@@ -9,11 +9,12 @@ import { Post } from "@/types";
 import Banner from "@/components/Banner";
 import { useEffect, useState } from "react";
 import FeaturedPostsCarousel from "@/components/FeaturedPostsCarousel";
-
-async function getPosts() {
-  const response = await fetch("http://localhost:8000/api/v1/posts");
+import { getPosts } from "@/lib/api";
+import SinglePostCard from "@/components/SinglePostCard";
+async function getLatestPost() {
+  const response = await fetch("http://localhost:8000/api/v1/posts/latest");
   if (!response.ok) {
-    throw new Error("Failed to fetch posts");
+    throw new Error("Failed to fetch latest post");
   }
   return response.json();
 }
@@ -82,9 +83,10 @@ export function PostCard({ post }: { post: Post }) {
 }
 
 export default function Home() {
-  const { data: posts, loading, error } = useApi<Post[]>(getPosts);
+  const { data: latestPost, loading, error } = useApi<Post>(getLatestPost);
   const { data: featuredPosts, isLoading: isFeaturedLoading } =
     useFeaturedPosts();
+  const { data: posts, isLoading: isPostsLoading } = useApi<Post[]>(getPosts);
 
   useEffect(() => {
     console.log("in use effect");
@@ -96,6 +98,10 @@ export default function Home() {
       // Clear the saved position after restoring
       // sessionStorage.removeItem("homeScrollPosition");
     }
+  }, [latestPost]);
+
+  useEffect(() => {
+    console.log("posts", posts);
   }, [posts]);
 
   if (loading || isFeaturedLoading) {
@@ -118,12 +124,26 @@ export default function Home() {
           </section>
         )}
 
+        <section className="p-8 bg-orange-100">
+          <h2 className="text-3xl font-bold mb-6">Ostatni Wpis</h2>
+          <div className="gap-8">
+            {latestPost && <SinglePostCard post={latestPost} />}
+          </div>
+        </section>
+
         <section className="p-8">
           <h2 className="text-3xl font-bold mb-6">Ostatnie Wpisy</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {posts?.map((post: Post) => (
-              <PostCard key={post.slug} post={post} />
-            ))}
+            {posts
+              ?.filter((post) => post.id !== latestPost?.id)
+              .map((post: Post) => (
+                <PostCard key={post.slug} post={post} />
+              ))}
+            {isPostsLoading && (
+              <div className="col-span-3">
+                <div className="animate-pulse h-full w-full bg-gray-200 rounded-lg"></div>
+              </div>
+            )}
           </div>
         </section>
       </main>
