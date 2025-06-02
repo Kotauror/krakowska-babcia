@@ -7,6 +7,7 @@ import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import { Post } from "@/types";
 import Banner from "@/components/Banner";
+import { useEffect } from "react";
 
 async function getPosts() {
   const response = await fetch("http://localhost:8000/api/v1/posts");
@@ -17,18 +18,27 @@ async function getPosts() {
 }
 
 function PostCard({ post }: { post: Post }) {
+  const handleClick = () => {
+    console.log("in handle click", window.scrollY.toString());
+    sessionStorage.setItem("homeScrollPosition", window.scrollY.toString());
+  };
+
   return (
     <article className="bg-white rounded-lg shadow-lg overflow-hidden">
       {post.content_images?.[0]?.url && (
         <img
           src={post.content_images[0].url}
-          alt={post.content_images[0].alt_text || post.title}
+          alt={post.content_images[0].alt || post.title}
           className="w-full h-64 object-cover"
         />
       )}
       <div className="p-6">
         <h3 className="text-2xl font-bold mb-2">
-          <Link href={`/posts/${post.slug}`} className="hover:text-blue-600">
+          <Link
+            href={`/posts/${post.slug}`}
+            onClick={handleClick}
+            className="hover:text-blue-600"
+          >
             {post.title}
           </Link>
         </h3>
@@ -40,7 +50,8 @@ function PostCard({ post }: { post: Post }) {
           <ReactMarkdown>{post.content}</ReactMarkdown>
         </div>
         <Link
-          href={`/posts/${post.id}`}
+          href={`/posts/${post.slug}`}
+          onClick={handleClick}
           className="mt-4 inline-block text-blue-600 hover:text-blue-800"
         >
           Read more →
@@ -54,6 +65,18 @@ export default function Home() {
   const { data: posts, loading, error } = useApi(getPosts);
   const { data: featuredPosts, isLoading: isFeaturedLoading } =
     useFeaturedPosts();
+
+  useEffect(() => {
+    console.log("in use effect");
+    // Restore scroll position when component mounts
+    const savedPosition = sessionStorage.getItem("homeScrollPosition");
+    console.log("savedPosition", savedPosition);
+    if (savedPosition) {
+      window.scrollTo(0, parseInt(savedPosition));
+      // Clear the saved position after restoring
+      // sessionStorage.removeItem("homeScrollPosition");
+    }
+  }, [posts]);
 
   if (loading || isFeaturedLoading) {
     return <div>Loading...</div>;
