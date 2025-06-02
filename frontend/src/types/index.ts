@@ -10,6 +10,7 @@ export interface Post {
   title: string;
   content: string;
   slug: string;
+  destination: string;
   content_images: Array<{
     url: string;
     alt: string;

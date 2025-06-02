@@ -51,14 +51,14 @@ export default function FeaturedPostsCarousel({
         </div>
       </div>
       <button
-        className="absolute left-0 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow-lg hover:bg-white disabled:opacity-50 disabled:cursor-not-allowed"
+        className="bg-orange-300 absolute left-0 top-1/2 -translate-y-1/2 p-2 rounded-full shadow-lg hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed"
         onClick={scrollPrev}
         disabled={!prevBtnEnabled}
       >
         <ChevronLeftIcon className="h-6 w-6" />
       </button>
       <button
-        className="absolute right-0 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow-lg hover:bg-white disabled:opacity-50 disabled:cursor-not-allowed"
+        className="bg-orange-300 absolute right-0 top-1/2 -translate-y-1/2 p-2 rounded-full shadow-lg hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed"
         onClick={scrollNext}
         disabled={!nextBtnEnabled}
       >
