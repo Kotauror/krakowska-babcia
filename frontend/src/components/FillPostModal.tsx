@@ -1,26 +1,42 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import MDEditor from "@uiw/react-md-editor";
 import { XMarkIcon, PhotoIcon } from "@heroicons/react/24/outline";
 import { api } from "@/lib/api";
+import { Post } from "@/types";
 
-interface AddPostModalProps {
+interface FillPostModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSuccess: () => void;
+  postToEdit?: Post;
 }
 
-export default function AddPostModal({
+export default function FillPostModal({
   isOpen,
   onClose,
   onSuccess,
-}: AddPostModalProps) {
+  postToEdit,
+}: FillPostModalProps) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const editorRef = useRef<{ textarea: HTMLTextAreaElement } | null>(null);
+
+  // Reset form when modal opens/closes or postToEdit changes
+  useEffect(() => {
+    if (isOpen) {
+      if (postToEdit) {
+        setTitle(postToEdit.title);
+        setContent(postToEdit.content);
+      } else {
+        setTitle("");
+        setContent("");
+      }
+    }
+  }, [isOpen, postToEdit]);
 
   const handleImageUpload = async (file: File) => {
     setIsUploading(true);
@@ -66,16 +82,23 @@ export default function AddPostModal({
     setIsSubmitting(true);
 
     try {
-      await api.post("/posts", {
-        title,
-        content,
-      });
+      if (postToEdit) {
+        await api.put(`/posts/${postToEdit.id}`, {
+          title,
+          content,
+        });
+      } else {
+        await api.post("/posts", {
+          title,
+          content,
+        });
+      }
 
       onSuccess();
       onClose();
     } catch (error) {
-      console.error("Error creating post:", error);
-      alert("Error creating post. Please try again.");
+      console.error("Error saving post:", error);
+      alert("Error saving post. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -87,7 +110,9 @@ export default function AddPostModal({
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg p-6 w-full max-w-4xl max-h-[90vh] overflow-y-auto">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-bold">Add New Post</h2>
+          <h2 className="text-2xl font-bold">
+            {postToEdit ? "Edit Post" : "Add New Post"}
+          </h2>
           <button
             onClick={onClose}
             className="text-gray-500 hover:text-gray-700"
@@ -157,7 +182,13 @@ export default function AddPostModal({
               disabled={isSubmitting || isUploading}
               className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 disabled:opacity-50"
             >
-              {isSubmitting ? "Creating..." : "Create Post"}
+              {isSubmitting
+                ? postToEdit
+                  ? "Saving..."
+                  : "Creating..."
+                : postToEdit
+                ? "Save Changes"
+                : "Create Post"}
             </button>
           </div>
         </form>

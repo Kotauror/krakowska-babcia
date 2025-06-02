@@ -5,11 +5,12 @@ import { api } from "@/lib/api";
 import { Post } from "@/types";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
-import AddPostModal from "@/components/AddPostModal";
+import FillPostModal from "@/components/FillPostModal";
 import Link from "next/link";
 
 export default function AdminPage() {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [postToEdit, setPostToEdit] = useState<Post | undefined>();
   const queryClient = useQueryClient();
 
   const {
@@ -45,7 +46,7 @@ export default function AdminPage() {
         // Check if we already have 5 featured posts
         const featuredCount = posts?.filter((p) => p.is_featured).length || 0;
         if (featuredCount >= 5) {
-          alert("Mozesz dodac tylko 5 postow do wyroznionych.");
+          alert("You can only have up to 5 featured posts at a time.");
           return;
         }
       }
@@ -58,6 +59,16 @@ export default function AdminPage() {
       console.error("Error toggling featured status:", error);
       alert("Error updating featured status. Please try again.");
     }
+  };
+
+  const handleEdit = (post: Post) => {
+    setPostToEdit(post);
+    setIsAddModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsAddModalOpen(false);
+    setPostToEdit(undefined);
   };
 
   if (isLoading) {
@@ -145,9 +156,7 @@ export default function AdminPage() {
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                   <div className="flex space-x-3">
                     <button
-                      onClick={() => {
-                        /* TODO: Handle edit */
-                      }}
+                      onClick={() => handleEdit(post)}
                       className="text-blue-600 hover:text-blue-900"
                     >
                       <PencilIcon className="h-5 w-5" />
@@ -166,12 +175,13 @@ export default function AdminPage() {
         </table>
       </div>
 
-      <AddPostModal
+      <FillPostModal
         isOpen={isAddModalOpen}
-        onClose={() => setIsAddModalOpen(false)}
+        onClose={handleModalClose}
         onSuccess={() => {
           queryClient.invalidateQueries({ queryKey: ["posts"] });
         }}
+        postToEdit={postToEdit}
       />
     </div>
   );
