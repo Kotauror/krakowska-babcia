@@ -1,85 +1,20 @@
 "use client";
+import Banner from '@/components/Banner';
+import FeaturedPostsCarousel from '@/components/FeaturedPostsCarousel';
+import SinglePostCard from '@/components/SinglePostCard';
+import { getPosts } from '@/lib/api';
+import { Post } from '@/types';
+import { useApi } from '@/hooks/useApi';
+import { useEffect } from 'react';
+import { useFeaturedPosts } from '@/hooks/useFeaturedPosts';
+import PostCard from '@/components/PostCard';
 
-import { useFeaturedPosts } from "@/hooks/useFeaturedPosts";
-import { useApi } from "@/hooks/useApi";
-import { format } from "date-fns";
-import { pl } from "date-fns/locale";
-import Link from "next/link";
-import { Post } from "@/types";
-import Banner from "@/components/Banner";
-import { useEffect, useState } from "react";
-import FeaturedPostsCarousel from "@/components/FeaturedPostsCarousel";
-import { getPosts } from "@/lib/api";
-import SinglePostCard from "@/components/SinglePostCard";
 async function getLatestPost() {
   const response = await fetch("http://localhost:8000/api/v1/posts/latest");
   if (!response.ok) {
     throw new Error("Failed to fetch latest post");
   }
   return response.json();
-}
-
-// Function to extract first image URL from markdown content
-function extractFirstImageUrl(content: string): string | null {
-  const imageRegex = /!\[.*?\]\((.*?)\)/;
-  const match = content.match(imageRegex);
-  return match ? match[1] : null;
-}
-
-export function PostCard({ post }: { post: Post }) {
-  const handleClick = () => {
-    console.log("in handle click", window.scrollY.toString());
-    sessionStorage.setItem("homeScrollPosition", window.scrollY.toString());
-  };
-
-  const firstImageUrl = extractFirstImageUrl(post.content);
-  const [imageError, setImageError] = useState(false);
-
-  return (
-    <Link
-      href={`/posts/${post.slug}`}
-      onClick={handleClick}
-      className="mt-4 inline-block"
-    >
-      <article className="bg-white rounded-lg shadow-lg overflow-hidden">
-        <div className="w-[400px] h-[300px] mx-auto overflow-hidden">
-          {firstImageUrl && !imageError ? (
-            <img
-              src={firstImageUrl}
-              alt={post.title}
-              className="w-full h-full object-cover object-center"
-              onError={() => setImageError(true)}
-            />
-          ) : (
-            <img
-              src="/icon.png"
-              alt="Default icon"
-              className="w-full h-full object-contain p-4"
-            />
-          )}
-        </div>
-        <div className="p-6">
-          <h3 className="text-2xl font-bold mb-2">
-            <Link
-              href={`/posts/${post.slug}`}
-              onClick={handleClick}
-              className="hover:text-orange-600"
-            >
-              {post.title}
-            </Link>
-          </h3>
-          <div className="text-gray-600 mb-4">
-            <p>
-              {" "}
-              {format(new Date(post.created_at), "d MMMM yyyy", {
-                locale: pl,
-              })}
-            </p>
-          </div>
-        </div>
-      </article>
-    </Link>
-  );
 }
 
 export default function Home() {

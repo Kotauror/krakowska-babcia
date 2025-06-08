@@ -4,8 +4,7 @@ import { Post } from "@/types";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import useEmblaCarousel from "embla-carousel-react";
 import { useCallback, useEffect, useState } from "react";
-import { PostCard } from "@/app/page";
-
+import PostCard from "./PostCard";
 interface FeaturedPostsCarouselProps {
   posts: Post[];
 }
