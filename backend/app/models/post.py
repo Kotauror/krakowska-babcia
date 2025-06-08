@@ -1,8 +1,15 @@
-from sqlalchemy import Column, Integer, String, Text, ForeignKey, DateTime
+from sqlalchemy import Column, Integer, String, Text, ForeignKey, DateTime, Enum as SqlEnum, Float
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from datetime import datetime, timezone
 from ..core.database import Base
+import enum
+
+class PostType(enum.Enum):
+    kultura = "kultura"
+    natura = "natura"
+    sport = "sport"
+    zabawa = "zabawa"
 
 class Post(Base):
     __tablename__ = "posts"
@@ -15,6 +22,9 @@ class Post(Base):
     created_at = Column(DateTime(timezone=True), nullable=False, default=lambda: datetime.now(timezone.utc))
     updated_at = Column(DateTime(timezone=True), onupdate=lambda: datetime.now(timezone.utc))
     destination = Column(String, nullable=False)
+    longitude = Column(Float, nullable=False)
+    latitude = Column(Float, nullable=False)
+    type = Column(SqlEnum(PostType), nullable=False)
 
     author = relationship("User", back_populates="posts")
     featured_status = relationship("FeaturedPost", back_populates="post", uselist=False)

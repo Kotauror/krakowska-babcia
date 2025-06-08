@@ -45,7 +45,10 @@ def create_post(
         slug=slug,
         content=post.content,
         author_id=1,  # Hardcoded for now
-        destination=post.destination
+        destination=post.destination,
+        longitude=post.longitude,
+        latitude=post.latitude,
+        type=post.type
     )
     db.add(db_post)
     db.commit()
@@ -56,7 +59,7 @@ def create_post(
 def get_latest_post(db: Session = Depends(get_db)):
       post = (
           db.query(Post)
-          .order_by(Post.updated_at.desc())
+          .order_by(Post.created_at.desc())
           .options(joinedload(Post.featured_status))
           .first()
       )
@@ -96,6 +99,9 @@ def update_post(
     db_post.title = post.title
     db_post.content = post.content
     db_post.destination = post.destination
+    db_post.longitude = post.longitude
+    db_post.latitude = post.latitude
+    db_post.type = post.type
     db.commit()
     db.refresh(db_post)
     return db_post

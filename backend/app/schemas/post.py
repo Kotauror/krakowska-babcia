@@ -1,6 +1,6 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
 from datetime import datetime
-from typing import Optional, Union
+from typing import Optional, Union, Literal
 import re
 
 def slugify(text: str) -> str:
@@ -20,6 +20,16 @@ class PostBase(BaseModel):
     title: str
     content: str
     destination: str
+    longitude: float
+    latitude: float
+    type: str
+
+    @field_validator("type", mode="before")
+    @classmethod
+    def type_to_str(cls, v):
+        if v is not None and not isinstance(v, str):
+            return v.value
+        return v
 
 class PostCreate(PostBase):
     def generate_slug(self) -> str:

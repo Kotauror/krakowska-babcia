@@ -10,6 +10,7 @@ from app.models.post import Post
 from app.models.post_image import PostImage
 from app.models.user import User
 from app.core.database import Base
+from app.models.featured_post import FeaturedPost
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
