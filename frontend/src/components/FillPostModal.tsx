@@ -176,6 +176,27 @@ export default function FillPostModal({
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
               <label
+                htmlFor="latitude"
+                className="block text-sm font-medium text-gray-700"
+              >
+               Latitude 
+              </label>
+              <input
+                type="number"
+                step="any"
+                id="latitude"
+                value={latitude}
+                onChange={(e) =>
+                  setLatitude(
+                    e.target.value === "" ? "" : parseFloat(e.target.value)
+                  )
+                }
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                required
+              />
+            </div>
+            <div>
+              <label
                 htmlFor="longitude"
                 className="block text-sm font-medium text-gray-700"
               >
@@ -188,27 +209,6 @@ export default function FillPostModal({
                 value={longitude}
                 onChange={(e) =>
                   setLongitude(
-                    e.target.value === "" ? "" : parseFloat(e.target.value)
-                  )
-                }
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                required
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="latitude"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Latitude
-              </label>
-              <input
-                type="number"
-                step="any"
-                id="latitude"
-                value={latitude}
-                onChange={(e) =>
-                  setLatitude(
                     e.target.value === "" ? "" : parseFloat(e.target.value)
                   )
                 }
