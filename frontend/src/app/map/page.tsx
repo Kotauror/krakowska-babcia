@@ -1,11 +1,21 @@
 "use client";
 
 import React, { useState } from "react";
-import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
+import {
+  AdvancedMarker,
+  APIProvider,
+  Map,
+  Marker,
+} from "@vis.gl/react-google-maps";
 
 function MapComponent() {
   const [markerLocation, setMarkerLocation] = useState({
     lat: 50.9647,
+    lng: 20.945,
+  });
+
+  const [otherMarkerLocation, setOtherMarkerLocation] = useState({
+    lat: 51.9647,
     lng: 20.945,
   });
 
@@ -27,6 +37,9 @@ function MapComponent() {
             disableDefaultUI={true}
           />
           <Marker position={markerLocation} />
+          {/* <AdvancedMarker position={otherMarkerLocation}>
+            <img src={"./nature-marker.png"} width={32} height={32} />
+          </AdvancedMarker> */}
         </APIProvider>
       </div>
     </div>
