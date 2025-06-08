@@ -47,8 +47,8 @@ export default function AdminPage() {
       if (!currentStatus) {
         // Check if we already have 5 featured posts
         const featuredCount = posts?.filter((p) => p.is_featured).length || 0;
-        if (featuredCount >= 5) {
-          alert("You can only have up to 5 featured posts at a time.");
+        if (featuredCount >= 10) {
+          alert("You can only have up to 10 featured posts at a time.");
           return;
         }
       }

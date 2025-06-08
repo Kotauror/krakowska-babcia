@@ -129,9 +129,9 @@ def toggle_featured_post(
     ).first()
 
     if update.is_featured:
-        # Check if we already have 5 featured posts
+        # Check if we already have 10 featured posts
         featured_count = db.query(FeaturedPost).count()
-        if featured_count >= 5 and not featured_post:
+        if featured_count >= 10 and not featured_post:
             raise HTTPException(
                 status_code=400,
                 detail="Maximum number of featured posts (5) reached"

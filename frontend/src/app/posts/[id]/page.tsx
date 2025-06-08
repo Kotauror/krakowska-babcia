@@ -6,8 +6,11 @@ import { format } from "date-fns";
 import ReactMarkdown from "react-markdown";
 import Link from "next/link";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
+import { useRouter } from "next/navigation";
 
 export default function PostPage({ params }: { params: { id: string } }) {
+  const router = useRouter();
+
   const {
     data: post,
     isLoading,
@@ -48,13 +51,14 @@ export default function PostPage({ params }: { params: { id: string } }) {
 
   return (
     <main className="container mx-auto px-4 py-8">
-      <Link
-        href="/"
+      <button
+        type="button"
+        onClick={() => router.back()}
         className="inline-flex items-center text-blue-600 hover:text-blue-800 mb-8"
       >
         <ArrowLeftIcon className="h-5 w-5 mr-2" />
-        Back to Home
-      </Link>
+        Powrót
+      </button>
 
       <article className="max-w-4xl mx-auto">
         <header className="mb-8">

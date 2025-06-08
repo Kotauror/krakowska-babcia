@@ -54,14 +54,14 @@ export default function FeaturedPostsCarousel({
         onClick={scrollPrev}
         disabled={!prevBtnEnabled}
       >
-        <ChevronLeftIcon className="h-6 w-6" />
+        <ChevronLeftIcon className="h-8 w-8" />
       </button>
       <button
         className="bg-orange-300 absolute right-0 top-1/2 -translate-y-1/2 p-2 rounded-full shadow-lg hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed"
         onClick={scrollNext}
         disabled={!nextBtnEnabled}
       >
-        <ChevronRightIcon className="h-6 w-6" />
+        <ChevronRightIcon className="h-8 w-8" />
       </button>
     </div>
   );

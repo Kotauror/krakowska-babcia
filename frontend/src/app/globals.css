@@ -13,6 +13,9 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --color-olive-green: #bcc691;
+  --color-light-brick-orange: #ffdaa9;
+  --color-orange-gray: #f1e5d2;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -46,4 +49,5 @@ body {
   --color-success-emphasis: #116329;
   --color-warning-fg: #9a6700;
   --color-warning-emphasis: #9a6700;
+  --color-olive-green: #929e5e;
 }

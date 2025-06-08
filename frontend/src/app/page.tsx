@@ -50,37 +50,40 @@ export default function Home() {
   return (
     <div>
       <Banner />
-      <main className="container mx-auto py-8">
+      <main className="mx-auto py-8 mt-4">
         {/* Featured Posts Section */}
         {featuredPosts && featuredPosts.length > 0 && (
-          <section className="mb-12 bg-gray-50 p-8">
-            <h2 className="text-3xl font-bold mb-6">Ulubione Miejsca</h2>
-            <FeaturedPostsCarousel posts={featuredPosts.map((f) => f.post)} />
-          </section>
+          <div className="mb-12 bg-olive-green p-8">
+            <section className="container mx-auto">
+              <h2 className="text-3xl font-bold mb-6">Ulubione Miejsca</h2>
+              <FeaturedPostsCarousel posts={featuredPosts.map((f) => f.post)} />
+            </section>
+          </div>
         )}
+        <div className="container mx-auto">
+          <section className="p-8 bg-light-brick-orange mb-12">
+            <h2 className="text-3xl font-bold mb-6">Ostatni Wpis</h2>
+            <div className="gap-8">
+              {latestPost && <SinglePostCard post={latestPost} />}
+            </div>
+          </section>
 
-        <section className="p-8 bg-orange-100 mb-12">
-          <h2 className="text-3xl font-bold mb-6">Ostatni Wpis</h2>
-          <div className="gap-8">
-            {latestPost && <SinglePostCard post={latestPost} />}
-          </div>
-        </section>
-
-        <section className="p-8 bg-gray-50">
-          <h2 className="text-3xl font-bold mb-6">Wycieczki</h2>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            {posts
-              ?.filter((post) => post.id !== latestPost?.id)
-              .map((post: Post) => (
-                <PostCard key={post.slug} post={post} variant="detailed" />
-              ))}
-            {isPostsLoading && (
-              <div className="col-span-3">
-                <div className="animate-pulse h-full w-full bg-gray-200 rounded-lg"></div>
-              </div>
-            )}
-          </div>
-        </section>
+          <section className="p-8 bg-gray-50">
+            <h2 className="text-3xl font-bold mb-6">Wycieczki</h2>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+              {posts
+                ?.filter((post) => post.id !== latestPost?.id)
+                .map((post: Post) => (
+                  <PostCard key={post.slug} post={post} variant="detailed" />
+                ))}
+              {isPostsLoading && (
+                <div className="col-span-3">
+                  <div className="animate-pulse h-full w-full bg-gray-200 rounded-lg"></div>
+                </div>
+              )}
+            </div>
+          </section>
+        </div>
       </main>
     </div>
   );

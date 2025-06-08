@@ -9,7 +9,7 @@ export default function Destinations() {
   const { data: posts, loading, error } = useApi(getPosts);
 
   return (
-    <div className="pt-12 space-y-8 bg-gray-50 md:pl-12 md:pr-12 pl-8 pr-8">
+    <div className="pt-12 space-y-8 bg-orange-gray md:pl-12 md:pr-12 pl-8 pr-8">
       <div className="text-center">
         <h1 className="text-4xl font-bold text-gray-900 mb-4">Wycieczki</h1>
       </div>
