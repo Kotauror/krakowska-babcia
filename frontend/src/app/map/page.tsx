@@ -10,9 +10,9 @@ function MapComponent() {
   });
 
   return (
-    <div className="pt-12 space-y-8 bg-orange-gray h-full w-full">
+    <div className="pt-12 space-y-8 bg-orange-gray min-h-screen">
       <div className="text-center">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">Mapa Miejsc</h1>
+        <h1 className="text-4xl font-bold text-gray-900">Mapa Miejsc</h1>
       </div>
       <div className="flex justify-center">
         <h3> Legenda</h3>
