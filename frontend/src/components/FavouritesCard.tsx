@@ -11,13 +11,7 @@ function extractFirstImageUrl(content: string): string | null {
   return match ? match[1] : null;
 }
 
-function PostCard({
-  post,
-  variant = "compact",
-}: {
-  post: Post;
-  variant: "detailed" | "compact";
-}) {
+function FavouritesCard({ post }: { post: Post }) {
   const handleClick = () => {
     console.log("in handle click", window.scrollY.toString());
     sessionStorage.setItem("homeScrollPosition", window.scrollY.toString());
@@ -33,7 +27,7 @@ function PostCard({
       className="mt-4 inline-block"
     >
       <article className="bg-white rounded-lg shadow-lg overflow-hidden">
-        <div className="w-[300px] h-[200px] mx-auto overflow-hidden mt-8">
+        <div className="w-[300px] h-[200px] mx-auto overflow-hidden">
           {firstImageUrl && !imageError ? (
             <img
               src={firstImageUrl}
@@ -56,14 +50,7 @@ function PostCard({
               onClick={handleClick}
               className="hover:text-orange-600"
             >
-              {post.title}
-              <div>
-                {variant === "detailed" && (
-                  <span className="text-gray-500 text-sm">
-                    {post.destination}
-                  </span>
-                )}
-              </div>
+              {post.destination}
             </Link>
           </h3>
           <div className="text-gray-600 mb-4">
@@ -80,4 +67,4 @@ function PostCard({
   );
 }
 
-export default PostCard;
+export default FavouritesCard;

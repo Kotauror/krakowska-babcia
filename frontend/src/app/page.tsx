@@ -1,13 +1,13 @@
 "use client";
-import Banner from '@/components/Banner';
-import FeaturedPostsCarousel from '@/components/FeaturedPostsCarousel';
-import SinglePostCard from '@/components/SinglePostCard';
-import { getPosts } from '@/lib/api';
-import { Post } from '@/types';
-import { useApi } from '@/hooks/useApi';
-import { useEffect } from 'react';
-import { useFeaturedPosts } from '@/hooks/useFeaturedPosts';
-import PostCard from '@/components/PostCard';
+import Banner from "@/components/Banner";
+import FeaturedPostsCarousel from "@/components/FeaturedPostsCarousel";
+import SinglePostCard from "@/components/SinglePostCard";
+import { getPosts } from "@/lib/api";
+import { Post } from "@/types";
+import { useApi } from "@/hooks/useApi";
+import { useEffect } from "react";
+import { useFeaturedPosts } from "@/hooks/useFeaturedPosts";
+import PostCard from "@/components/PostCard";
 
 async function getLatestPost() {
   const response = await fetch("http://localhost:8000/api/v1/posts/latest");
@@ -53,26 +53,26 @@ export default function Home() {
       <main className="container mx-auto py-8">
         {/* Featured Posts Section */}
         {featuredPosts && featuredPosts.length > 0 && (
-          <section className="mb-12 bg-gray-100 p-8">
+          <section className="mb-12 bg-gray-50 p-8">
             <h2 className="text-3xl font-bold mb-6">Ulubione Miejsca</h2>
             <FeaturedPostsCarousel posts={featuredPosts.map((f) => f.post)} />
           </section>
         )}
 
-        <section className="p-8 bg-orange-100">
+        <section className="p-8 bg-orange-100 mb-12">
           <h2 className="text-3xl font-bold mb-6">Ostatni Wpis</h2>
           <div className="gap-8">
             {latestPost && <SinglePostCard post={latestPost} />}
           </div>
         </section>
 
-        <section className="p-8">
-          <h2 className="text-3xl font-bold mb-6">Ostatnie Wpisy</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <section className="p-8 bg-gray-50">
+          <h2 className="text-3xl font-bold mb-6">Wycieczki</h2>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {posts
               ?.filter((post) => post.id !== latestPost?.id)
               .map((post: Post) => (
-                <PostCard key={post.slug} post={post} />
+                <PostCard key={post.slug} post={post} variant="detailed" />
               ))}
             {isPostsLoading && (
               <div className="col-span-3">

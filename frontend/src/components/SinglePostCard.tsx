@@ -33,7 +33,7 @@ function SinglePostCard({ post }: { post: Post }) {
       <div className="text-2xl font-bold mb-2">{post.title}</div>
       <div className="flex items-center gap-2">
         <MapPinIcon className="h-5 w-5" />
-        <div className="text-xl font-bold mb-2">{post.destination}</div>
+        <div className="text-xl font-bold mb-0">{post.destination}</div>
       </div>
 
       <p className="text-gray-600 mb-4">

@@ -1,20 +1,17 @@
 "use client";
 
+import { getPosts } from "@/lib/api";
+import { useApi } from "@/hooks/useApi";
 
-import { getPosts } from '@/lib/api';
-import { useApi } from '@/hooks/useApi';
-
-import { PostCard } from '../page';
-
+import PostCard from "@/components/PostCard";
 
 export default function Destinations() {
   const { data: posts, loading, error } = useApi(getPosts);
-  
+
   return (
-    <div className="space-y-8">
+    <div className="pt-12 space-y-8 bg-gray-50">
       <div className="text-center">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">Ostatnie Wpisy</h1>
-   
+        <h1 className="text-4xl font-bold text-gray-900 mb-4">Wycieczki</h1>
       </div>
 
       {loading ? (
@@ -29,7 +26,7 @@ export default function Destinations() {
           </p>
         </div>
       ) : posts && posts.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {posts.map((post) => (
             <PostCard key={post.slug} post={post} />
           ))}

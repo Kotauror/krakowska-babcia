@@ -4,7 +4,7 @@ import { Post } from "@/types";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import useEmblaCarousel from "embla-carousel-react";
 import { useCallback, useEffect, useState } from "react";
-import PostCard from "./PostCard";
+import FavouritesCard from "./FavouritesCard";
 interface FeaturedPostsCarouselProps {
   posts: Post[];
 }
@@ -44,7 +44,7 @@ export default function FeaturedPostsCarousel({
         <div className="flex">
           {posts.map((post) => (
             <div key={post.id} className="p-2">
-              <PostCard post={post} />
+              <FavouritesCard post={post} />
             </div>
           ))}
         </div>
