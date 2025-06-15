@@ -12,12 +12,12 @@ export default function Banner() {
       <img
         src="/valley.png"
         alt="Header image"
-        className="h-[calc(60vh-4rem)] w-full object-cover opacity-95"
+        className="md:h-[calc(60vh-4rem)] h-[calc(40vh-4rem)] w-full object-cover opacity-95"
       />
       <h1 className="text-2xl md:text-3xl font-bold text-center px-4 m-8 ">
         Zabierz wnuki na wycieczkę
       </h1>
-      <div className="justify-center text-center">
+      <div className="justify-center text-center md:px-2 px-1">
         <div>Hej! Tu Marta - babcia z Krakowa :)</div>
         <div>
           Piszę o miejscach w Małopolsce i okolicach, które zachwycą zarówno

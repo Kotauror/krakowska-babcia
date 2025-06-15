@@ -26,7 +26,7 @@ function FilterTag({
 }) {
   return (
     <button
-      className={`mx-2 my-1 md:px-4 px-2 py-1 rounded-md border-1 border-gray-500 ${
+      className={`mx-2 my-1 md:px-4 px-2 py-1 rounded-md border-1 border-gray-500 md:text-xl text-sm ${
         selected ? "bg-light-brick-orange border-orange-400" : "bg-gray-100"
       }`}
       onClick={onClick}
@@ -79,7 +79,7 @@ export default function Destinations() {
       </div>
 
       {/* <div> */}
-      <div className="flex flex-wrap justify-center sticky top-20 bg-orange-gray md:text-xl text-s p-2">
+      <div className="flex flex-wrap justify-center sticky top-20 bg-orange-gray md:text-xl text-s p-4 border-b border-gray-500">
         {ALLOWED_TAGS.map((tag) => (
           <FilterTag
             key={tag}
