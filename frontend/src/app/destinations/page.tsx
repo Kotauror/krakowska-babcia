@@ -27,7 +27,7 @@ function FilterTag({
   return (
     <button
       className={`mx-2 my-1 md:px-4 px-2 py-1 rounded-md border-1 border-gray-500 ${
-        selected ? "bg-orange-400 text-white" : "bg-light-brick-orange"
+        selected ? "bg-light-brick-orange border-orange-400" : "bg-gray-100"
       }`}
       onClick={onClick}
       type="button"

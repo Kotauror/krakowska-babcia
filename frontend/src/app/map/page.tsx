@@ -1,12 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  GoogleMap,
-  InfoWindow,
-  LoadScript,
-  Marker,
-} from "@react-google-maps/api";
+import { APIProvider, Map, AdvancedMarker } from "@vis.gl/react-google-maps";
+
 import { getPosts } from "@/lib/api";
 import type { Post } from "@/types/post";
 
@@ -15,10 +11,7 @@ function MapComponent() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const center = {
-    lat: 49.609,
-    lng: 19.9672,
-  };
+  const center = { lat: 49.8335, lng: 19.9396 };
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -52,61 +45,72 @@ function MapComponent() {
     );
   };
 
+  const ALLOWED_TAGS = [
+    "w góry",
+    "nad wodę",
+    "regionalna kultura",
+    "w niepogodę",
+    "budżetowo",
+    "z nocowankiem",
+    "dzieciaczkowy raj",
+  ];
+
   return (
-    <div className="pt-12 space-y-8 bg-orange-gray min-h-screen pb-20">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold text-gray-900">Mapa Miejsc</h1>
-      </div>
-      <div className="flex justify-center items-center">
-        <div className="flex gap-8 items-center justify-center">
-          {filterCard("Natura", "./natura-marker.png")}
-          {filterCard("Kultura", "./kultura-marker.png")}
-          {filterCard("Sport", "./sport-marker.png")}
-          {filterCard("Zabawa", "./zabawa-marker.png")}
+    <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || ""}>
+      <div className="bg-gray-100">
+        <div className="flex flex-wrap justify-center pt-4">
+          {/* <div style={{ height: "20vh", width: "100%" }}> */}
+
+          {ALLOWED_TAGS.map((tag) => (
+            <button
+              key={tag}
+              className="border-1 border-gray-500 md:mx-2 md:my-1 md:px-4 px-2 py-1 rounded hover:bg-light-brick-orange hover:cursor-pointer"
+              onClick={() =>
+                router.push(`/destinations?tag=${encodeURIComponent(tag)}`)
+              }
+            >
+              {tag}
+            </button>
+          ))}
+
+          {/* </div> */}
+        </div>
+        <div style={{ height: "100vh", width: "100%" }} className="mt-4">
+          <Map
+            defaultZoom={9}
+            defaultCenter={center}
+            onCameraChanged={(ev) =>
+              console.log(
+                "camera changed:",
+                ev.detail.center,
+                "zoom:",
+                ev.detail.zoom
+              )
+            }
+            mapId={"298d9f1b27024ac234909302"}
+            // styles={mapStyles}
+          />
+          {posts.map((post) => (
+            <AdvancedMarker
+              key={post.id}
+              position={{ lat: post.latitude, lng: post.longitude }}
+            >
+              {" "}
+              <div
+                style={{
+                  width: "32px", // Specify the unit for width
+                  height: "32px", // Specify the unit for height
+                  backgroundColor: "red",
+                  borderRadius: "50%", // Optional, to make the marker round
+                  background:
+                    "radial-gradient(circle, rgba(255, 0, 0, 1) 0%, rgba(255, 0, 0, 0) 90%)", // Dark red at center, fades to transparent
+                }}
+              ></div>
+            </AdvancedMarker>
+          ))}
         </div>
       </div>
-      <div className="flex justify-center">
-        <LoadScript
-          googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || ""}
-        >
-          <GoogleMap
-            mapContainerStyle={{ width: "1200px", height: "700px" }}
-            center={center}
-            zoom={9}
-          >
-            {posts.map((post) => {
-              console.log(post.latitude);
-              return (
-                <Marker
-                  key={post.id}
-                  position={{ lat: post.latitude, lng: post.longitude }}
-                  // icon={{
-                  //   url: `./${post.type}-marker.png`,
-                  // }}
-                  onClick={() => setSelectedMarker(post)}
-                />
-              );
-            })}
-
-            {selectedMarker && (
-              <InfoWindow
-                position={{
-                  lat: selectedMarker.latitude,
-                  lng: selectedMarker.longitude,
-                }}
-                onCloseClick={() => setSelectedMarker(null)}
-                options={{ pixelOffset: new window.google.maps.Size(0, -30) }}
-              >
-                <div>
-                  <h3 className="font-bold">{selectedMarker.title}</h3>
-                  <p>{selectedMarker.destination}</p>
-                </div>
-              </InfoWindow>
-            )}
-          </GoogleMap>
-        </LoadScript>
-      </div>
-    </div>
+    </APIProvider>
   );
 }
 
