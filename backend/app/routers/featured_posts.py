@@ -8,6 +8,12 @@ from app.models.post import Post
 from app.models.featured_post import FeaturedPost
 from app.schemas.featured_post import FeaturedPost as FeaturedPostSchema, FeaturedPostCreate
 
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 router = APIRouter()
 
 @router.get("/featured-posts", response_model=List[FeaturedPostSchema])
@@ -15,6 +21,7 @@ def list_featured_posts(
     db: Session = Depends(get_db)
 ):
     """List all featured posts"""
+    logger.info("Fetching all featured posts")
     featured_posts = (
         db.query(FeaturedPost)
         .options(joinedload(FeaturedPost.post))
@@ -31,6 +38,7 @@ def create_featured_post(
     """Create a new featured post (admin only)"""
     if not current_user.is_admin:
         raise HTTPException(status_code=403, detail="Not enough permissions")
+    logger.info(f"Creating featured post for post_id: {featured_post.post_id} by user: {current_user.username}")
     
     # Check if post exists
     post = db.query(Post).filter(Post.id == featured_post.post_id).first()

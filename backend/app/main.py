@@ -40,6 +40,7 @@ app.include_router(upload.router, prefix="/api/v1")
 
 @app.get("/")
 async def root():
+    logger.info("Root endpoint accessed")
     return {"message": "Welcome to Travel Blog API"} 
 
 # Startup event

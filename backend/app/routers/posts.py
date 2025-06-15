@@ -8,6 +8,12 @@ from app.models.featured_post import FeaturedPost
 from app.schemas.post import Post as PostSchema, PostCreate, PostUpdate
 from pydantic import BaseModel
 
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 router = APIRouter()
 
 class FeaturedPostUpdate(BaseModel):
@@ -42,6 +48,7 @@ def list_posts(
     db: Session = Depends(get_db),
     tags: List[str] = Query(default=None)
 ):
+    logger.info(f"Listing posts with skip={skip}, limit={limit}, tags={tags}")
     query = db.query(Post).options(joinedload(Post.featured_status))
     if tags:
         query = query.join(Post.tags).filter(Tag.name.in_(tags)).distinct()
