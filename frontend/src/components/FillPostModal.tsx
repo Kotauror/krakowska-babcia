@@ -27,7 +27,6 @@ export default function FillPostModal({
   const editorRef = useRef<{ textarea: HTMLTextAreaElement } | null>(null);
   const [longitude, setLongitude] = useState<number | "">("");
   const [latitude, setLatitude] = useState<number | "">("");
-  const [type, setType] = useState<string>("");
 
   // Reset form when modal opens/closes or postToEdit changes
   useEffect(() => {
@@ -38,14 +37,12 @@ export default function FillPostModal({
         setContent(postToEdit.content);
         setLongitude(postToEdit.longitude);
         setLatitude(postToEdit.latitude);
-        setType(postToEdit.type);
       } else {
         setTitle("");
         setDestination("");
         setContent("");
         setLongitude("");
         setLatitude("");
-        setType("");
       }
     }
   }, [isOpen, postToEdit]);
@@ -101,7 +98,6 @@ export default function FillPostModal({
           content,
           longitude,
           latitude,
-          type,
         });
       } else {
         await api.post("/posts", {
@@ -110,7 +106,6 @@ export default function FillPostModal({
           content,
           longitude,
           latitude,
-          type,
         });
       }
 
@@ -216,27 +211,7 @@ export default function FillPostModal({
                 required
               />
             </div>
-            <div>
-              <label
-                htmlFor="type"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Type
-              </label>
-              <select
-                id="type"
-                value={type}
-                onChange={(e) => setType(e.target.value)}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                required
-              >
-                <option value="">Select type</option>
-                <option value="kultura">Kultura</option>
-                <option value="natura">Natura</option>
-                <option value="sport">Sport</option>
-                <option value="zabawa">Zabawa</option>
-              </select>
-            </div>
+
           </div>
           <div>
             <div className="flex justify-between items-center mb-2">

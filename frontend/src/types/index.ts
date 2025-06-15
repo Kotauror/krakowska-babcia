@@ -13,7 +13,6 @@ export interface Post {
   destination: string;
   longitude: number;
   latitude: number;
-  type: "kultura" | "natura" | "sport" | "zabawa";
   content_images: Array<{
     url: string;
     alt: string;

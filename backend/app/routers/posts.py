@@ -48,7 +48,6 @@ def create_post(
         destination=post.destination,
         longitude=post.longitude,
         latitude=post.latitude,
-        type=post.type
     )
     db.add(db_post)
     db.commit()
@@ -101,7 +100,6 @@ def update_post(
     db_post.destination = post.destination
     db_post.longitude = post.longitude
     db_post.latitude = post.latitude
-    db_post.type = post.type
     db.commit()
     db.refresh(db_post)
     return db_post

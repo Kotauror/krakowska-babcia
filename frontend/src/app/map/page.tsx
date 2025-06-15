@@ -80,9 +80,9 @@ function MapComponent() {
                 <Marker
                   key={post.id}
                   position={{ lat: post.latitude, lng: post.longitude }}
-                  icon={{
-                    url: `./${post.type}-marker.png`,
-                  }}
+                  // icon={{
+                  //   url: `./${post.type}-marker.png`,
+                  // }}
                   onClick={() => setSelectedMarker(post)}
                 />
               );

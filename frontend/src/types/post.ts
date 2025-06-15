@@ -9,6 +9,5 @@ export type Post = {
   destination: string;
   longitude: number;
   latitude: number;
-  type: string;
   is_featured: boolean;
 }; 

@@ -22,9 +22,7 @@ class PostBase(BaseModel):
     destination: str
     longitude: float
     latitude: float
-    type: str
 
-    @field_validator("type", mode="before")
     @classmethod
     def type_to_str(cls, v):
         if v is not None and not isinstance(v, str):
