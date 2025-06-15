@@ -5,6 +5,14 @@ import { useApi } from "@/hooks/useApi";
 
 import PostCard from "@/components/PostCard";
 
+function FilterTag({ name }: { name: string }) {
+  return (
+    <div className="bg-light-brick-orange border-1 border-gray-500 mx-2 my-1 md:px-4 px-2 py-1 rounded-md">
+      {name}
+    </div>
+  );
+}
+
 export default function Destinations() {
   const { data: posts, loading, error } = useApi(getPosts);
 
@@ -15,16 +23,15 @@ export default function Destinations() {
       </div>
 
       {/* <div> */}
-        <div className="flex flex-row justify-center sticky top-0 bg-white">
-          <div className="p-2 border-2 m-2">w góry</div>
-          <div className="p-2 border-2 m-2">nad wodę</div>
-          <div className="p-2 border-2 m-2">z regionalną kulturą</div>
-          <div className="p-2 border-2 m-2">w niepogodę</div>
-          <div className="p-2 border-2 m-2">budżetowo</div>
-          <div className="p-2 border-2 m-2">z nocowankiem</div>
-          <div className="p-2 border-2 m-2">dzieciaczkowy raj</div>
-
-        </div>
+      <div className="flex flex-wrap justify-center sticky top-20 bg-orange-gray md:text-xl text-s p-2">
+        <FilterTag name="w góry" />
+        <FilterTag name="nad wodę" />
+        <FilterTag name="z regionalną kulturą" />
+        <FilterTag name="w niepogodę" />
+        <FilterTag name="budżetowo" />
+        <FilterTag name="z nocowankiem" />
+        <FilterTag name="dzieciaczkowy raj" />
+      </div>
       {/* </div> */}
 
       {loading ? (
