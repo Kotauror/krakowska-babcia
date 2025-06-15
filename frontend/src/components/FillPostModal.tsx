@@ -267,7 +267,7 @@ export default function FillPostModal({
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Tagi <span className="text-red-500">*</span>
+              Tagi
             </label>
             <div className="flex flex-wrap gap-3">
               {ALLOWED_TAGS.map((tag) => (

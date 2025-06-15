@@ -37,12 +37,7 @@ class Post(Base):
 
     author = relationship("User", back_populates="posts")
     featured_status = relationship("FeaturedPost", back_populates="post", uselist=False)
-    tags = relationship("Tag", secondary=post_tags, backref="posts")
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        if not kwargs.get('tags'):
-            raise ValueError("At least one tag is required for a post.")
+    tags = relationship("Tag", secondary=post_tags, backref="posts") 
 
     @property
     def is_featured(self):
