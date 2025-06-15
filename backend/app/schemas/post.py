@@ -1,6 +1,6 @@
 from pydantic import BaseModel, field_validator
 from datetime import datetime
-from typing import Optional, Union, Literal
+from typing import Optional, Union, Literal, List
 import re
 
 def slugify(text: str) -> str:
@@ -16,6 +16,19 @@ def slugify(text: str) -> str:
     text = text.strip('-')
     return text
 
+class TagBase(BaseModel):
+    name: str
+
+class TagCreate(TagBase):
+    pass
+
+class Tag(TagBase):
+    id: int
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
+
 class PostBase(BaseModel):
     title: str
     content: str
@@ -30,10 +43,12 @@ class PostBase(BaseModel):
         return v
 
 class PostCreate(PostBase):
+    tags: Optional[List[str]] = None
     def generate_slug(self) -> str:
         return slugify(self.title)
 
 class PostUpdate(PostBase):
+    tags: Optional[List[str]] = None
     def generate_slug(self) -> str:
         return slugify(self.title)
 
@@ -44,7 +59,7 @@ class Post(PostBase):
     created_at: datetime
     updated_at: Optional[datetime] = None
     is_featured: bool = False
+    tags: List[Tag] = []
 
-    
     class Config:
         from_attributes = True 

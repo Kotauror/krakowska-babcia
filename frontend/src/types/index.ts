@@ -25,6 +25,7 @@ export interface Post {
     username: string;
     full_name: string;
   };
+  tags?: { name: string }[];
 }
 
 export interface FeaturedPost {

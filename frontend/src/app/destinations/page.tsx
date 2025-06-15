@@ -22,6 +22,8 @@ export default function Destinations() {
           <div className="p-2 border-2 m-2">w niepogodę</div>
           <div className="p-2 border-2 m-2">budżetowo</div>
           <div className="p-2 border-2 m-2">z nocowankiem</div>
+          <div className="p-2 border-2 m-2">dzieciaczkowy raj</div>
+
         </div>
       {/* </div> */}
 

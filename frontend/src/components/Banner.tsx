@@ -25,6 +25,7 @@ export default function Banner() {
         <div className="border-2 ">w niepogodę</div>
         <div className="border-2 ">budżetowo</div>
         <div className="border-2 ">z nocowankiem</div>
+        <div className="border-2 ">dzieciaczkowy raj</div>
       </div>
     </div>
     // <div className="">

@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session, joinedload
 from app.core.database import get_db
 from app.models.user import User
-from app.models.post import Post
+from app.models.post import Post, Tag
 from app.models.featured_post import FeaturedPost
 from app.schemas.post import Post as PostSchema, PostCreate, PostUpdate
 from pydantic import BaseModel
@@ -12,6 +12,15 @@ router = APIRouter()
 
 class FeaturedPostUpdate(BaseModel):
     is_featured: bool
+
+ALLOWED_TAGS = {
+    "w góry",
+    "nad wodę",
+    "regionalna kultura",
+    "w niepogodę",
+    "budżetowo",
+    "z nocowankiem"
+}
 
 def ensure_unique_slug(db: Session, slug: str, exclude_id: int = None) -> str:
     base_slug = slug
@@ -49,6 +58,19 @@ def create_post(
         longitude=post.longitude,
         latitude=post.latitude,
     )
+    # Handle tags
+    if post.tags:
+        tag_objs = []
+        for tag_name in post.tags:
+            if tag_name not in ALLOWED_TAGS:
+                raise HTTPException(status_code=400, detail=f"Invalid tag: {tag_name}")
+            tag = db.query(Tag).filter_by(name=tag_name).first()
+            if not tag:
+                tag = Tag(name=tag_name)
+                db.add(tag)
+                db.flush()  # get tag.id
+            tag_objs.append(tag)
+        db_post.tags = tag_objs
     db.add(db_post)
     db.commit()
     db.refresh(db_post)
@@ -100,6 +122,19 @@ def update_post(
     db_post.destination = post.destination
     db_post.longitude = post.longitude
     db_post.latitude = post.latitude
+    # Handle tags
+    if post.tags is not None:
+        tag_objs = []
+        for tag_name in post.tags:
+            if tag_name not in ALLOWED_TAGS:
+                raise HTTPException(status_code=400, detail=f"Invalid tag: {tag_name}")
+            tag = db.query(Tag).filter_by(name=tag_name).first()
+            if not tag:
+                tag = Tag(name=tag_name)
+                db.add(tag)
+                db.flush()
+            tag_objs.append(tag)
+        db_post.tags = tag_objs
     db.commit()
     db.refresh(db_post)
     return db_post

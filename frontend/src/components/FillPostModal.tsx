@@ -13,6 +13,16 @@ interface FillPostModalProps {
   postToEdit?: Post;
 }
 
+const ALLOWED_TAGS = [
+  "w góry",
+  "nad wodę",
+  "regionalna kultura",
+  "w niepogodę",
+  "budżetowo",
+  "z nocowankiem",
+  "dzieciaczkowy raj",
+];
+
 export default function FillPostModal({
   isOpen,
   onClose,
@@ -27,6 +37,8 @@ export default function FillPostModal({
   const editorRef = useRef<{ textarea: HTMLTextAreaElement } | null>(null);
   const [longitude, setLongitude] = useState<number | "">("");
   const [latitude, setLatitude] = useState<number | "">("");
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [tagError, setTagError] = useState<string>("");
 
   // Reset form when modal opens/closes or postToEdit changes
   useEffect(() => {
@@ -37,12 +49,16 @@ export default function FillPostModal({
         setContent(postToEdit.content);
         setLongitude(postToEdit.longitude);
         setLatitude(postToEdit.latitude);
+        setSelectedTags(
+          postToEdit.tags ? postToEdit.tags.map((t) => t.name) : []
+        );
       } else {
         setTitle("");
         setDestination("");
         setContent("");
         setLongitude("");
         setLatitude("");
+        setSelectedTags([]);
       }
     }
   }, [isOpen, postToEdit]);
@@ -88,6 +104,12 @@ export default function FillPostModal({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (selectedTags.length === 0) {
+      setTagError("Wybierz przynajmniej jeden tag.");
+      return;
+    } else {
+      setTagError("");
+    }
     setIsSubmitting(true);
 
     try {
@@ -98,6 +120,7 @@ export default function FillPostModal({
           content,
           longitude,
           latitude,
+          tags: selectedTags,
         });
       } else {
         await api.post("/posts", {
@@ -106,6 +129,7 @@ export default function FillPostModal({
           content,
           longitude,
           latitude,
+          tags: selectedTags,
         });
       }
 
@@ -174,7 +198,7 @@ export default function FillPostModal({
                 htmlFor="latitude"
                 className="block text-sm font-medium text-gray-700"
               >
-               Latitude 
+                Latitude
               </label>
               <input
                 type="number"
@@ -211,7 +235,6 @@ export default function FillPostModal({
                 required
               />
             </div>
-
           </div>
           <div>
             <div className="flex justify-between items-center mb-2">
@@ -242,7 +265,32 @@ export default function FillPostModal({
               />
             </div>
           </div>
-
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Tagi <span className="text-red-500">*</span>
+            </label>
+            <div className="flex flex-wrap gap-3">
+              {ALLOWED_TAGS.map((tag) => (
+                <label key={tag} className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    checked={selectedTags.includes(tag)}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setSelectedTags([...selectedTags, tag]);
+                      } else {
+                        setSelectedTags(selectedTags.filter((t) => t !== tag));
+                      }
+                    }}
+                  />
+                  <span>{tag}</span>
+                </label>
+              ))}
+            </div>
+            {tagError && (
+              <div className="text-red-500 text-sm mt-1">{tagError}</div>
+            )}
+          </div>
           <div className="flex justify-end space-x-3 mt-6">
             <button
               type="button"
