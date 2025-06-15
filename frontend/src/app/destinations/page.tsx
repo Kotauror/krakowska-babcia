@@ -14,6 +14,17 @@ export default function Destinations() {
         <h1 className="text-4xl font-bold text-gray-900 mb-4">Wycieczki</h1>
       </div>
 
+      {/* <div> */}
+        <div className="flex flex-row justify-center sticky top-0 bg-white">
+          <div className="p-2 border-2 m-2">w góry</div>
+          <div className="p-2 border-2 m-2">nad wodę</div>
+          <div className="p-2 border-2 m-2">z regionalną kulturą</div>
+          <div className="p-2 border-2 m-2">w niepogodę</div>
+          <div className="p-2 border-2 m-2">budżetowo</div>
+          <div className="p-2 border-2 m-2">z nocowankiem</div>
+        </div>
+      {/* </div> */}
+
       {loading ? (
         <div className="text-center py-12">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto"></div>
