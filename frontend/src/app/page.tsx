@@ -67,7 +67,7 @@ export default function Home() {
         {ALLOWED_TAGS.map((tag) => (
           <button
             key={tag}
-            className="border-1 border-gray-500 mx-2 my-1 md:px-4 px-2 py-1 rounded hover:bg-light-brick-orange hover:cursor-pointer"
+            className="border-1 border-gray-500 md:mx-2 md:my-1 md:px-4 px-2 py-1 rounded hover:bg-light-brick-orange hover:cursor-pointer"
             onClick={() =>
               router.push(`/destinations?tag=${encodeURIComponent(tag)}`)
             }

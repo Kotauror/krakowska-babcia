@@ -17,12 +17,12 @@ export default function Navbar() {
     <nav className="sticky top-0 z-50 bg-white shadow">
       <div className="container mx-auto px-4">
         <div className="flex h-16 justify-between items-center">
+            <Link href="/" className="text-2xl font-bold text-gray-900">
           <div className="flex-shrink-0 flex items-center">
             <img src="/icon.png" alt="Logo" className="h-16 w-16 mr-2" />
-            <Link href="/" className="text-2xl font-bold text-gray-900">
               Krakowska Babcia
-            </Link>
           </div>
+            </Link>
 
           <div className="hidden md:block">
             <div className="ml-10 flex items-center space-x-4">

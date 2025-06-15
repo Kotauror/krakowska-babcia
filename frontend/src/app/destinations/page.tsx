@@ -109,7 +109,7 @@ export default function Destinations() {
           </p>
         </div>
       ) : posts && posts.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-8">
           {posts.map((post) => (
             <PostCard key={post.slug} post={post} />
           ))}

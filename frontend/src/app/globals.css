@@ -16,6 +16,7 @@
   --color-olive-green: #bcc691;
   --color-light-brick-orange: #ffdaa9;
   --color-orange-gray: #f1e5d2;
+  --color-dark-olive-green: #59824b;
 }
 
 @media (prefers-color-scheme: dark) {
