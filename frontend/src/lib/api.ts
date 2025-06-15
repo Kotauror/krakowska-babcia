@@ -18,8 +18,13 @@ api.interceptors.request.use((config) => {
 });
 
 // Posts
-export const getPosts = async (): Promise<Post[]> => {
-  const response = await api.get('/posts');
+export const getPosts = async (tags?: string[]): Promise<Post[]> => {
+  let url = '/posts';
+  if (tags && tags.length > 0) {
+    const params = tags.map(tag => `tags=${encodeURIComponent(tag)}`).join('&');
+    url += `?${params}`;
+  }
+  const response = await api.get(url);
   return response.data;
 };
 

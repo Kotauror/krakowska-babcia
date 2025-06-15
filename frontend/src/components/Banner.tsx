@@ -17,15 +17,15 @@ export default function Banner() {
       <h1 className="text-2xl md:text-3xl font-bold text-center px-4 m-8 ">
         Zabierz wnuki na wycieczkę
       </h1>
-      <div className="flex flex-wrap justify-center">
+      {/* <div className="flex flex-wrap justify-center">
         <FilterTag name="w góry" />
         <FilterTag name="nad wodę" />
-        <FilterTag name="z regionalną kulturą" />
+        <FilterTag name="regionalna kultura" />
         <FilterTag name="w niepogodę" />
         <FilterTag name="budżetowo" />
         <FilterTag name="z nocowankiem" />
         <FilterTag name="dzieciaczkowy raj" />
-      </div>
+      </div> */}
     </div>
   );
 }

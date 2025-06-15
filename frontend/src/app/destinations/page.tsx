@@ -1,20 +1,76 @@
 "use client";
 
 import { getPosts } from "@/lib/api";
-import { useApi } from "@/hooks/useApi";
-
+import { useState, useEffect } from "react";
 import PostCard from "@/components/PostCard";
+import { useSearchParams, useRouter } from "next/navigation";
 
-function FilterTag({ name }: { name: string }) {
+const ALLOWED_TAGS = [
+  "w góry",
+  "nad wodę",
+  "regionalna kultura",
+  "w niepogodę",
+  "budżetowo",
+  "z nocowankiem",
+  "dzieciaczkowy raj",
+];
+
+function FilterTag({
+  name,
+  selected,
+  onClick,
+}: {
+  name: string;
+  selected: boolean;
+  onClick: () => void;
+}) {
   return (
-    <div className="bg-light-brick-orange border-1 border-gray-500 mx-2 my-1 md:px-4 px-2 py-1 rounded-md">
+    <button
+      className={`mx-2 my-1 md:px-4 px-2 py-1 rounded-md border-1 border-gray-500 ${
+        selected ? "bg-orange-400 text-white" : "bg-light-brick-orange"
+      }`}
+      onClick={onClick}
+      type="button"
+    >
       {name}
-    </div>
+    </button>
   );
 }
 
 export default function Destinations() {
-  const { data: posts, loading, error } = useApi(getPosts);
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  // Get all tag params from URL
+  const initialTags = Array.from(searchParams.getAll("tag"));
+  const [selectedTags, setSelectedTags] = useState<string[]>(initialTags);
+  // Manual fetching of posts
+  const [posts, setPosts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<any>(null);
+
+  useEffect(() => {
+    setLoading(true);
+    getPosts(selectedTags.length > 0 ? selectedTags : undefined)
+      .then(setPosts)
+      .catch(setError)
+      .finally(() => setLoading(false));
+  }, [selectedTags]);
+
+  // Keep URL in sync with selectedTags
+  useEffect(() => {
+    const params = selectedTags
+      .map((tag) => `tag=${encodeURIComponent(tag)}`)
+      .join("&");
+    router.replace(`/destinations${params ? `?${params}` : ""}`);
+    // eslint-disable-next-line
+  }, [selectedTags]);
+
+  // Keep selectedTags in sync with URL (for back/forward navigation)
+  useEffect(() => {
+    const urlTags = Array.from(searchParams.getAll("tag"));
+    setSelectedTags(urlTags);
+    // eslint-disable-next-line
+  }, [searchParams]);
 
   return (
     <div className="pt-12 space-y-8 bg-orange-gray md:pl-12 md:pr-12 pl-8 pr-8 min-h-screen">
@@ -24,13 +80,20 @@ export default function Destinations() {
 
       {/* <div> */}
       <div className="flex flex-wrap justify-center sticky top-20 bg-orange-gray md:text-xl text-s p-2">
-        <FilterTag name="w góry" />
-        <FilterTag name="nad wodę" />
-        <FilterTag name="z regionalną kulturą" />
-        <FilterTag name="w niepogodę" />
-        <FilterTag name="budżetowo" />
-        <FilterTag name="z nocowankiem" />
-        <FilterTag name="dzieciaczkowy raj" />
+        {ALLOWED_TAGS.map((tag) => (
+          <FilterTag
+            key={tag}
+            name={tag}
+            selected={selectedTags.includes(tag)}
+            onClick={() => {
+              setSelectedTags((prev) =>
+                prev.includes(tag)
+                  ? prev.filter((t) => t !== tag)
+                  : [...prev, tag]
+              );
+            }}
+          />
+        ))}
       </div>
       {/* </div> */}
 

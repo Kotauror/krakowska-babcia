@@ -8,6 +8,17 @@ import { useApi } from "@/hooks/useApi";
 import { useEffect } from "react";
 import { useFeaturedPosts } from "@/hooks/useFeaturedPosts";
 import PostCard from "@/components/PostCard";
+import { useRouter } from "next/navigation";
+
+const ALLOWED_TAGS = [
+  "w góry",
+  "nad wodę",
+  "regionalna kultura",
+  "w niepogodę",
+  "budżetowo",
+  "z nocowankiem",
+  "dzieciaczkowy raj",
+];
 
 async function getLatestPost() {
   const response = await fetch("http://localhost:8000/api/v1/posts/latest");
@@ -22,6 +33,7 @@ export default function Home() {
   const { data: featuredPosts, isLoading: isFeaturedLoading } =
     useFeaturedPosts();
   const { data: posts, isLoading: isPostsLoading } = useApi<Post[]>(getPosts);
+  const router = useRouter();
 
   useEffect(() => {
     console.log("in use effect");
@@ -50,6 +62,20 @@ export default function Home() {
   return (
     <div>
       <Banner />
+      {/* Tag Filter Bar */}
+      <div className="flex flex-wrap justify-center gap-2 my-4">
+        {ALLOWED_TAGS.map((tag) => (
+          <button
+            key={tag}
+            className="border-1 border-gray-500 mx-2 my-1 md:px-4 px-2 py-1 rounded hover:bg-light-brick-orange hover:cursor-pointer"
+            onClick={() =>
+              router.push(`/destinations?tag=${encodeURIComponent(tag)}`)
+            }
+          >
+            {tag}
+          </button>
+        ))}
+      </div>
       <main className="mx-auto py-8 mt-4">
         {/* Featured Posts Section */}
         {featuredPosts && featuredPosts.length > 0 && (

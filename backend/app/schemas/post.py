@@ -62,4 +62,7 @@ class Post(PostBase):
     tags: List[Tag] = []
 
     class Config:
-        from_attributes = True 
+        from_attributes = True
+
+class PostFilterByTagsRequest(BaseModel):
+    tags: List[str] 

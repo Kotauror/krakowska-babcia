@@ -1,5 +1,5 @@
 from typing import List
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Query
 from sqlalchemy.orm import Session, joinedload
 from app.core.database import get_db
 from app.models.user import User
@@ -19,7 +19,8 @@ ALLOWED_TAGS = {
     "regionalna kultura",
     "w niepogodę",
     "budżetowo",
-    "z nocowankiem"
+    "z nocowankiem",
+    "dzieciaczkowy raj"
 }
 
 def ensure_unique_slug(db: Session, slug: str, exclude_id: int = None) -> str:
@@ -38,9 +39,13 @@ def ensure_unique_slug(db: Session, slug: str, exclude_id: int = None) -> str:
 def list_posts(
     skip: int = 0,
     limit: int = 100,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    tags: List[str] = Query(default=None)
 ):
-    posts = db.query(Post).options(joinedload(Post.featured_status)).order_by(Post.created_at.desc()).offset(skip).limit(limit).all()
+    query = db.query(Post).options(joinedload(Post.featured_status))
+    if tags:
+        query = query.join(Post.tags).filter(Tag.name.in_(tags)).distinct()
+    posts = query.order_by(Post.created_at.desc()).offset(skip).limit(limit).all()
     return posts
 
 @router.post("/posts", response_model=PostSchema, status_code=status.HTTP_201_CREATED)
