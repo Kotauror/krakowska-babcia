@@ -26,7 +26,7 @@ function FilterTag({
 }) {
   return (
     <button
-      className={`mx-2 my-1 md:px-4 px-2 py-1 rounded-md border-1 border-gray-500 md:text-xl text-sm ${
+      className={`mx-2 my-1 md:px-4 px-2 py-2 rounded-md border-1 border-gray-500 text-sm hover:cursor-pointer hover:underline underline-offset-8 decoration-1 ${
         selected ? "bg-light-brick-orange border-orange-400" : "bg-gray-100"
       }`}
       onClick={onClick}
@@ -73,13 +73,13 @@ export default function Destinations() {
   }, [searchParams]);
 
   return (
-    <div className="pt-12 space-y-8 bg-orange-gray md:pl-24 md:pr-24 pl-8 pr-8 min-h-screen">
+    <div className="pt-12 space-y-4 bg-orange-gray min-h-screen">
       <div className="text-center">
         <h1 className="text-4xl font-bold text-gray-900 mb-4">Wycieczki</h1>
       </div>
 
       {/* <div> */}
-      <div className="flex flex-wrap justify-center sticky top-20 bg-orange-gray md:text-xl text-s p-4 border-b border-gray-500">
+      <div className="flex flex-wrap justify-center sticky top-15 bg-orange-gray p-4 border-b border-gray-400 shadow-md">
         {ALLOWED_TAGS.map((tag) => (
           <FilterTag
             key={tag}
@@ -109,7 +109,7 @@ export default function Destinations() {
           </p>
         </div>
       ) : posts && posts.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-8 md:pl-24 md:pr-24 pl-8 pr-8 ">
           {posts.map((post) => (
             <PostCard key={post.slug} post={post} />
           ))}

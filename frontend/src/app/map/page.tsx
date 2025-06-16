@@ -64,7 +64,9 @@ function MapComponent() {
           {ALLOWED_TAGS.map((tag) => (
             <button
               key={tag}
-              className="border-1 border-gray-500 md:mx-2 md:my-1 md:px-4 px-2 py-1 rounded hover:bg-light-brick-orange hover:cursor-pointer"
+              className={`mx-2 my-1 md:px-4 px-2 py-2 rounded-md border-1 border-gray-500 text-sm hover:cursor-pointer hover:underline underline-offset-8 decoration-1
+            
+              `}
               onClick={() =>
                 router.push(`/destinations?tag=${encodeURIComponent(tag)}`)
               }

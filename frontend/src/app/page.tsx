@@ -79,7 +79,7 @@ export default function Home() {
       <main className="mx-auto py-8 mt-4">
         {/* Featured Posts Section */}
         {featuredPosts && featuredPosts.length > 0 && (
-          <div className="mb-12 bg-olive-green p-8">
+          <div className="mb-12 bg-olive-green py-8 px-4">
             <section className="container mx-auto">
               <h2 className="text-3xl font-bold mb-6">Ulubione Miejsca</h2>
               <FeaturedPostsCarousel posts={featuredPosts.map((f) => f.post)} />

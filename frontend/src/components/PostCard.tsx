@@ -30,10 +30,10 @@ function PostCard({
     <Link
       href={`/posts/${post.slug}`}
       onClick={handleClick}
-      className="mt-4 inline-block"
+      className="mt-4"
     >
-      <article className="bg-white rounded-lg shadow-lg overflow-hidden">
-        <div className="w-[300px] h-[200px] mx-auto overflow-hidden mt-8">
+      <article className="bg-white rounded-lg shadow-lg overflow-hidden ">
+        <div className="w-[300px] h-[200px] mx-auto overflow-hidden mt-4">
           {firstImageUrl && !imageError ? (
             <img
               src={firstImageUrl}
@@ -50,7 +50,7 @@ function PostCard({
           )}
         </div>
         <div className="p-6">
-          <h3 className="text-2xl font-bold mb-2">
+          <h3 className="text-xl font-bold mb-2">
             <Link
               href={`/posts/${post.slug}`}
               onClick={handleClick}
@@ -66,7 +66,7 @@ function PostCard({
               </div>
             </Link>
           </h3>
-          <div className="text-gray-600 mb-4">
+          <div className="text-gray-600 mb-4 text-sm">
             <p>
               {" "}
               {format(new Date(post.created_at), "d MMMM yyyy", {

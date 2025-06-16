@@ -44,7 +44,7 @@ function FavouritesCard({ post }: { post: Post }) {
           )}
         </div>
         <div className="p-6">
-          <h3 className="text-2xl font-bold mb-2">
+          <h3 className="text-xl font-bold mb-2">
             <Link
               href={`/posts/${post.slug}`}
               onClick={handleClick}
@@ -53,7 +53,7 @@ function FavouritesCard({ post }: { post: Post }) {
               {post.destination}
             </Link>
           </h3>
-          <div className="text-gray-600 mb-4">
+          <div className="text-gray-600 mb-4 text-sm">
             <p>
               {" "}
               {format(new Date(post.created_at), "d MMMM yyyy", {
