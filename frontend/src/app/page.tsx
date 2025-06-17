@@ -5,7 +5,7 @@ import SinglePostCard from "@/components/SinglePostCard";
 import { getPosts } from "@/lib/api";
 import { Post } from "@/types";
 import { useApi } from "@/hooks/useApi";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useFeaturedPosts } from "@/hooks/useFeaturedPosts";
 import PostCard from "@/components/PostCard";
 import { useRouter } from "next/navigation";
@@ -34,6 +34,7 @@ export default function Home() {
     useFeaturedPosts();
   const { data: posts, isLoading: isPostsLoading } = useApi<Post[]>(getPosts);
   const router = useRouter();
+  const [hoveredTag, setHoveredTag] = useState<string | null>(null);
 
   useEffect(() => {
     console.log("in use effect");
@@ -63,23 +64,34 @@ export default function Home() {
     <div>
       <Banner />
       {/* Tag Filter Bar */}
-      <div className="flex flex-wrap justify-center gap-2 my-4">
+      <div className="flex flex-wrap justify-center gap-2 my-4 relative">
         {ALLOWED_TAGS.map((tag) => (
-          <button
-            key={tag}
-            className="border-1 border-gray-500 md:mx-2 md:my-1 md:px-4 px-2 py-1 rounded hover:bg-light-brick-orange hover:cursor-pointer"
-            onClick={() =>
-              router.push(`/destinations?tag=${encodeURIComponent(tag)}`)
-            }
-          >
-            {tag}
-          </button>
+          <div key={tag} className="relative flex flex-col items-center">
+            {tag === "nad wodę" && hoveredTag === tag && (
+              <img
+                src="/fish-jump.gif"
+                alt="fish jump"
+                className="w-16 h-16 absolute -top-10 left-1/2 -translate-x-1/2 z-20 pointer-events-none"
+                style={{}}
+              />
+            )}
+            <button
+              className="bg-light-brick-orange border-1 border-gray-500 mx-2 my-1 md:px-4 px-2 py-1 rounded-md hover:bg-orange-300"
+              onClick={() =>
+                router.push(`/destinations?tag=${encodeURIComponent(tag)}`)
+              }
+              onMouseEnter={() => setHoveredTag(tag)}
+              onMouseLeave={() => setHoveredTag(null)}
+            >
+              {tag}
+            </button>
+          </div>
         ))}
       </div>
       <main className="mx-auto py-8 mt-4">
         {/* Featured Posts Section */}
         {featuredPosts && featuredPosts.length > 0 && (
-          <div className="mb-12 bg-olive-green py-8 px-4">
+          <div className="mb-12 bg-dirty-olive-green py-8 px-4">
             <section className="container mx-auto">
               <h2 className="text-3xl font-bold mb-6">Ulubione Miejsca</h2>
               <FeaturedPostsCarousel posts={featuredPosts.map((f) => f.post)} />
