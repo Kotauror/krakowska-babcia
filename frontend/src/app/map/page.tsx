@@ -6,27 +6,38 @@ import { APIProvider, Map, AdvancedMarker } from "@vis.gl/react-google-maps";
 import { getPosts } from "@/lib/api";
 import type { Post } from "@/types/post";
 
+const ALLOWED_TAGS = [
+  "w góry",
+  "nad wodę",
+  "regionalna kultura",
+  "w niepogodę",
+  "budżetowo",
+  "z nocowankiem",
+  "dzieciaczkowy raj",
+];
+
 function MapComponent() {
-  const [selectedMarker, setSelectedMarker] = useState<Post | null>(null);
+  const [selectedTags, setSelectedTags] = useState<string[]>(
+    ALLOWED_TAGS.map((tag) => tag)
+  );
   const [posts, setPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedMarker, setSelectedMarker] = useState<Post | null>(null);
 
   const center = { lat: 49.8335, lng: 19.9396 };
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const fetchedPosts = await getPosts();
-        setPosts(fetchedPosts);
-      } catch (error) {
-        console.error("Error fetching posts:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchPosts();
-  }, []);
+    if (selectedTags.length === 0) {
+      setPosts([]);
+      setIsLoading(false);
+      return;
+    }
+    setIsLoading(true);
+    getPosts(selectedTags)
+      .then(setPosts)
+      .catch((err) => console.error("Error fetching posts:", err))
+      .finally(() => setIsLoading(false));
+  }, [selectedTags]);
 
   if (isLoading) {
     return (
@@ -35,6 +46,23 @@ function MapComponent() {
       </div>
     );
   }
+
+  const generateInput = (tag: string) => {
+    return (
+      <input
+        type="checkbox"
+        checked={selectedTags.includes(tag)}
+        onChange={() => {
+          setSelectedTags((prev) =>
+            prev.includes(tag)
+              ? prev.filter((t) => t !== tag)
+              : [...prev, tag]
+          );
+        }}
+        className="mr-2 accent-gray-300"
+      />
+    );
+  };
 
   const filterCard = (name: string, image: string) => {
     return (
@@ -45,37 +73,80 @@ function MapComponent() {
     );
   };
 
-  const ALLOWED_TAGS = [
-    "w góry",
-    "nad wodę",
-    "regionalna kultura",
-    "w niepogodę",
-    "budżetowo",
-    "z nocowankiem",
-    "dzieciaczkowy raj",
-  ];
-
   return (
     <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || ""}>
-      <div className="bg-gray-100">
+      <div className="bg-dirty-olive-green">
         <div className="flex flex-wrap justify-center pt-4">
-          {/* <div style={{ height: "20vh", width: "100%" }}> */}
-
-          {ALLOWED_TAGS.map((tag) => (
-            <button
-              key={tag}
-              className={`mx-2 my-1 md:px-4 px-2 py-2 rounded-md border-1 border-gray-500 text-sm hover:cursor-pointer hover:underline underline-offset-8 decoration-1
-            
-              `}
-              onClick={() =>
-                router.push(`/destinations?tag=${encodeURIComponent(tag)}`)
-              }
-            >
-              {tag}
-            </button>
-          ))}
-
-          {/* </div> */}
+          <label
+            key={"w góry"}
+            className="flex items-center mx-2 my-1 md:px-4 px-2 py-2 rounded-md border-1 border-gray-500 text-sm bg-gray-100 cursor-pointer"
+          >
+            {generateInput("w góry")}
+            <span
+              className={`inline-block w-4 h-4 rounded-full mr-2 bg-mountains-marker`}
+            ></span>
+            "w góry"
+          </label>
+          <label
+            key={"nad wodę"}
+            className="flex items-center mx-2 my-1 md:px-4 px-2 py-2 rounded-md border-1 border-gray-500 text-sm bg-gray-100 cursor-pointer"
+          >
+            {generateInput("nad wodę")}
+            <span
+              className={`inline-block w-4 h-4 rounded-full mr-2 bg-water-marker`}
+            ></span>
+            "nad wodę"
+          </label>
+          <label
+            key={"regionalna kultura"}
+            className="flex items-center mx-2 my-1 md:px-4 px-2 py-2 rounded-md border-1 border-gray-500 text-sm bg-gray-100 cursor-pointer"
+          >
+            {generateInput("regionalna kultura")}
+            <span
+              className={`inline-block w-4 h-4 rounded-full mr-2 bg-culture-marker`}
+            ></span>
+            "regionalna kultura"
+          </label>
+          <label
+            key={"w niepogodę"}
+            className="flex items-center mx-2 my-1 md:px-4 px-2 py-2 rounded-md border-1 border-gray-500 text-sm bg-gray-100 cursor-pointer"
+          >
+            {generateInput("w niepogodę")}
+            <span
+              className={`inline-block w-4 h-4 rounded-full mr-2 bg-weather-marker`}
+            ></span>
+            "w niepogodę"
+          </label>
+          <label
+            key={"budżetowo"}
+            className="flex items-center mx-2 my-1 md:px-4 px-2 py-2 rounded-md border-1 border-gray-500 text-sm bg-gray-100 cursor-pointer"
+          >
+            {generateInput("budżetowo")}
+            <span
+              className={`inline-block w-4 h-4 rounded-full mr-2 bg-budget-marker`}
+            ></span>
+            budżetowo
+          </label>
+          <label
+            key={"z nocowankiem"}
+            className="flex items-center mx-2 my-1 md:px-4 px-2 py-2 rounded-md border-1 border-gray-500 text-sm bg-gray-100 cursor-pointer"
+          >
+            {generateInput("z nocowankiem")}
+            <span
+              className={`inline-block w-4 h-4 rounded-full mr-2 bg-camping-marker`}
+            ></span>
+            z nocowankiem
+          </label>
+          <label
+            key={"dzieciaczkowy raj"}
+            className="flex items-center mx-2 my-1 md:px-4 px-2 py-2 rounded-md border-1 border-gray-500 text-sm bg-gray-100 cursor-pointer"
+          >
+            {generateInput("dzieciaczkowy raj")}
+            <span
+              className={`inline-block w-4 h-4 rounded-full mr-2 bg-children-marker`}
+            ></span>
+            dzieciaczkowy raj
+          </label>
         </div>
         <div style={{ height: "100vh", width: "100%" }} className="mt-4">
           <Map
@@ -90,22 +161,20 @@ function MapComponent() {
               )
             }
             mapId={"298d9f1b27024ac234909302"}
-            // styles={mapStyles}
           />
           {posts.map((post) => (
             <AdvancedMarker
               key={post.id}
               position={{ lat: post.latitude, lng: post.longitude }}
             >
-              {" "}
               <div
                 style={{
-                  width: "32px", // Specify the unit for width
-                  height: "32px", // Specify the unit for height
+                  width: "32px",
+                  height: "32px",
                   backgroundColor: "red",
-                  borderRadius: "50%", // Optional, to make the marker round
+                  borderRadius: "50%",
                   background:
-                    "radial-gradient(circle, rgba(255, 0, 0, 1) 0%, rgba(255, 0, 0, 0) 90%)", // Dark red at center, fades to transparent
+                    "radial-gradient(circle, rgba(255, 0, 0, 1) 0%, rgba(255, 0, 0, 0) 90%)",
                 }}
               ></div>
             </AdvancedMarker>

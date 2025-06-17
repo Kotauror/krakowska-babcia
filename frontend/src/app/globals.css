@@ -17,6 +17,13 @@
   --color-light-brick-orange: #ffdaa9;
   --color-orange-gray: #f1e5d2;
   --color-dark-dirty-olive-green: #dee1d0;
+  --color-mountains-marker: #228B22;
+  --color-water-marker: #007BFF;
+  --color-culture-marker: #FFC107;
+  --color-weather-marker: #FF5722;
+  --color-budget-marker: #6F42C1;
+  --color-camping-marker: #8B4513;
+  --color-children-marker: #DC3545;
 }
 
 @media (prefers-color-scheme: dark) {
