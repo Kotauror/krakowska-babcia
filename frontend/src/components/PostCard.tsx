@@ -13,7 +13,7 @@ function extractFirstImageUrl(content: string): string | null {
 
 function PostCard({
   post,
-  variant = "compact",
+  variant,
 }: {
   post: Post;
   variant: "detailed" | "compact";
@@ -79,5 +79,9 @@ function PostCard({
     </Link>
   );
 }
+
+PostCard.defaultProps = {
+  variant: "compact",
+};
 
 export default PostCard;

@@ -1,7 +1,7 @@
 "use client";
 
 import { getPosts } from "@/lib/api";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import PostCard from "@/components/PostCard";
 import { useSearchParams, useRouter } from "next/navigation";
 
@@ -26,9 +26,8 @@ function FilterTag({
 }) {
   return (
     <button
-      className={`mx-2 my-1 md:px-4 px-2 py-1 rounded-md border-1 border-gray-500 ${
-        selected ? "bg-orange-400 text-white" : "bg-light-brick-orange"
-      }`}
+      className={`mx-2 my-1 md:px-4 px-2 py-1 rounded-md border-1 border-gray-500 ${selected ? "bg-orange-400 text-white" : "bg-light-brick-orange"
+        }`}
       onClick={onClick}
       type="button"
     >
@@ -38,6 +37,15 @@ function FilterTag({
 }
 
 export default function Destinations() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <DestinationsContent />
+    </Suspense>
+  );
+}
+
+
+function DestinationsContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   // Get all tag params from URL
