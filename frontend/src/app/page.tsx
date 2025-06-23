@@ -21,7 +21,7 @@ const ALLOWED_TAGS = [
 ];
 
 async function getLatestPost() {
-  const response = await fetch("http://localhost:8000/api/v1/posts/latest");
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BABCIA_API}/api/v1/posts/latest`);
   if (!response.ok) {
     throw new Error("Failed to fetch latest post");
   }

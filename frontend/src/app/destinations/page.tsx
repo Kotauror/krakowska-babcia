@@ -1,7 +1,7 @@
 "use client";
 
 import { getPosts } from "@/lib/api";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import PostCard from "@/components/PostCard";
 import { useSearchParams, useRouter } from "next/navigation";
 
@@ -38,6 +38,15 @@ function FilterTag({
 }
 
 export default function Destinations() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <DestinationsContent />
+    </Suspense>
+  );
+}
+
+
+function DestinationsContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   // Get all tag params from URL

@@ -1,7 +1,7 @@
 """add_slug_to_posts
 
 Revision ID: 5e75994e82ab
-Revises: remove_slug_column
+Revises: create_featured_posts_table
 Create Date: 2024-03-21 12:00:00.000000
 
 """
@@ -13,7 +13,7 @@ import re
 
 # revision identifiers, used by Alembic.
 revision: str = '5e75994e82ab'
-down_revision: Union[str, None] = 'remove_slug_column'
+down_revision: Union[str, None] = 'create_featured_posts_table'
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 

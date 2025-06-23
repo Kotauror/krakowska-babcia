@@ -4,6 +4,11 @@ from fastapi.staticfiles import StaticFiles
 from app.core.config import settings
 from app.routers import posts, users, auth, featured_posts, upload
 import os
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
@@ -35,4 +40,11 @@ app.include_router(upload.router, prefix="/api/v1")
 
 @app.get("/")
 async def root():
+    logger.info("Root endpoint accessed")
     return {"message": "Welcome to Travel Blog API"} 
+
+# Startup event
+@app.on_event("startup")
+async def startup_event():
+    logger.info(f"Starting {settings.PROJECT_NAME} v{settings.VERSION}")
+    logger.info(f"Environment: Production")
