@@ -26,13 +26,18 @@ function FilterTag({
 }) {
   return (
     <button
-      className={`mx-2 my-1 md:px-4 px-2 py-2 rounded-md border-1 border-gray-500 text-sm hover:cursor-pointer hover:underline underline-offset-8 decoration-1 ${
-        selected ? "bg-light-brick-orange border-orange-400" : "bg-gray-100"
+      className={`border-1 md:mx-2 mx-1 my-1 md:px-4 px-2 py-2 text-xs md:text-base rounded-full decoration-1 hover:cursor-pointer ${
+        selected ? "border-[#458753]" : "border-gray-400"
       }`}
       onClick={onClick}
       type="button"
     >
-      {name}
+      <div className="checkbox-container">
+        {" "}
+        {name}
+        <input type="checkbox" checked={selected} />
+        <span className="checkmark"></span>
+      </div>
     </button>
   );
 }
@@ -44,7 +49,6 @@ export default function Destinations() {
     </Suspense>
   );
 }
-
 
 function DestinationsContent() {
   const searchParams = useSearchParams();
@@ -58,8 +62,13 @@ function DestinationsContent() {
   const [error, setError] = useState<any>(null);
 
   useEffect(() => {
+    if (selectedTags.length === 0) {
+      setPosts([]);
+      setLoading(false);
+      return;
+    }
     setLoading(true);
-    getPosts(selectedTags.length > 0 ? selectedTags : undefined)
+    getPosts(selectedTags)
       .then(setPosts)
       .catch(setError)
       .finally(() => setLoading(false));
@@ -81,26 +90,36 @@ function DestinationsContent() {
     // eslint-disable-next-line
   }, [searchParams]);
 
+  const handleTagChange = (tag: string) => {
+    setSelectedTags((prev) => {
+      // If this is the last selected tag and the user is deselecting it, do nothing.
+      if (prev.length === 1 && prev.includes(tag)) {
+        return prev;
+      }
+      // Otherwise, toggle the tag as normal.
+      return prev.includes(tag)
+        ? prev.filter((t) => t !== tag)
+        : [...prev, tag];
+    });
+  };
+
   return (
-    <div className="pt-12 space-y-4 bg-orange-gray min-h-screen">
+    <div className="pt-12 space-y-4 min-h-screen bg-light-background">
       <div className="text-center">
         <h1 className="text-4xl font-bold text-gray-900 mb-4">Wycieczki</h1>
       </div>
 
       {/* <div> */}
-      <div className="flex flex-wrap justify-center sticky top-15 bg-orange-gray p-4 border-b border-gray-400 shadow-md">
+      <div className="text-center mt-8">
+        Znajdź idealną wycieczkę dla siebie i swoich bliskich:
+      </div>
+      <div className="flex flex-wrap justify-center sticky top-15 bg-light-background md:text-xl text-sm p-2 border-b-1 border-gray-400">
         {ALLOWED_TAGS.map((tag) => (
           <FilterTag
             key={tag}
             name={tag}
             selected={selectedTags.includes(tag)}
-            onClick={() => {
-              setSelectedTags((prev) =>
-                prev.includes(tag)
-                  ? prev.filter((t) => t !== tag)
-                  : [...prev, tag]
-              );
-            }}
+            onClick={() => handleTagChange(tag)}
           />
         ))}
       </div>

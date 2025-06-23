@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { APIProvider, Map, AdvancedMarker } from "@vis.gl/react-google-maps";
-
+import { XMarkIcon } from "@heroicons/react/24/outline";
 import { getPosts } from "@/lib/api";
 import type { Post } from "@/types/post";
 
@@ -16,10 +16,50 @@ const ALLOWED_TAGS = [
   "dzieciaczkowy raj",
 ];
 
-function MapComponent() {
-  const [selectedTags, setSelectedTags] = useState<string[]>(
-    ALLOWED_TAGS.map((tag) => tag)
+function extractFirstImageUrl(content: string): string | null {
+  const imageRegex = /!\[.*?\]\((.*?)\)/;
+  const match = content.match(imageRegex);
+  return match ? match[1] : "/icon.png";
+}
+
+function removeImagesFromMarkdown(content: string): string {
+  return content.replace(/!\[.*?\]\(.*?\)/g, "");
+}
+
+function truncateText(text: string, maxLength: number): string {
+  if (text.length <= maxLength) return text;
+  return text.slice(0, maxLength) + "…";
+}
+
+function FilterTag({
+  name,
+  selected,
+  onClick,
+}: {
+  name: string;
+  selected: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      className={`border-1 md:mx-2 mx-1 my-1 md:px-4 px-2 py-2 text-xs md:text-base rounded-full decoration-1 hover:cursor-pointer ${
+        selected ? "border-[#458753]" : "border-gray-400"
+      }`}
+      onClick={onClick}
+      type="button"
+    >
+      <div className="checkbox-container">
+        {" "}
+        {name}
+        <input type="checkbox" checked={selected} />
+        <span className="checkmark"></span>
+      </div>
+    </button>
   );
+}
+
+function MapComponent() {
+  const [selectedTags, setSelectedTags] = useState<string[]>(ALLOWED_TAGS);
   const [posts, setPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedMarker, setSelectedMarker] = useState<Post | null>(null);
@@ -47,107 +87,77 @@ function MapComponent() {
     );
   }
 
-  const generateInput = (tag: string) => {
-    return (
-      <input
-        type="checkbox"
-        checked={selectedTags.includes(tag)}
-        onChange={() => {
-          setSelectedTags((prev) =>
-            prev.includes(tag)
-              ? prev.filter((t) => t !== tag)
-              : [...prev, tag]
-          );
-        }}
-        className="mr-2 accent-gray-300"
-      />
-    );
-  };
-
-  const filterCard = (name: string, image: string) => {
-    return (
-      <div className="border-1 border-gray-900 rounded-lg p-4 items-center justify-center text-center flex flex-col w-20 h-25">
-        <img src={image} alt="marker" />
-        <h3> {name}</h3>
-      </div>
-    );
-  };
-
   return (
     <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || ""}>
-      <div className="bg-dirty-olive-green">
+      <div className="bg-gray-100 relative">
         <div className="flex flex-wrap justify-center pt-4">
-          <label
-            key={"w góry"}
-            className="flex items-center mx-2 my-1 md:px-4 px-2 py-2 rounded-md border-1 border-gray-500 text-sm bg-gray-100 cursor-pointer"
-          >
-            {generateInput("w góry")}
-            <span
-              className={`inline-block w-4 h-4 rounded-full mr-2 bg-mountains-marker`}
-            ></span>
-            "w góry"
-          </label>
-          <label
-            key={"nad wodę"}
-            className="flex items-center mx-2 my-1 md:px-4 px-2 py-2 rounded-md border-1 border-gray-500 text-sm bg-gray-100 cursor-pointer"
-          >
-            {generateInput("nad wodę")}
-            <span
-              className={`inline-block w-4 h-4 rounded-full mr-2 bg-water-marker`}
-            ></span>
-            "nad wodę"
-          </label>
-          <label
-            key={"regionalna kultura"}
-            className="flex items-center mx-2 my-1 md:px-4 px-2 py-2 rounded-md border-1 border-gray-500 text-sm bg-gray-100 cursor-pointer"
-          >
-            {generateInput("regionalna kultura")}
-            <span
-              className={`inline-block w-4 h-4 rounded-full mr-2 bg-culture-marker`}
-            ></span>
-            "regionalna kultura"
-          </label>
-          <label
-            key={"w niepogodę"}
-            className="flex items-center mx-2 my-1 md:px-4 px-2 py-2 rounded-md border-1 border-gray-500 text-sm bg-gray-100 cursor-pointer"
-          >
-            {generateInput("w niepogodę")}
-            <span
-              className={`inline-block w-4 h-4 rounded-full mr-2 bg-weather-marker`}
-            ></span>
-            "w niepogodę"
-          </label>
-          <label
-            key={"budżetowo"}
-            className="flex items-center mx-2 my-1 md:px-4 px-2 py-2 rounded-md border-1 border-gray-500 text-sm bg-gray-100 cursor-pointer"
-          >
-            {generateInput("budżetowo")}
-            <span
-              className={`inline-block w-4 h-4 rounded-full mr-2 bg-budget-marker`}
-            ></span>
-            budżetowo
-          </label>
-          <label
-            key={"z nocowankiem"}
-            className="flex items-center mx-2 my-1 md:px-4 px-2 py-2 rounded-md border-1 border-gray-500 text-sm bg-gray-100 cursor-pointer"
-          >
-            {generateInput("z nocowankiem")}
-            <span
-              className={`inline-block w-4 h-4 rounded-full mr-2 bg-camping-marker`}
-            ></span>
-            z nocowankiem
-          </label>
-          <label
-            key={"dzieciaczkowy raj"}
-            className="flex items-center mx-2 my-1 md:px-4 px-2 py-2 rounded-md border-1 border-gray-500 text-sm bg-gray-100 cursor-pointer"
-          >
-            {generateInput("dzieciaczkowy raj")}
-            <span
-              className={`inline-block w-4 h-4 rounded-full mr-2 bg-children-marker`}
-            ></span>
-            dzieciaczkowy raj
-          </label>
+          {ALLOWED_TAGS.map((tag) => (
+            <FilterTag
+              key={tag}
+              name={tag}
+              selected={selectedTags.includes(tag)}
+              onClick={() =>
+                setSelectedTags((prev) =>
+                  prev.includes(tag)
+                    ? prev.filter((t) => t !== tag)
+                    : [...prev, tag]
+                )
+              }
+            />
+          ))}
         </div>
+
+        {selectedMarker && (
+          <div className="absolute top-0 left-0 h-full w-full max-w-sm bg-white z-10 p-6 overflow-y-auto shadow-xl">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-bold mb-2">{selectedMarker.title}</h3>
+              <button
+                onClick={() => setSelectedMarker(null)}
+                className="p-1 rounded-full hover:bg-gray-200"
+              >
+                <XMarkIcon className="h-6 w-6" />
+              </button>
+            </div>
+            <div>
+              <p className="text-gray-600 mb-4">{selectedMarker.destination}</p>
+              <p className="text-sm text-gray-500 mb-4">
+                {new Date(selectedMarker.created_at).toLocaleDateString()}
+              </p>
+              <div className="flex flex-wrap gap-2 mb-4">
+                {selectedMarker.tags.map((tag) => (
+                  <p
+                    key={tag.id}
+                    className="text-sm text-gray-500 mb-4 rounded-full bg-gray-200 px-4 py-1"
+                  >
+                    {tag.name}
+                  </p>
+                ))}
+              </div>
+              <div className="prose">
+                <img
+                  src={extractFirstImageUrl(selectedMarker.content)}
+                  alt={selectedMarker.title}
+                  className="w-full h-full object-cover object-center"
+                  // onError={() =>  (true)}
+                />
+                {truncateText(
+                  removeImagesFromMarkdown(selectedMarker.content),
+                  600
+                )}{" "}
+                {/* <p>{selectedMarker.content.substring(0, 600)}...</p> */}
+                <p className="mt-4">
+                  <a
+                    href={`/posts/${selectedMarker.slug}`}
+                    className="text-blue-500"
+                  >
+                    Czytaj więcej
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
         <div style={{ height: "100vh", width: "100%" }} className="mt-4">
           <Map
             defaultZoom={9}
@@ -166,17 +176,9 @@ function MapComponent() {
             <AdvancedMarker
               key={post.id}
               position={{ lat: post.latitude, lng: post.longitude }}
+              onClick={() => setSelectedMarker(post)}
             >
-              <div
-                style={{
-                  width: "32px",
-                  height: "32px",
-                  backgroundColor: "red",
-                  borderRadius: "50%",
-                  background:
-                    "radial-gradient(circle, rgba(255, 0, 0, 1) 0%, rgba(255, 0, 0, 0) 90%)",
-                }}
-              ></div>
+              <img src="/pin.png" alt="marker" width={34} />
             </AdvancedMarker>
           ))}
         </div>

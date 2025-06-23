@@ -1,3 +1,9 @@
+type Tag = {
+  id: string;
+  name: string;
+  created_at: string;
+};
+
 export type Post = {
   id: number;
   title: string;
@@ -9,5 +15,6 @@ export type Post = {
   destination: string;
   longitude: number;
   latitude: number;
-  is_featured: boolean;
+  is_featured: boolean
+  tags: Tag[];
 }; 

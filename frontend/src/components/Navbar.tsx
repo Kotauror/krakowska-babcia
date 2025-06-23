@@ -5,7 +5,7 @@ import { MapIcon, UserIcon, BookOpenIcon } from "@heroicons/react/24/outline";
 import { usePathname } from "next/navigation";
 
 const navigation = [
-  { name: "Wycieczki", href: "/destinations", icon: BookOpenIcon },
+  { name: "Wycieczki", href: "/destinations?tag=nad%20wodę&tag=w%20góry&tag=w%20niepogodę&tag=regionalna%20kultura&tag=budżetowo&tag=z%20nocowankiem&tag=dzieciaczkowy%20raj", icon: BookOpenIcon },
   { name: "Mapa Miejsc", href: "/map", icon: MapIcon },
   { name: "O mnie", href: "/about", icon: UserIcon },
 ];

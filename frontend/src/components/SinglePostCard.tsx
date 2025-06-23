@@ -21,13 +21,9 @@ function truncateText(text: string, maxLength: number): string {
 }
 
 function SinglePostCard({ post }: { post: Post }) {
-  const handleClick = () => {
-    console.log("in handle click", window.scrollY.toString());
-    sessionStorage.setItem("homeScrollPosition", window.scrollY.toString());
-  };
-
   const firstImageUrl = extractFirstImageUrl(post.content);
   const [imageError, setImageError] = useState(false);
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 justify-between">
       <div>
@@ -40,7 +36,7 @@ function SinglePostCard({ post }: { post: Post }) {
           {post.tags.map((tag) => (
             <div
               key={tag.name}
-              className="text-sm text-gray-600 border-1 rounded px-2 m-2 text-black"
+              className="text-sm text-gray-600 border-1 rounded-full px-2 m-2 text-black"
             >
               {tag.name}
             </div>
@@ -55,12 +51,9 @@ function SinglePostCard({ post }: { post: Post }) {
         <div className="items-stretch rounded-lg overflow-hidden">
           <div className="flex flex-col justify-between">
             <div>
-              {/* <ReactMarkdown> */}
               {truncateText(removeImagesFromMarkdown(post.content), 800)}
-              {/* </ReactMarkdown> */}
               <Link
                 href={`/posts/${post.slug}`}
-                onClick={handleClick}
                 className="mt-4 inline-block w-full"
               >
                 <div className="text-sm text-gray-600 py-2">Read more</div>

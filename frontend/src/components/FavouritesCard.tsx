@@ -12,20 +12,11 @@ function extractFirstImageUrl(content: string): string | null {
 }
 
 function FavouritesCard({ post }: { post: Post }) {
-  const handleClick = () => {
-    console.log("in handle click", window.scrollY.toString());
-    sessionStorage.setItem("homeScrollPosition", window.scrollY.toString());
-  };
-
   const firstImageUrl = extractFirstImageUrl(post.content);
   const [imageError, setImageError] = useState(false);
 
   return (
-    <Link
-      href={`/posts/${post.slug}`}
-      onClick={handleClick}
-      className="mt-4 inline-block"
-    >
+    <Link href={`/posts/${post.slug}`} className="mt-4 inline-block">
       <article className="bg-white rounded-lg shadow-lg overflow-hidden">
         <div className="w-[300px] h-[200px] mx-auto overflow-hidden">
           {firstImageUrl && !imageError ? (
@@ -44,15 +35,7 @@ function FavouritesCard({ post }: { post: Post }) {
           )}
         </div>
         <div className="p-6">
-          <h3 className="text-xl font-bold mb-2">
-            <Link
-              href={`/posts/${post.slug}`}
-              onClick={handleClick}
-              className="hover:text-orange-600"
-            >
-              {post.destination}
-            </Link>
-          </h3>
+          <h3 className="text-xl font-bold mb-2">{post.destination}</h3>
           <div className="text-gray-600 mb-4 text-sm">
             <p>
               {" "}
