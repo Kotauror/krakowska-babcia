@@ -4,7 +4,7 @@ import FeaturedPostsCarousel from "@/components/FeaturedPostsCarousel";
 import SinglePostCard from "@/components/SinglePostCard";
 import { Post } from "@/types";
 import { useApi } from "@/hooks/useApi";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useFeaturedPosts } from "@/hooks/useFeaturedPosts";
 import PostCard from "@/components/PostCard";
 import { useRouter } from "next/navigation";
@@ -30,7 +30,7 @@ async function getLatestPost() {
 }
 
 export default function Home() {
-  const { data: latestPost, loading, error } = useApi<Post>(getLatestPost);
+  const { data: latestPost } = useApi<Post>(getLatestPost);
   const {
     data: featuredPosts,
     isLoading: isFeaturedLoading,
