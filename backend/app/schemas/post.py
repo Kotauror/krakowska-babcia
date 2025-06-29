@@ -55,7 +55,7 @@ class PostUpdate(PostBase):
 class Post(PostBase):
     id: int
     slug: str
-    author_id: int
+    author_id: Optional[int] = None
     created_at: datetime
     updated_at: Optional[datetime] = None
     is_featured: bool = False

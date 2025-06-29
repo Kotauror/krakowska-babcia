@@ -28,7 +28,7 @@ class Post(Base):
     title = Column(String, nullable=False)
     slug = Column(String, nullable=False, unique=True, index=True)
     content = Column(Text, nullable=False)
-    author_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    author_id = Column(Integer, ForeignKey("users.id"), nullable=True)
     created_at = Column(DateTime(timezone=True), nullable=False, default=lambda: datetime.now(timezone.utc))
     updated_at = Column(DateTime(timezone=True), onupdate=lambda: datetime.now(timezone.utc))
     destination = Column(String, nullable=False)

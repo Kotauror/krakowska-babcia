@@ -65,7 +65,7 @@ def create_post(
         title=post.title,
         slug=slug,
         content=post.content,
-        author_id=1,  # Hardcoded for now
+        # author_id=1,  # Hardcoded for now
         destination=post.destination,
         longitude=post.longitude,
         latitude=post.latitude,
