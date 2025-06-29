@@ -51,7 +51,7 @@ function SinglePostCard({ post }: { post: Post }) {
         <div className="items-stretch rounded-lg overflow-hidden">
           <div className="flex flex-col justify-between">
             <div>
-              {truncateText(removeImagesFromMarkdown(post.content), 800)}
+              {truncateText(removeImagesFromMarkdown(post.content), 400)}
               <Link
                 href={`/posts/${post.slug}`}
                 className="mt-4 inline-block w-full"
@@ -68,14 +68,14 @@ function SinglePostCard({ post }: { post: Post }) {
             <img
               src={firstImageUrl}
               alt={post.title}
-              className="max-h-100 p-2"
+              className="max-h-70 p-2 object-cover"
               onError={() => setImageError(true)}
             />
           ) : (
             <img
               src="/icon.png"
               alt="Default icon"
-              className="max-w-full max-h-150 object-contain p-4"
+              className="max-w-full max-h-70 object-contain p-4"
             />
           )}
         </div>
