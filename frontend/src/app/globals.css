@@ -69,7 +69,7 @@ body {
   .checkbox-container {
     display: block;
     position: relative;
-    padding-left: 35px;
+    /* padding-left: 35px; */
 
     
   }
@@ -84,15 +84,7 @@ body {
   }
   
   /* Create a custom checkbox */
-  .checkmark {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 25px;
-    width: 25px;
-    background-color: #eee;
-    border-radius: 15px;
-  }
+ 
 
   @media (max-width: 768px) {
     .checkmark {
@@ -101,18 +93,15 @@ body {
     }
   }
   
-  /* On mouse-over, add a grey background color */
-  .checkbox-container:hover input ~ .checkmark {
-    background-color: #ccc;
-  }
+
   
   /* When the checkbox is checked, add a blue background */
   .checkbox-container input:checked ~ .checkmark {
-    background-color: var(--color-custom-dark-green);
+    /* background-color: var(--color-custom-dark-green); */
   }
 
   .checkbox-container input:checked {
-    color: var(--color-custom-dark-green);
+    color: #27377d;
   }
   
   /* Create the checkmark/indicator (hidden when not checked) */
@@ -129,12 +118,12 @@ body {
   
   /* Style the checkmark/indicator */
   .checkbox-container .checkmark:after {
-    left: 9px;
-    top: 5px;
+    left: 0px;
+    top: 4px;
     width: 6px;
-    height: 13px;
-    border: solid white;
-    border-width: 0 3px 3px 0;
+    height: 14px;
+    border: solid #27377d;
+    border-width: 0 2px 2px 0;
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
