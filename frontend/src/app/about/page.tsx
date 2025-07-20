@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import DOMPurify from "dompurify";
 
 export default function About() {
   const [header, setHeader] = useState<any>(null);
@@ -49,7 +48,7 @@ export default function About() {
           <div className="flex-1 prose prose-lg">
             <div
               dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(content),
+                __html: content,
               }}
             />
           </div>
