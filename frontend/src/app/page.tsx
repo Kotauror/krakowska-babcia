@@ -67,14 +67,14 @@ export default function Home() {
               />
             )}
             <button
-              className="bg-custom-dark-green text-white md:mx-2 my-1 md:px-4 px-3 py-2 text-sm md:text-base rounded-full hover:bg-custom-straw hover:text-black hover:cursor-pointer"
+              className="bg-[#b9cbf6] text-[#27377d] md:mx-2 my-1 md:px-4 px-3 py-2 text-sm md:text-base rounded-full hover:bg-custom-straw hover:text-black hover:cursor-pointer"
               onClick={() =>
                 router.push(`/destinations?tag=${encodeURIComponent(tag)}`)
               }
               onMouseEnter={() => setHoveredTag(tag)}
               onMouseLeave={() => setHoveredTag(null)}
             >
-              {tag}
+              {tag.charAt(0).toUpperCase() + tag.slice(1)}
             </button>
           </div>
         ))}

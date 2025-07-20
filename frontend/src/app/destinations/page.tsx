@@ -26,18 +26,18 @@ function FilterTag({
 }) {
   return (
     <button
-      className={`md:border-2 border-1 md:mx-2 mx-1 my-1 md:px-6 px-2 py-2 text-xs md:text-base rounded-full decoration-1 hover:cursor-pointer font-medium
+      className={`border-1 md:mx-2 mx-1 my-1 md:px-6 px-2 py-2 text-xs md:text-base rounded-full decoration-1 hover:cursor-pointer font-medium
  ${
         selected ? "border-[#27377d]" : "border-gray-600"
       }  ${
         selected ? "bg-[#b9cbf6]" : "bg-white"
       }`}
       onClick={onClick}
-      type="button"
+      type="button"w
     >
       <div className={`checkbox-container ${selected ? "pl-6" : ""}`}>
         {" "}
-        {name}
+        {name.charAt(0).toUpperCase() + name.slice(1)}
         <input type="checkbox" checked={selected} className={`${selected ? "visible" : "collapse"}`} />
         <span className="checkmark"></span>
       </div>
