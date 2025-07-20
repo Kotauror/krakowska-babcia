@@ -5,6 +5,8 @@ import { APIProvider, Map, AdvancedMarker } from "@vis.gl/react-google-maps";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { getPosts } from "@/lib/api";
 import type { Post } from "@/types/post";
+import ContentWrapper from "@/components/ContentWrapper";
+import FilterTag from "@/components/FilterTag";
 
 const ALLOWED_TAGS = [
   "w góry",
@@ -29,39 +31,6 @@ function removeImagesFromMarkdown(content: string): string {
 function truncateText(text: string, maxLength: number): string {
   if (text.length <= maxLength) return text;
   return text.slice(0, maxLength) + "…";
-}
-
-function FilterTag({
-  name,
-  selected,
-  onClick,
-}: {
-  name: string;
-  selected: boolean;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      className={`border-1 md:mx-2 mx-1 my-1 md:px-6 px-2 py-2 text-xs md:text-base rounded-full decoration-1 hover:cursor-pointer font-medium
- ${selected ? "border-[#27377d]" : "border-gray-600"}  ${
-        selected ? "bg-[#b9cbf6]" : "bg-white"
-      }`}
-      onClick={onClick}
-      type="button"
-      w
-    >
-      <div className={`checkbox-container ${selected ? "pl-6" : ""}`}>
-        {" "}
-        {name.charAt(0).toUpperCase() + name.slice(1)}
-        <input
-          type="checkbox"
-          checked={selected}
-          className={`${selected ? "visible" : "collapse"}`}
-        />
-        <span className="checkmark"></span>
-      </div>
-    </button>
-  );
 }
 
 function MapComponent() {
@@ -95,14 +64,11 @@ function MapComponent() {
 
   return (
     <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || ""}>
-      <div className="pt-12 space-y-4 min-h-screen bg-light-background">
-        <div className="container mx-auto px-4">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
-              Mapa Miejsc
-            </h1>
-          </div>
-          <div className="text-center mt-8">Filtruj wg. kategorii:</div>
+      <ContentWrapper
+        header="Mapa Miejsc"
+        subheader="Znajdź wycieczkę na mapie:"
+      >
+        <div className="flex flex-wrap justify-center sticky bg-light-background md:text-xl text-sm">
           {ALLOWED_TAGS.map((tag) => (
             <FilterTag
               key={tag}
@@ -121,7 +87,7 @@ function MapComponent() {
 
         {selectedMarker && (
           <div className="absolute top-0 left-0 h-full w-full max-w-sm bg-white z-10 p-6 overflow-y-auto shadow-xl">
-            <div className="flex justify-between items-center mb-4">
+            <div className="flex justify-between items-center mb-4 mt-15">
               <h3 className="text-xl font-bold mb-2">{selectedMarker.title}</h3>
               <button
                 onClick={() => setSelectedMarker(null)}
@@ -194,7 +160,7 @@ function MapComponent() {
             </AdvancedMarker>
           ))}
         </div>
-      </div>
+      </ContentWrapper>
     </APIProvider>
   );
 }

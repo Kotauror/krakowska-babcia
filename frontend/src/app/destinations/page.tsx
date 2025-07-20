@@ -4,6 +4,8 @@ import { getPosts } from "@/lib/api";
 import { useState, useEffect, Suspense } from "react";
 import PostCard from "@/components/PostCard";
 import { useSearchParams, useRouter } from "next/navigation";
+import ContentWrapper from "@/components/ContentWrapper";
+import FilterTag from "@/components/FilterTag";
 
 const ALLOWED_TAGS = [
   "w góry",
@@ -14,39 +16,6 @@ const ALLOWED_TAGS = [
   "z nocowankiem",
   "dzieciaczkowy raj",
 ];
-
-function FilterTag({
-  name,
-  selected,
-  onClick,
-}: {
-  name: string;
-  selected: boolean;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      className={`border-1 md:mx-2 mx-1 my-1 md:px-6 px-2 py-2 text-xs md:text-base rounded-full decoration-1 hover:cursor-pointer font-medium
- ${selected ? "border-[#27377d]" : "border-gray-600"}  ${
-        selected ? "bg-[#b9cbf6]" : "bg-white"
-      }`}
-      onClick={onClick}
-      type="button"
-      w
-    >
-      <div className={`checkbox-container ${selected ? "pl-6" : ""}`}>
-        {" "}
-        {name.charAt(0).toUpperCase() + name.slice(1)}
-        <input
-          type="checkbox"
-          checked={selected}
-          className={`${selected ? "visible" : "collapse"}`}
-        />
-        <span className="checkmark"></span>
-      </div>
-    </button>
-  );
-}
 
 export default function Destinations() {
   return (
@@ -110,18 +79,8 @@ function DestinationsContent() {
   };
 
   return (
-    <div className="pt-12 space-y-4 min-h-screen bg-light-background">
-      <div className="container mx-auto px-4">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Wycieczki</h1>
-        </div>
-        {/* <div className="text-center container mx-auto"> */}
-
-        {/* <div> */}
-        <div className="text-center mt-8">
-          Znajdź idealną wycieczkę dla siebie i swoich bliskich:
-        </div>
-        <div className="flex flex-wrap justify-center sticky top-15 bg-light-background md:text-xl text-sm p-2">
+    <ContentWrapper header="Wycieczki" subheader="Znajdź idealną wycieczkę dla siebie i swoich bliskich:">
+        <div className="flex flex-wrap justify-center sticky bg-light-background md:text-xl text-sm">
           {ALLOWED_TAGS.map((tag) => (
             <FilterTag
               key={tag}
@@ -157,7 +116,8 @@ function DestinationsContent() {
             </p>
           </div>
         )}
-      </div>
-    </div>
+  
+      
+    </ContentWrapper>
   );
 }

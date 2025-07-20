@@ -1,5 +1,6 @@
 "use client";
 
+import ContentWrapper from "@/components/ContentWrapper";
 import { useEffect, useState } from "react";
 import sanitizeHtml from "sanitize-html";
 
@@ -49,51 +50,44 @@ export default function About() {
   }
 
   return (
-    <div className="pt-12 space-y-4 min-h-screen bg-light-background">
-      <div className="container mx-auto px-4">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">O mnie</h1>
-          <p className="text-xl text-gray-600">{header}</p>
+    <ContentWrapper header="O mnie" subheader={header}>
+      <div className="flex flex-col md:flex-row items-center gap-8 my-8">
+        <div className="flex-shrink-0">
+          <img
+            src={`${process.env.NEXT_PUBLIC_DIRECTUS_URL}assets/${portraitFoto}`}
+            alt="Portrait"
+            className="w-60 h-60 rounded-full object-cover border-4 border-gray-200 shadow-lg"
+          />
         </div>
 
-        <div className="flex flex-col md:flex-row items-center gap-8 my-8">
-          <div className="flex-shrink-0">
-            <img
-              src={`${process.env.NEXT_PUBLIC_DIRECTUS_URL}assets/${portraitFoto}`}
-              alt="Portrait"
-              className="w-60 h-60 rounded-full object-cover border-4 border-gray-200 shadow-lg"
-            />
-          </div>
-
-          <div className="flex-1 prose prose-lg">
-            <div
-              dangerouslySetInnerHTML={{
-                __html: sanitizeHtml(content),
-              }}
-            />
-          </div>
-        </div>
-
-        <div className="mt-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <img
-              src={`${process.env.NEXT_PUBLIC_DIRECTUS_URL}assets/${foto1}`}
-              alt="about me"
-              className="w-full h-196 rounded-lg shadow-lg object-cover object-center"
-            />
-            <img
-              src={`${process.env.NEXT_PUBLIC_DIRECTUS_URL}assets/${foto2}`}
-              alt="about me"
-              className="w-full h-196 rounded-lg shadow-lg object-cover object-center"
-            />
-            <img
-              src={`${process.env.NEXT_PUBLIC_DIRECTUS_URL}assets/${foto3}`}
-              alt="about me"
-              className="w-full h-196 rounded-lg shadow-lg object-cover object-center"
-            />
-          </div>
+        <div className="flex-1 prose prose-lg">
+          <div
+            dangerouslySetInnerHTML={{
+              __html: sanitizeHtml(content),
+            }}
+          />
         </div>
       </div>
-    </div>
+
+      <div className="mt-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <img
+            src={`${process.env.NEXT_PUBLIC_DIRECTUS_URL}assets/${foto1}`}
+            alt="about me"
+            className="w-full h-196 rounded-lg shadow-lg object-cover object-center"
+          />
+          <img
+            src={`${process.env.NEXT_PUBLIC_DIRECTUS_URL}assets/${foto2}`}
+            alt="about me"
+            className="w-full h-196 rounded-lg shadow-lg object-cover object-center"
+          />
+          <img
+            src={`${process.env.NEXT_PUBLIC_DIRECTUS_URL}assets/${foto3}`}
+            alt="about me"
+            className="w-full h-196 rounded-lg shadow-lg object-cover object-center"
+          />
+        </div>
+      </div>
+    </ContentWrapper>
   );
 }
