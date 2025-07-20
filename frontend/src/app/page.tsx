@@ -100,10 +100,10 @@ export default function Home() {
         )}
         <div className="mx-auto">
           <section className="md:p-16 p-8 bg-light-brick-orange mb-12 containe mx-autor">
-              {/* <h2 className="text-3xl font-bold mb-6">Ostatni Wpis</h2> */}
-              <div className="gap-8">
-                {latestPost && <SinglePostCard post={latestPost} />}
-              </div>
+            {/* <h2 className="text-3xl font-bold mb-6">Ostatni Wpis</h2> */}
+            <div className="gap-8">
+              {latestPost && <SinglePostCard post={latestPost} />}
+            </div>
           </section>
 
           <section className="p-8 bg-gray-50">

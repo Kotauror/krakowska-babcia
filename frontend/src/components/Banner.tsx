@@ -2,9 +2,9 @@ export default function Banner() {
   return (
     <div>
       <img
-        src="/tatry.JPG"
+        src="/banner.JPG"
         alt="Header image"
-        className="md:h-[calc(60vh-4rem)] h-[calc(40vh-4rem)] w-full object-[45%_28%] object-cover opacity-95"
+        className="md:h-[calc(70vh-4rem)] h-[calc(50vh-4rem)] w-full object-cover opacity-95"
       />
       <h1 className="text-2xl md:text-3xl font-bold text-center px-4 m-8 ">
         Zabierz wnuki na wycieczkę
