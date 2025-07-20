@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import sanitizeHtml from 'sanitize-html';
 
 export default function About() {
   const [header, setHeader] = useState<any>(null);
@@ -48,7 +49,7 @@ export default function About() {
           <div className="flex-1 prose prose-lg">
             <div
               dangerouslySetInnerHTML={{
-                __html: content,
+                __html: sanitizeHtml(content),
               }}
             />
           </div>
