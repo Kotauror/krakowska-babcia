@@ -2,7 +2,7 @@ export default function Banner() {
   return (
     <div>
       <img
-        src="/banner.JPG"
+        src="/banner.webp"
         alt="Header image"
         className="md:h-[calc(70vh-4rem)] h-[calc(50vh-4rem)] w-full object-cover opacity-95"
       />
