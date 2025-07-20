@@ -4,7 +4,7 @@ export default function Banner() {
       <img
         src="/banner.webp"
         alt="Header image"
-        className="md:h-[calc(70vh-4rem)] h-[calc(50vh-4rem)] w-full object-cover opacity-95"
+        className="md:h-[calc(70vh-4rem)] h-[calc(50vh-4rem)] w-full object-cover object-[40%_60%] opacity-95"
       />
       <h1 className="text-2xl md:text-3xl font-bold text-center px-4 m-8 ">
         Zabierz wnuki na wycieczkę
