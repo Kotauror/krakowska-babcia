@@ -40,7 +40,7 @@ export default function About() {
         <div className="flex flex-col md:flex-row items-center gap-8 my-8">
           <div className="flex-shrink-0">
             <img
-              src={`http://www.krakowskababcia.pl:8055/assets/${portraitFoto}`}
+              src={`${process.env.NEXT_PUBLIC_DIRECTUS_URL}assets/${portraitFoto}`}
               alt="Portrait"
               className="w-60 h-60 rounded-full object-cover border-4 border-gray-200 shadow-lg"
             />
@@ -58,17 +58,17 @@ export default function About() {
         <div className="mt-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <img
-              src={`http://www.krakowskababcia.pl:8055/assets/${foto1}`}
+              src={`${process.env.NEXT_PUBLIC_DIRECTUS_URL}assets/${foto1}`}
               alt="about me"
               className="w-full h-196 rounded-lg shadow-lg object-cover object-center"
             />
             <img
-              src={`http://www.krakowskababcia.pl:8055/assets/${foto2}`}
+              src={`${process.env.NEXT_PUBLIC_DIRECTUS_URL}assets/${foto2}`}
               alt="about me"
               className="w-full h-196 rounded-lg shadow-lg object-cover object-center"
             />
             <img
-              src={`http://www.krakowskababcia.pl:8055/assets/${foto3}`}
+              src={`${process.env.NEXT_PUBLIC_DIRECTUS_URL}assets/${foto3}`}
               alt="about me"
               className="w-full h-196 rounded-lg shadow-lg object-cover object-center"
             />
