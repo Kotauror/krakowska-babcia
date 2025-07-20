@@ -27,18 +27,21 @@ function FilterTag({
   return (
     <button
       className={`border-1 md:mx-2 mx-1 my-1 md:px-6 px-2 py-2 text-xs md:text-base rounded-full decoration-1 hover:cursor-pointer font-medium
- ${
-        selected ? "border-[#27377d]" : "border-gray-600"
-      }  ${
+ ${selected ? "border-[#27377d]" : "border-gray-600"}  ${
         selected ? "bg-[#b9cbf6]" : "bg-white"
       }`}
       onClick={onClick}
-      type="button"w
+      type="button"
+      w
     >
       <div className={`checkbox-container ${selected ? "pl-6" : ""}`}>
         {" "}
         {name.charAt(0).toUpperCase() + name.slice(1)}
-        <input type="checkbox" checked={selected} className={`${selected ? "visible" : "collapse"}`} />
+        <input
+          type="checkbox"
+          checked={selected}
+          className={`${selected ? "visible" : "collapse"}`}
+        />
         <span className="checkmark"></span>
       </div>
     </button>
@@ -108,50 +111,53 @@ function DestinationsContent() {
 
   return (
     <div className="pt-12 space-y-4 min-h-screen bg-light-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">Wycieczki</h1>
-      </div>
-
-      {/* <div> */}
-      <div className="text-center mt-8">
-        Znajdź idealną wycieczkę dla siebie i swoich bliskich:
-      </div>
-      <div className="flex flex-wrap justify-center sticky top-15 bg-light-background md:text-xl text-sm p-2 border-b-1 border-gray-400">
-        {ALLOWED_TAGS.map((tag) => (
-          <FilterTag
-            key={tag}
-            name={tag}
-            selected={selectedTags.includes(tag)}
-            onClick={() => handleTagChange(tag)}
-          />
-        ))}
-      </div>
-      {/* </div> */}
-
-      {loading ? (
-        <div className="text-center py-12">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading destinations...</p>
+      <div className="container mx-auto px-4">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">Wycieczki</h1>
         </div>
-      ) : error ? (
-        <div className="text-center py-12">
-          <p className="text-red-600">
-            Error loading destinations. Please try again later.
-          </p>
+        {/* <div className="text-center container mx-auto"> */}
+
+        {/* <div> */}
+        <div className="text-center mt-8">
+          Znajdź idealną wycieczkę dla siebie i swoich bliskich:
         </div>
-      ) : posts && posts.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-8 md:pl-24 md:pr-24 pl-8 pr-8 ">
-          {posts.map((post) => (
-            <PostCard key={post.slug} post={post} />
+        <div className="flex flex-wrap justify-center sticky top-15 bg-light-background md:text-xl text-sm p-2">
+          {ALLOWED_TAGS.map((tag) => (
+            <FilterTag
+              key={tag}
+              name={tag}
+              selected={selectedTags.includes(tag)}
+              onClick={() => handleTagChange(tag)}
+            />
           ))}
         </div>
-      ) : (
-        <div className="text-center py-12">
-          <p className="text-gray-600">
-            No destinations available yet. Check back soon!
-          </p>
-        </div>
-      )}
+        {/* </div> */}
+
+        {loading ? (
+          <div className="text-center py-12">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto"></div>
+            <p className="mt-4 text-gray-600">Loading destinations...</p>
+          </div>
+        ) : error ? (
+          <div className="text-center py-12">
+            <p className="text-red-600">
+              Error loading destinations. Please try again later.
+            </p>
+          </div>
+        ) : posts && posts.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-8 md:pl-24 md:pr-24 pl-8 pr-8 ">
+            {posts.map((post) => (
+              <PostCard key={post.slug} post={post} />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-12">
+            <p className="text-gray-600">
+              No destinations available yet. Check back soon!
+            </p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

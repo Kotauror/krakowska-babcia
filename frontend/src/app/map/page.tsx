@@ -43,18 +43,21 @@ function FilterTag({
   return (
     <button
       className={`border-1 md:mx-2 mx-1 my-1 md:px-6 px-2 py-2 text-xs md:text-base rounded-full decoration-1 hover:cursor-pointer font-medium
- ${
-        selected ? "border-[#27377d]" : "border-gray-600"
-      }  ${
+ ${selected ? "border-[#27377d]" : "border-gray-600"}  ${
         selected ? "bg-[#b9cbf6]" : "bg-white"
       }`}
       onClick={onClick}
-      type="button"w
+      type="button"
+      w
     >
       <div className={`checkbox-container ${selected ? "pl-6" : ""}`}>
         {" "}
         {name.charAt(0).toUpperCase() + name.slice(1)}
-        <input type="checkbox" checked={selected} className={`${selected ? "visible" : "collapse"}`} />
+        <input
+          type="checkbox"
+          checked={selected}
+          className={`${selected ? "visible" : "collapse"}`}
+        />
         <span className="checkmark"></span>
       </div>
     </button>
@@ -92,8 +95,14 @@ function MapComponent() {
 
   return (
     <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || ""}>
-      <div className="bg-gray-100 relative">
-        <div className="flex flex-wrap justify-center pt-4">
+      <div className="pt-12 space-y-4 min-h-screen bg-light-background">
+        <div className="container mx-auto px-4">
+          <div className="text-center">
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">
+              Mapa Miejsc
+            </h1>
+          </div>
+          <div className="text-center mt-8">Filtruj wg. kategorii:</div>
           {ALLOWED_TAGS.map((tag) => (
             <FilterTag
               key={tag}

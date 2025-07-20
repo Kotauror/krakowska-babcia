@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import sanitizeHtml from 'sanitize-html';
+import sanitizeHtml from "sanitize-html";
 
 export default function About() {
   const [header, setHeader] = useState<any>(null);
@@ -10,24 +10,43 @@ export default function About() {
   const [foto1, setFoto1] = useState<any>(null);
   const [foto2, setFoto2] = useState<any>(null);
   const [foto3, setFoto3] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchAboutMe = async () => {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_DIRECTUS_URL}items/o_mnie`
-      );
-      const data = await response.json();
+      try {
+        setLoading(true);
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_DIRECTUS_URL}items/o_mnie`
+        );
+        const data = await response.json();
 
-      setHeader(data.data.naglowek);
-      setContent(data.data.tekst);
-      setPortraitFoto(data.data.zdjecie_portretowe);
-
-      setFoto1(data.data.zdjecie);
-      setFoto2(data.data.zdjecie2);
-      setFoto3(data.data.zdjecie3);
+        setHeader(data.data.naglowek);
+        setContent(data.data.tekst);
+        setPortraitFoto(data.data.zdjecie_portretowe);
+        setFoto1(data.data.zdjecie);
+        setFoto2(data.data.zdjecie2);
+        setFoto3(data.data.zdjecie3);
+        console.log(data.data);
+      } catch (error) {
+        console.error("Error fetching about data:", error);
+      } finally {
+        setLoading(false);
+      }
     };
     fetchAboutMe();
   }, []);
+
+  if (loading) {
+    return (
+      <div className="pt-12 min-h-screen bg-light-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-gray-900 mx-auto mb-4"></div>
+          <p className="text-gray-600 text-lg">Ładowanie...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="pt-12 space-y-4 min-h-screen bg-light-background">
