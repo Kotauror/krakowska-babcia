@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import { Post } from "@/types";
 import { pl } from "date-fns/locale";
 
-export default function PostPage({ params }: { params: { id: string } }) {
+export default function PostPage({ }: { params: { id: string } }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const postId = searchParams.get("id");
