@@ -13,6 +13,9 @@ export interface Post {
   tytul: string;
   ulubione: boolean;
   zdjecie_glowne: string;
+  lokalizacja: string;
+  dlugosc_geograficzna: number;
+  szerokosc_geograficzna: number;
   kategoria: {
     kategoria_id: {
       id: number;

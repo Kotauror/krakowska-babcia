@@ -11,7 +11,7 @@ function PostCard({ post }: { post: Post }) {
   return (
     <Link href={`/posts/${slugify(post.tytul)}?id=${post.id}`} className="mt-4">
       <article className="min-h-[450px] bg-white rounded-lg shadow-lg overflow-hidden border-1 border-gray-400">
-        <div className="mx-auto overflow-hidden mt-4 h-[200px]">
+        <div className="mx-auto overflow-hidden h-[200px]">
           <img
             src={`${process.env.NEXT_PUBLIC_DIRECTUS_URL}assets/${post.zdjecie_glowne}`}
             // alt={post.title}
@@ -28,7 +28,7 @@ function PostCard({ post }: { post: Post }) {
                 alt="Destination icon"
                 className="w-4 h-6 mr-1"
               />
-              {/* <span className="text-gray-500 text-m">{post.destination}</span> */}
+              <span className="text-gray-500 text-m">{post.lokalizacja}</span>
             </div>
             <div className="flex flex-wrap my-2">
               {post.kategoria.map((kategoria, key) => (

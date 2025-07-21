@@ -14,7 +14,7 @@ import { useState } from "react";
 const navigation = [
   {
     name: "Wycieczki",
-    href: "/destinations?tag=nad%20wodę&tag=w%20góry&tag=w%20niepogodę&tag=regionalna%20kultura&tag=budżetowo&tag=z%20nocowankiem&tag=dzieciaczkowy%20raj",
+    href: "/wycieczki",
     icon: BookOpenIcon,
   },
   { name: "Mapa Miejsc", href: "/map", icon: MapIcon },

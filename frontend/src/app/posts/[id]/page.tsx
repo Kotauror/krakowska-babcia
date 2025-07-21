@@ -93,7 +93,7 @@ export default function PostPage({ params }: { params: { id: string } }) {
               className="rounded-lg p-8"
               style={{ backgroundColor: "rgba(255, 255, 255, 0.9)" }}
             >
-              <h1 className="text-4xl font-bold text-gray-700 mb-4">
+              <h1 className="text-4xl font-bold text-graya-700 mb-4">
                 {post.tytul}
               </h1>
               <div className="flex flex-row my-4">
