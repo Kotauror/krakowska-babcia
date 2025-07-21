@@ -79,21 +79,21 @@ export default function PostPage({ }: { params: { id: string } }) {
           <button
             type="button"
             onClick={() => router.back()}
-            className="inline-flex items-center text-black hover:text-gray-700 bg-white rounded-full px-4 py-2 shadow-lg"
+            className="md:text-sm text-xs inline-flex items-center text-black hover:text-gray-700 bg-white rounded-full px-4 py-2 shadow-lg"
           >
-            <ArrowLeftIcon className="h-5 w-5 mr-2" />
+            <ArrowLeftIcon className="md:h-5 md:w-5 h-4 w-4 mr-2" />
             Powrót
           </button>
         </div>
 
         {/* Content overlay */}
-        <div className="absolute inset-0 z-10 flex flex-col justify-end p-8">
+        <div className="absolute inset-0 z-10 flex flex-col justify-end md:p-8 p-4">
           <div className="container mx-auto max-w-4xl">
             <header
-              className="rounded-lg p-8"
+              className="rounded-lg md:p-8 p-4"
               style={{ backgroundColor: "rgba(255, 255, 255, 0.9)" }}
             >
-              <h1 className="text-4xl font-bold text-graya-700 mb-4">
+              <h1 className="md:text-4xl text-2xl font-bold text-graya-700 mb-4">
                 {post.tytul}
               </h1>
               <div className="flex flex-row my-4">
@@ -108,7 +108,7 @@ export default function PostPage({ }: { params: { id: string } }) {
                   ))}
                 </div>
               </div>
-              <div className="text-black">
+              <div className="text-black md:text-sm text-xs">
                 <p>
                   {format(new Date(post.date_created), "d MMMM yyyy", {
                     locale: pl,
