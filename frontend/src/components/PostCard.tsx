@@ -4,7 +4,7 @@ import { format } from "date-fns";
 import { pl } from "date-fns/locale";
 
 function slugify(text: string) {
-  return text.toLowerCase().replace(/ /g, "-");
+  return text && text.toLowerCase().replace(/ /g, "-");
 }
 
 function PostCard({ post }: { post: Post }) {
