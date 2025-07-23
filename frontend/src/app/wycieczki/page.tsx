@@ -159,7 +159,7 @@ function DestinationsContent() {
           </p>
         </div>
       ) : posts && posts.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-8 md:pl-24 md:pr-24 pl-2 pr-2 ">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-8 md:pl-12 md:pr-12 pl-2 pr-2 ">
           {posts.map((post) => (
             <PostCard key={post.id} post={post} />
           ))}

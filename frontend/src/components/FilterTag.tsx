@@ -2,10 +2,12 @@ export default function FilterTag({
   name,
   selected,
   onClick,
+  showCheckbox = true,
 }: {
   name: string;
   selected: boolean;
   onClick: () => void;
+  showCheckbox?: boolean;
 }) {
   return (
     <button
@@ -18,8 +20,9 @@ export default function FilterTag({
       onClick={onClick}
       type="button"
     >
-      <div className="relative">
-        <div
+      {showCheckbox && (
+        <div className="relative">
+          <div
           className={`w-4 h-4 border-2 rounded-lg flex items-center justify-center ${
             selected ? "border-white bg-white" : "border-gray-400 bg-white"
           }`}
@@ -37,8 +40,9 @@ export default function FilterTag({
               />
             </svg>
           )}
+          </div>
         </div>
-      </div>
+      )}
       <span>{name.charAt(0).toUpperCase() + name.slice(1)}</span>
     </button>
   );

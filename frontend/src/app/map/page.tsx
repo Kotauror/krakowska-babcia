@@ -160,7 +160,7 @@ function MapComponent() {
             onClick={closeModal}
           >
             <div
-              className="bg-white rounded-lg shadow-xl/30 max-w-md w-full mx-4 max-h-[80vh] overflow-y-auto"
+              className="bg-white rounded-lg shadow-xl/30 max-w-md md:w-full w-10/12 mx-4 max-h-[80vh] overflow-y-auto m-4"
               onClick={(e) => e.stopPropagation()}
               style={{
                 position: "absolute",
@@ -172,7 +172,7 @@ function MapComponent() {
                 zIndex: 1000,
               }}
             >
-              <div className="p-6">
+              <div className="p-6 border-1 border-gray-400 rounded-lg">
                 <div className="flex justify-between items-center mb-4">
                   <h3 className="text-xl font-bold">{selectedMarker.tytul}</h3>
                   <button
@@ -238,8 +238,10 @@ function MapComponent() {
         )}
 
         <div
-          style={{ height: "70vh", width: "100%" }}
-          className="mt-4 relative"
+          className="h-full flex items-center justify-center bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: `url(${process.env.NEXT_PUBLIC_DIRECTUS_URL}assets/${selectedMarker?.zdjecie_glowne})`,
+          }}
         >
           <Map
             defaultZoom={9}

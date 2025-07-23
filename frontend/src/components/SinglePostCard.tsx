@@ -4,6 +4,7 @@ import { format } from "date-fns";
 import Link from "next/link";
 import { useState } from "react";
 import { MapPinIcon } from "@heroicons/react/24/outline";
+import { htmlToText } from "html-to-text";
 
 function extractFirstImageUrl(content: string): string | null {
   const imageRegex = /!\[.*?\]\((.*?)\)/;
@@ -11,76 +12,97 @@ function extractFirstImageUrl(content: string): string | null {
   return match ? match[1] : null;
 }
 
-function removeImagesFromMarkdown(content: string): string {
-  return content.replace(/!\[.*?\]\(.*?\)/g, "");
+// function removeImagesFromMarkdown(content: string): string {
+//   return content.replace(/!\[.*?\]\(.*?\)/g, "");
+// }
+
+function truncateText(
+  text: string,
+  maxWords: number,
+  suffix: string = "..."
+): string {
+  if (!text) return "";
+
+  const words = text.trim().split(/\s+/);
+
+  if (words.length <= maxWords) {
+    return text;
+  }
+
+  return words.slice(0, maxWords).join(" ") + suffix;
+}
+function slugify(text: string) {
+  return text && text.toLowerCase().replace(/ /g, "-");
 }
 
-function truncateText(text: string, maxLength: number): string {
-  if (text.length <= maxLength) return text;
-  return text.slice(0, maxLength) + "…";
-}
+const options = {
+  selectors: [
+    { selector: "img", format: "skip" }, // Skip image tags completely
+    { selector: "script", format: "skip" }, // Also skip scripts
+    { selector: "style", format: "skip" }, // And styles
+  ],
+};
 
 function SinglePostCard({ post }: { post: Post }) {
-  const firstImageUrl = extractFirstImageUrl(post.content);
-  const [imageError, setImageError] = useState(false);
-
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 justify-between">
-      <div>
-        <div className="text-2xl font-bold mb-2">{post.title}</div>
-        <div className="flex items-center gap-2">
-          <MapPinIcon className="h-5 w-5" />
-          <div className="text-xl font-bold mb-0">{post.destination}</div>
-        </div>
-        <div className="flex items-center gap-2">
-          {post.tags.map((tag) => (
-            <div
-              key={tag.name}
-              className="text-sm text-gray-600 border-1 rounded-full px-2 m-2 text-black"
-            >
-              {tag.name}
-            </div>
-          ))}
-        </div>
-
-        <p className="text-gray-600 mb-4">
-          {format(new Date(post.created_at), "d MMMM yyyy", {
-            locale: pl,
-          })}
-        </p>
-        <div className="items-stretch rounded-lg overflow-hidden">
-          <div className="flex flex-col justify-between">
-            <div>
-              {truncateText(removeImagesFromMarkdown(post.content), 400)}
-              <Link
-                href={`/posts/${post.slug}`}
-                className="mt-4 inline-block w-full"
+    <section className="bg-[#f3f5f7] mb-12 containe mx-autor grid grid-cols-1 md:grid-cols-2 justify-between">
+      <div className="gap-8 p-8 md:p-16">
+        <h2 className="text-3xl font-bold mb-6">Najnowszy Wpis</h2>
+        <div>
+          <div className="text-2xl font-bold mb-2">{post.tytul}</div>
+          <div className="flex items-center gap-2">
+            <MapPinIcon className="h-5 w-5" />
+            <div className="text-xl font-bold mb-0">{post.lokalizacja}</div>
+          </div>
+          <div className="flex items-center flex-wrap">
+            {post.kategoria.map((kategoria) => (
+              <div
+                key={kategoria.kategoria_id.nazwa}
+                className="text-sm text-gray-600 border-1 rounded-full px-4 m-1 text-black"
               >
-                <div className="text-sm text-gray-600 py-2">Read more</div>
-              </Link>
+                {kategoria.kategoria_id.nazwa}
+              </div>
+            ))}
+          </div>
+
+          <p className="text-gray-600 mb-4">
+            {format(new Date(post.date_created), "d MMMM yyyy", {
+              locale: pl,
+            })}
+          </p>
+          <div className="items-stretch rounded-lg overflow-hidden">
+            <div className="flex flex-col justify-between">
+              <div>
+                {htmlToText(truncateText(post.tresc, 50), options)}
+                <Link
+                  href={`/posts/${slugify(post.tytul)}?id=${post.id}`}
+                  className="mt-4 inline-block w-full"
+                >
+                  <div className="text-sm text-gray-600 py-2 hover:cursor-pointer">
+                    Czytaj więcej
+                  </div>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div>
-        <div className="bg-white flex items-center justify-center">
-          {firstImageUrl && !imageError ? (
-            <img
-              src={firstImageUrl}
-              alt={post.title}
-              className="max-h-70 p-2 object-cover"
-              onError={() => setImageError(true)}
-            />
-          ) : (
-            <img
-              src="/icon.png"
-              alt="Default icon"
-              className="max-w-full max-h-70 object-contain p-4"
-            />
-          )}
+        <div
+          className="h-full flex items-center justify-center bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: `url(${process.env.NEXT_PUBLIC_DIRECTUS_URL}assets/${post.zdjecie_glowne})`,
+          }}
+        >
+          {/* <img
+            src={`${process.env.NEXT_PUBLIC_DIRECTUS_URL}assets/${post.zdjecie_glowne}`}
+            alt={post.tytul}
+            className="max-h-70 p-2 object-cover"
+            // onError={() => setImageError(true)}
+          /> */}
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 
