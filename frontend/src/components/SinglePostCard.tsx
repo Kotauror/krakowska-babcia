@@ -2,15 +2,8 @@ import { Post } from "@/types";
 import { pl } from "date-fns/locale";
 import { format } from "date-fns";
 import Link from "next/link";
-import { useState } from "react";
 import { MapPinIcon } from "@heroicons/react/24/outline";
 import { htmlToText } from "html-to-text";
-
-function extractFirstImageUrl(content: string): string | null {
-  const imageRegex = /!\[.*?\]\((.*?)\)/;
-  const match = content.match(imageRegex);
-  return match ? match[1] : null;
-}
 
 // function removeImagesFromMarkdown(content: string): string {
 //   return content.replace(/!\[.*?\]\(.*?\)/g, "");

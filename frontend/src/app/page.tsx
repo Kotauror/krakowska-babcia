@@ -1,15 +1,15 @@
 "use client";
 import Banner from "@/components/Banner";
-import FeaturedPostsCarousel from "@/components/FeaturedPostsCarousel";
+// import FeaturedPostsCarousel from "@/components/FeaturedPostsCarousel";
 import SinglePostCard from "@/components/SinglePostCard";
 import { Post } from "@/types";
-import { useApi } from "@/hooks/useApi";
+// import { useApi } from "@/hooks/useApi";
 import { useEffect, useState } from "react";
-import { useFeaturedPosts } from "@/hooks/useFeaturedPosts";
+// import { useFeaturedPosts } from "@/hooks/useFeaturedPosts";
 import PostCard from "@/components/PostCard";
-import { useRouter } from "next/navigation";
-import { usePosts } from "@/hooks/usePosts";
-import FilterTag from "@/components/FilterTag";
+// import { useRouter } from "next/navigation";
+// import { usePosts } from "@/hooks/usePosts";
+// import FilterTag from "@/components/FilterTag";
 import Link from "next/link";
 // const ALLOWED_TAGS = [
 //   "w góry",
@@ -43,10 +43,10 @@ export default function Home() {
   //   isLoading: isPostsLoading,
   //   isError: isPostsError,
   // } = usePosts();
-  const router = useRouter();
-  const [hoveredTag, setHoveredTag] = useState<string | null>(null);
+  // const router = useRouter();
+  // const [hoveredTag, setHoveredTag] = useState<string | null>(null);
   const [categories, setCategories] = useState<any[]>([]);
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  // const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<any>(null);
   const [posts, setPosts] = useState<any[]>([]);
@@ -55,7 +55,7 @@ export default function Home() {
     const fetchPosts = async (selectedCats: string[] = []) => {
       try {
         setLoading(true);
-        let url = `${process.env.NEXT_PUBLIC_DIRECTUS_URL}items/post?fields=*,kategoria.kategoria_id.*`;
+        let url = `${process.env.NEXT_PUBLIC_DIRECTUS_URL}items/post?fields=*,kategoria.kategoria_id.*&sort=-date_created`;
 
         // Add filter if categories are selected
         if (
@@ -96,7 +96,7 @@ export default function Home() {
         const data = await response.json();
         setCategories(data.data);
         // Initially select all categories
-        setSelectedCategories(data.data.map((cat: any) => cat.nazwa));
+        // setSelectedCategories(data.data.map((cat: any) => cat.nazwa));
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
@@ -106,19 +106,19 @@ export default function Home() {
     fetchCategories();
   }, []);
 
-  const handleCategoryChange = (categoryName: string) => {
-    setSelectedCategories((prev) => {
-      if (prev.includes(categoryName)) {
-        // Don't allow deselecting the last category
-        if (prev.length === 1) {
-          return prev;
-        }
-        return prev.filter((cat) => cat !== categoryName);
-      } else {
-        return [...prev, categoryName];
-      }
-    });
-  };
+  // const handleCategoryChange = (categoryName: string) => {
+  //   setSelectedCategories((prev) => {
+  //     if (prev.includes(categoryName)) {
+  //       // Don't allow deselecting the last category
+  //       if (prev.length === 1) {
+  //         return prev;
+  //       }
+  //       return prev.filter((cat) => cat !== categoryName);
+  //     } else {
+  //       return [...prev, categoryName];
+  //     }
+  //   });
+  // };
 
   console.log(posts);
   return (
@@ -208,7 +208,7 @@ export default function Home() {
             <h2 className="text-3xl font-bold mb-6">Wycieczki</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-8">
               {posts
-                ?.filter((post) => post.id !== "111122")
+                ?.slice(1)
                 .map((post: Post) => (
                   <PostCard key={post.tytul} post={post} />
                 ))}
