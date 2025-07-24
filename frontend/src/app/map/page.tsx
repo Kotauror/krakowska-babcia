@@ -237,38 +237,33 @@ function MapComponent() {
           </div>
         )}
 
-        <div
+        {/* <div
           className="h-full flex items-center justify-center bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: `url(${process.env.NEXT_PUBLIC_DIRECTUS_URL}assets/${selectedMarker?.zdjecie_glowne})`,
           }}
-        >
+        > */}
+        <div className="h-[800px]">
+
           <Map
             defaultZoom={9}
             defaultCenter={center}
-            onCameraChanged={(ev) =>
-              console.log(
-                "camera changed:",
-                ev.detail.center,
-                "zoom:",
-                ev.detail.zoom
-              )
-            }
             mapId={"f70864a91d68c622fc65ba40"}
-          />
+            />
           {posts.map((post) => (
             <AdvancedMarker
-              key={post.id}
-              position={{
-                lat: parseFloat(post.szerokosc_geograficzna),
-                lng: parseFloat(post.dlugosc_geograficzna),
-              }}
-              onClick={(event) => handleMarkerClick(post, event)}
+            key={post.id}
+            position={{
+              lat: parseFloat(post.szerokosc_geograficzna),
+              lng: parseFloat(post.dlugosc_geograficzna),
+            }}
+            onClick={(event) => handleMarkerClick(post, event)}
             >
               <img src="/pin.png" alt="marker" width={34} />
             </AdvancedMarker>
           ))}
-        </div>
+          </div>
+        {/* </div> */}
       </ContentWrapper>
     </APIProvider>
   );
