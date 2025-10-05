@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import { Post } from "@/types";
 import { pl } from "date-fns/locale";
 import { Annie_Use_Your_Telescope } from "next/font/google";
+import { processPostImages } from "@/utils/imageUtils";
 
 const annie_use_your_telescope = Annie_Use_Your_Telescope({
   subsets: ["latin"],
@@ -131,7 +132,7 @@ export default function PostPage({ }: { params: { id: string } }) {
           <div className="prose prose-lg max-w-none">
             <div
               dangerouslySetInnerHTML={{
-                __html: post.tresc,
+                __html: processPostImages(post.tresc, 600, 400, 80),
               }}
             />
             {/* <ReactMarkdown>{post.tresc}</ReactMarkdown> */}
