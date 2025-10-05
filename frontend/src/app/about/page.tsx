@@ -28,7 +28,6 @@ export default function About() {
         setFoto1(data.data.zdjecie);
         setFoto2(data.data.zdjecie2);
         setFoto3(data.data.zdjecie3);
-        console.log(data.data);
       } catch (error) {
         console.error("Error fetching about data:", error);
       } finally {

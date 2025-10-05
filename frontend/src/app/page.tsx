@@ -11,6 +11,16 @@ import PostCard from "@/components/PostCard";
 // import { usePosts } from "@/hooks/usePosts";
 // import FilterTag from "@/components/FilterTag";
 import Link from "next/link";
+import { Annie_Use_Your_Telescope } from "next/font/google";
+
+
+const annie_use_your_telescope = Annie_Use_Your_Telescope({
+  subsets: ["latin"],
+  display: "swap",
+  weight: "400",
+});
+
+
 // const ALLOWED_TAGS = [
 //   "w góry",
 //   "nad wodę",
@@ -51,7 +61,6 @@ export default function Home() {
   const [error, setError] = useState<any>(null);
   const [posts, setPosts] = useState<any[]>([]);
   const [featuredPosts, setFeaturedPosts] = useState<any[]>([]);
-  // console.log(posts);
 
   useEffect(() => {
     const fetchPosts = async (selectedCats: string[] = []) => {
@@ -81,7 +90,6 @@ export default function Home() {
         const response = await fetch(url);
         const data = await response.json();
 
-        console.log(data.data);
         setPosts(data.data);
         setFeaturedPosts(data.data.filter((post: any) => post.ulubiony));
 
@@ -131,7 +139,7 @@ export default function Home() {
       {/* Tag Filter Bar */}
       <div className="flex flex-wrap justify-center sticky md:text-xl text-sm">
         <Link href="/wycieczki">
-        <button className="bg-[#215a80] text-white px-8 py-2 rounded-full mt-8 hover:cursor-pointer hover:bg-[#27377d] font-annie-use-your-telescope">
+        <button className={`bg-[#215a80] text-white px-8 py-2 rounded-full mt-8 hover:cursor-pointer hover:bg-[#27377d] ` + annie_use_your_telescope.className}>
           ZNAJDŹ SWOJĄ WYCIECZKĘ
         </button>
         </Link>
@@ -192,7 +200,7 @@ export default function Home() {
             )}
             {!loading && featuredPosts.length > 0 && (
               <div className="p-8">
-                  <h2 className="text-4xl font-bold mb-6 font-annie-use-your-telescope">Ulubione Miejsca</h2>
+                  <h2 className={`text-4xl font-bold mb-6 ${annie_use_your_telescope.className}`}>Ulubione Miejsca</h2>
                 <section className="container mx-auto">
     
                   <FeaturedPostsCarousel posts={featuredPosts} />
@@ -201,7 +209,7 @@ export default function Home() {
             )}
 
           <section className="p-8 bg-gray-50">
-            <h2 className="text-4xl font-bold mb-6 font-annie-use-your-telescope">Wycieczki</h2>
+            <h2 className={`text-4xl font-bold mb-6 ${annie_use_your_telescope.className}`}>Wycieczki</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-8">
               {posts
                 ?.slice(1)

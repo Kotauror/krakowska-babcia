@@ -18,14 +18,11 @@ export default function PostPage({ }: { params: { id: string } }) {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      console.log(postId);
-
       try {
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_DIRECTUS_URL}items/post/${postId}?fields=*,kategoria.kategoria_id.*`
         );
         const data = await response.json();
-        console.log(data);
         setPost(data.data);
       } catch (error) {
         setError(error);

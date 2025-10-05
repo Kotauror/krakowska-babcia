@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Annie+Use+Your+Telescope&display=swap');
 @import "tailwindcss";
 @tailwind base;
 @tailwind components;
@@ -28,7 +27,6 @@
   --color-children-marker: #DC3545;
   --color-custom-straw: #fdcc6b;
   --color-light-background: #fcfcfc;
-  --font-annie-use-your-telescope: 'Annie Use Your Telescope', cursive;
 }
 
 @media (prefers-color-scheme: dark) {
