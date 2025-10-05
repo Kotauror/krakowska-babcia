@@ -1,6 +1,6 @@
 "use client";
 import Banner from "@/components/Banner";
-// import FeaturedPostsCarousel from "@/components/FeaturedPostsCarousel";
+import FeaturedPostsCarousel from "@/components/FeaturedPostsCarousel";
 import SinglePostCard from "@/components/SinglePostCard";
 import { Post } from "@/types";
 // import { useApi } from "@/hooks/useApi";
@@ -50,6 +50,8 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<any>(null);
   const [posts, setPosts] = useState<any[]>([]);
+  const [featuredPosts, setFeaturedPosts] = useState<any[]>([]);
+  // console.log(posts);
 
   useEffect(() => {
     const fetchPosts = async (selectedCats: string[] = []) => {
@@ -81,7 +83,10 @@ export default function Home() {
 
         console.log(data.data);
         setPosts(data.data);
+        setFeaturedPosts(data.data.filter((post: any) => post.ulubiony));
+
       } catch (error) {
+        console.error("Error fetching posts:", error);
         setError(error);
       } finally {
         setLoading(false);
@@ -120,7 +125,6 @@ export default function Home() {
   //   });
   // };
 
-  console.log(posts);
   return (
     <div>
       <Banner />
@@ -175,23 +179,15 @@ export default function Home() {
       </div> */}
       <main className="mx-auto py-8 mt-4">
         {/* Featured Posts Section */}
-        {/* {isFeaturedLoading && (
-          <div className="container mx-auto">Pobieram ulubione miejsca...</div>
-        )}
-        {isFeaturedError && (
-          <div className="container mx-auto">
-            Błąd ładowania ulubionych miejsc.
-          </div>
-        )}
-        {featuredPosts && featuredPosts.length > 0 && (
+        {!loading && featuredPosts.length > 0 && (
           <div className="mb-12 bg-dirty-olive-green py-8 px-4">
             <section className="container mx-auto">
               <h2 className="text-3xl font-bold mb-6">Ulubione Miejsca</h2>
 
-              <FeaturedPostsCarousel posts={featuredPosts.map((f) => f.post)} />
+              <FeaturedPostsCarousel posts={featuredPosts} />
             </section>
           </div>
-        )} */}
+        )}
         <div className="mx-auto">
           {posts &&
             posts.length > 0 &&
