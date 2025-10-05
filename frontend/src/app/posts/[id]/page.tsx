@@ -6,6 +6,13 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { Post } from "@/types";
 import { pl } from "date-fns/locale";
+import { Annie_Use_Your_Telescope } from "next/font/google";
+
+const annie_use_your_telescope = Annie_Use_Your_Telescope({
+  subsets: ["latin"],
+  display: "swap",
+  weight: "400",
+});
 
 export default function PostPage({ }: { params: { id: string } }) {
   const router = useRouter();
@@ -15,6 +22,7 @@ export default function PostPage({ }: { params: { id: string } }) {
   const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<any>(null);
+
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -90,18 +98,18 @@ export default function PostPage({ }: { params: { id: string } }) {
               className="rounded-lg md:p-8 p-4"
               style={{ backgroundColor: "rgba(255, 255, 255, 0.9)" }}
             >
-              <h1 className="md:text-4xl text-2xl font-bold text-graya-700 mb-4">
+              <h1 className={`md:text-4xl text-2xl font-bold text-graya-700 mb-4 ${annie_use_your_telescope.className}`}>
                 {post.tytul}
               </h1>
               <div className="flex flex-row my-4">
-                <div className="text-black">
+                <div className="text-black flex flex-wrap">
                   {post.kategoria.map((kategoria, key) => (
-                    <span
-                      className="text-gray-500 text-[12px] border-1 border-gray-500 rounded-full px-2 py-1 mr-2 my-1 bg-white"
+                    <p
+                      className="text-gray-500 md:text-[14px] text-[12px] border-1 border-gray-500 rounded-full px-2 py-1 mr-1 mb-1 bg-white"
                       key={key}
                     >
                       {kategoria.kategoria_id.nazwa}
-                    </span>
+                    </p>
                   ))}
                 </div>
               </div>

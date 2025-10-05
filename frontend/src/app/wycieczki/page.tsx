@@ -24,7 +24,7 @@ function DestinationsContent() {
     const fetchPosts = async (selectedCats: string[] = []) => {
       try {
         setLoading(true);
-        let url = `${process.env.NEXT_PUBLIC_DIRECTUS_URL}items/post?fields=*,kategoria.kategoria_id.*`;
+        let url = `${process.env.NEXT_PUBLIC_DIRECTUS_URL}items/post?fields=*,kategoria.kategoria_id.*&sort=-date_created`;
 
         // Add filter if categories are selected
         if (
@@ -80,7 +80,7 @@ function DestinationsContent() {
       const fetchPosts = async () => {
         try {
           setLoading(true);
-          let url = `${process.env.NEXT_PUBLIC_DIRECTUS_URL}items/post?fields=*,kategoria.kategoria_id.*`;
+          let url = `${process.env.NEXT_PUBLIC_DIRECTUS_URL}items/post?fields=*,kategoria.kategoria_id.*&sort=-date_created`;
 
           // Add filter if categories are selected
           if (
