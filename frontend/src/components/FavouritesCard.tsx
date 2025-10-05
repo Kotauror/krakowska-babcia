@@ -1,8 +1,6 @@
 import Link from "next/link";
 import { Post } from "@/types";
 // import { useState } from "react";
-import { format } from "date-fns";
-import { pl } from "date-fns/locale";
 
 function slugify(text: string) {
   return text && text.toLowerCase().replace(/ /g, "-");
