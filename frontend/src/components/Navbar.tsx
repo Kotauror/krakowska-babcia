@@ -100,7 +100,7 @@ export default function Navbar() {
                       const currentPath = pathname.split("?")[0];
                       return itemPath === currentPath;
                     })()
-                      ? "border-green-500 text-green-700"
+                      ? "text-[#215a80]"
                       : "text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                   } ${
                     mobileMenuOpen
