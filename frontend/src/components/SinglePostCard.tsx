@@ -1,6 +1,4 @@
 import { Post } from "@/types";
-import { pl } from "date-fns/locale";
-import { format } from "date-fns";
 import Link from "next/link";
 import { MapPinIcon } from "@heroicons/react/24/outline";
 import { htmlToText } from "html-to-text";
@@ -52,9 +50,9 @@ function SinglePostCard({ post }: { post: Post }) {
           <div className="text-2xl font-bold mb-2">{post.tytul}</div>
           <div className="flex items-center gap-2">
             <MapPinIcon className="h-5 w-5" />
-            <div className="text-xl font-bold mb-0">{post.lokalizacja}</div>
+            <div className="text-lg my-1">{post.lokalizacja}</div>
           </div>
-          <div className="flex items-center flex-wrap">
+          <div className="flex items-center flex-wrap my-2">
             {post.kategoria.map((kategoria) => (
               <div
                 key={kategoria.kategoria_id.nazwa}
@@ -65,24 +63,19 @@ function SinglePostCard({ post }: { post: Post }) {
             ))}
           </div>
 
-          <p className="text-gray-600 mb-4">
-            {format(new Date(post.date_created), "d MMMM yyyy", {
-              locale: pl,
-            })}
-          </p>
           <div className="items-stretch rounded-lg overflow-hidden">
             <div className="flex flex-col justify-between">
               <div>
                 {htmlToText(truncateText(post.tresc, 50), options)}
+              </div>
                 <Link
                   href={`/posts/${slugify(post.tytul)}?id=${post.id}`}
-                  className="mt-4 inline-block w-full"
+                  className="mt-4 w-fit"
                 >
-                  <div className="text-sm text-gray-600 py-2 hover:cursor-pointer">
-                    Czytaj więcej
+                  <div   className="text-sm text-gray-600 py-2 hover:cursor-pointer rounded-full px-4 bg-[#215a80] text-white">
+                    Czytaj więcej...
                   </div>
                 </Link>
-              </div>
             </div>
           </div>
         </div>
