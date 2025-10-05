@@ -10,7 +10,7 @@ function slugify(text: string) {
 function PostCard({ post }: { post: Post }) {
   return (
     <Link href={`/posts/${slugify(post.tytul)}?id=${post.id}`} className="mt-4">
-      <article className="min-h-[450px] bg-white rounded-lg shadow-lg overflow-hidden border-1 border-gray-400">
+      <article className="min-h-[450px] bg-white rounded-lg shadow-lg overflow-hidden border-1 border-gray-400 hover:scale-105 transition-all duration-300">
         <div className="mx-auto overflow-hidden h-[200px]">
           <img
             src={`${process.env.NEXT_PUBLIC_DIRECTUS_URL}assets/${post.zdjecie_glowne}`}

@@ -129,10 +129,10 @@ export default function Home() {
     <div>
       <Banner />
       {/* Tag Filter Bar */}
-      <div className="flex flex-wrap justify-center sticky bg-light-background md:text-xl text-sm">
+      <div className="flex flex-wrap justify-center sticky md:text-xl text-sm">
         <Link href="/wycieczki">
-        <button className="bg-[#215a80] text-white px-8 py-2 rounded-full mt-8 hover:cursor-pointer hover:bg-[#27377d]">
-          Znajdź swoją wycieczkę
+        <button className="bg-[#215a80] text-white px-8 py-2 rounded-full mt-8 hover:cursor-pointer hover:bg-[#27377d] font-annie-use-your-telescope">
+          ZNAJDŹ SWOJĄ WYCIECZKĘ
         </button>
         </Link>
         {/* {categories.map((category) => (
@@ -177,17 +177,8 @@ export default function Home() {
           </div>
         ))}
       </div> */}
-      <main className="mx-auto py-8 mt-4">
+      <main className="mx-auto mt-12">
         {/* Featured Posts Section */}
-        {!loading && featuredPosts.length > 0 && (
-          <div className="mb-12 bg-dirty-olive-green py-8 px-4">
-            <section className="container mx-auto">
-              <h2 className="text-3xl font-bold mb-6">Ulubione Miejsca</h2>
-
-              <FeaturedPostsCarousel posts={featuredPosts} />
-            </section>
-          </div>
-        )}
         <div className="mx-auto">
           {posts &&
             posts.length > 0 &&
@@ -199,9 +190,18 @@ export default function Home() {
               //   </div>
               // </section>
             )}
+            {!loading && featuredPosts.length > 0 && (
+              <div className="p-8">
+                  <h2 className="text-4xl font-bold mb-6 font-annie-use-your-telescope">Ulubione Miejsca</h2>
+                <section className="container mx-auto">
+    
+                  <FeaturedPostsCarousel posts={featuredPosts} />
+                </section>
+              </div>
+            )}
 
           <section className="p-8 bg-gray-50">
-            <h2 className="text-3xl font-bold mb-6">Wycieczki</h2>
+            <h2 className="text-4xl font-bold mb-6 font-annie-use-your-telescope">Wycieczki</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-8">
               {posts
                 ?.slice(1)

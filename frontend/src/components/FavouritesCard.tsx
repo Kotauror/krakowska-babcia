@@ -21,7 +21,7 @@ function FavouritesCard({ post }: { post: Post }) {
 
   return (
     <Link href={`/posts/${slugify(post.tytul)}?id=${post.id}`} className="mt-4 inline-block">
-      <article className="bg-white rounded-lg shadow-lg overflow-hidden">
+      <article className="rounded-lg shadow-lg overflow-hidden border-1 border-gray-400 hover:scale-105 transition-all duration-300 bg-[#fff6e7]">
         <div className="w-[300px] h-[200px] mx-auto overflow-hidden">
           {/* {firstImageUrl && !imageError ? ( */}
             <img

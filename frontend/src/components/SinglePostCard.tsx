@@ -40,7 +40,7 @@ function SinglePostCard({ post }: { post: Post }) {
   return (
     <section className="bg-[#f3f5f7] mb-12 containe mx-autor grid grid-cols-1 md:grid-cols-2 justify-between">
       <div className="gap-8 p-8 md:p-16">
-        <h2 className="text-3xl font-bold mb-6">Najnowszy Wpis</h2>
+        <h2 className="text-4xl font-bold mb-6  font-annie-use-your-telescope">Najnowszy Wpis</h2>
         <div>
           <div className="text-2xl font-bold mb-2">{post.tytul}</div>
           <div className="flex items-center gap-2">

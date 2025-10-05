@@ -43,21 +43,21 @@ export default function FeaturedPostsCarousel({
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex">
           {posts.map((post) => (
-            <div key={post.id} className="p-2">
+            <div key={post.id} className="p-1 md:p-3">
               <FavouritesCard post={post} />
             </div>
           ))}
         </div>
       </div>
       <button
-        className="bg-white absolute left-[-10px] top-1/2 -translate-y-1/2 p-2 rounded-full shadow-lg hover:bg-orange-600 disabled:invisible disabled:cursor-not-allowed"
+        className="bg-white absolute left-[-10px] top-1/2 -translate-y-1/2 p-2 rounded-full shadow-lg hover:bg-orange-600 disabled:invisible disabled:cursor-not-allowed md:block hidden"
         onClick={scrollPrev}
         disabled={!prevBtnEnabled}
       >
         <ChevronLeftIcon className="md:h-8 md:w-8 h-6 w-6" />
       </button>
       <button
-        className="bg-white absolute right-[-10px] top-1/2 -translate-y-1/2 p-2 rounded-full shadow-lg hover:bg-orange-600 disabled:invisible disabled:cursor-not-allowed"
+        className="bg-white absolute right-[-10px] top-1/2 -translate-y-1/2 p-2 rounded-full shadow-lg hover:bg-orange-600 disabled:invisible disabled:cursor-not-allowed md:block hidden"
         onClick={scrollNext}
         disabled={!nextBtnEnabled}
       >

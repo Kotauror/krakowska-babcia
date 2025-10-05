@@ -1,15 +1,15 @@
 export default function Banner() {
   return (
-    <div>
+    <div className="font-annie-use-your-telescope">
       <img
         src="/banner.webp"
         alt="Header image"
-        className="md:h-[calc(70vh-4rem)] h-[calc(50vh-4rem)] w-full object-cover object-[40%_60%] opacity-95"
+        className="md:h-[calc(50vh-4rem)] h-[calc(40vh-4rem)] w-full object-cover object-[40%_60%] opacity-95"
       />
-      <h1 className="text-2xl md:text-3xl font-bold text-center px-4 m-8 ">
-        Zabierz wnuki na wycieczkę
+      <h1 className="text-2xl md:text-4xl font-bold text-center px-4 m-8 ">
+        ZABIERZ WNUKI NA WYCIECZKĘ
       </h1>
-      <div className="justify-center text-center md:px-2 px-1">
+      <div className="justify-center text-center md:px-2 px-1 text-xl md:text-2xl">
         <div>Hej! Tu Marta - babcia z Krakowa :)</div>
         <div>
           Piszę o miejscach w Małopolsce i okolicach, które zachwycą zarówno
