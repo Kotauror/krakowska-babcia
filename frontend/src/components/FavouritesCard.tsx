@@ -39,14 +39,8 @@ function FavouritesCard({ post }: { post: Post }) {
           {/* )} */}
         </div>
         <div className="p-6">
-          <h3 className="text-xl font-bold mb-2">{post.tytul}</h3>
+          <h3 className="md:text-lg text-base mb-2">{post.tytul}</h3>
           <div className="text-gray-600 mb-4 text-sm">
-            <p>
-              {" "}
-              {format(new Date(post.date_created), "d MMMM yyyy", {
-                locale: pl,
-              })}
-            </p>
           </div>
         </div>
       </article>

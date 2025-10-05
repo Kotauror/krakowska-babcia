@@ -10,6 +10,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { Annie_Use_Your_Telescope } from "next/font/google";
 
 const navigation = [
   {
@@ -20,6 +21,12 @@ const navigation = [
   { name: "Mapa Miejsc", href: "/map", icon: MapIcon },
   { name: "O mnie", href: "/about", icon: UserIcon },
 ];
+
+const annie_use_your_telescope = Annie_Use_Your_Telescope({
+  subsets: ["latin"],
+  display: "swap",
+  weight: "400",
+});
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -43,14 +50,14 @@ export default function Navbar() {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className={`inline-flex items-center px-3 py-2 text-sm font-medium ${
+                  className={`inline-flex items-center px-3 py-2 text-md font-medium ${
                     pathname === item.href
                       ? "border-blue-500 text-gray-900"
                       : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
-                  }`}
+                  } ${annie_use_your_telescope.className}`}
                 >
                   <item.icon className="h-5 w-5 mr-2" aria-hidden="true" />
-                  {item.name}
+                  {item.name.toUpperCase()}
                 </Link>
               ))}
             </div>
@@ -93,13 +100,13 @@ export default function Navbar() {
                       const currentPath = pathname.split("?")[0];
                       return itemPath === currentPath;
                     })()
-                      ? "bg-dirty-olive-green border-green-500 text-green-700"
+                      ? "border-green-500 text-green-700"
                       : "text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                   } ${
                     mobileMenuOpen
                       ? "translate-x-0 opacity-100"
                       : "translate-x-4 opacity-0"
-                  }`}
+                  } ${annie_use_your_telescope.className}`}
                   style={{
                     transitionDelay: mobileMenuOpen ? `${index * 50}ms` : "0ms",
                   }}
@@ -107,7 +114,7 @@ export default function Navbar() {
                 >
                   <div className="flex items-center">
                     <item.icon className="h-5 w-5 mr-3" aria-hidden="true" />
-                    {item.name}
+                    {item.name.toUpperCase()}
                   </div>
                 </Link>
               );

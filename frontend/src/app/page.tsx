@@ -201,7 +201,7 @@ export default function Home() {
             {!loading && featuredPosts.length > 0 && (
               <div className="p-8">
                   <h2 className={`text-4xl font-bold mb-6 ${annie_use_your_telescope.className}`}>Ulubione Miejsca</h2>
-                <section className="container mx-auto">
+                <section className="">
     
                   <FeaturedPostsCarousel posts={featuredPosts} />
                 </section>
