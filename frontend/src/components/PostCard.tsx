@@ -10,7 +10,7 @@ function slugify(text: string) {
 function PostCard({ post }: { post: Post }) {
   return (
     <Link href={`/posts/${slugify(post.tytul)}?id=${post.id}`} className="mt-4">
-      <article className="min-h-[450px] bg-white rounded-lg shadow-lg overflow-hidden border-1 border-gray-400 hover:scale-105 transition-all duration-300">
+      <article className="min-h-[400px] bg-white rounded-lg shadow-lg overflow-hidden border-1 border-gray-400 hover:scale-105 transition-all duration-300 relative">
         <div className="mx-auto overflow-hidden h-[200px]">
           <img
             src={`${process.env.NEXT_PUBLIC_DIRECTUS_URL}assets/${post.zdjecie_glowne}`}
@@ -19,9 +19,9 @@ function PostCard({ post }: { post: Post }) {
             // onError={() => setImageError(true)}
           />
         </div>
-        <div className="p-6 flex flex-col justify-between h-full">
-          <h3 className="text-xl font-bold mb-1">{post.tytul}</h3>
-          <div>
+        <div className="p-6 flex flex-col h-full">
+          <div className="flex-grow">
+            <h3 className="text-xl font-bold mb-1">{post.tytul}</h3>
             <div className="flex flex-row my-2">
               <img
                 src="/transparent-marker.png"
@@ -40,15 +40,14 @@ function PostCard({ post }: { post: Post }) {
                 </span>
               ))}
             </div>
-            <div className="text-gray-400 text-xs bottom-0">
-              <p>
-                {" "}
-                {format(new Date(post.date_created), "d MMMM yyyy", {
-                  locale: pl,
-                })}
-              </p>
-            </div>
           </div>
+        </div>
+        <div className="absolute bottom-4 left-6 right-6 text-gray-400 text-xs">
+          <p>
+            {format(new Date(post.date_created), "d MMMM yyyy", {
+              locale: pl,
+            })}
+          </p>
         </div>
       </article>
     </Link>
