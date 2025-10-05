@@ -15,6 +15,8 @@ export default function FeaturedPostsCarousel({
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "start" });
   const [prevBtnEnabled, setPrevBtnEnabled] = useState(false);
   const [nextBtnEnabled, setNextBtnEnabled] = useState(false);
+  const [leftBtnHover, setLeftBtnHover] = useState(false);
+  const [rightBtnHover, setRightBtnHover] = useState(false);
 
   const scrollPrev = useCallback(
     () => emblaApi && emblaApi.scrollPrev(),
@@ -50,15 +52,19 @@ export default function FeaturedPostsCarousel({
         </div>
       </div>
       <button
-        className="bg-white absolute left-[-10px] top-1/2 -translate-y-1/2 p-2 rounded-full shadow-lg hover:bg-orange-600 disabled:invisible disabled:cursor-not-allowed md:block hidden"
+        className={`bg-[#215a80] absolute left-[-10px] top-1/2 -translate-y-1/2 p-2 rounded-full shadow-lg disabled:invisible disabled:cursor-not-allowed md:block hidden ${leftBtnHover ? "bg-white text-[#215a80]" : "bg-[#215a80] text-white"}`}
         onClick={scrollPrev}
         disabled={!prevBtnEnabled}
+        onMouseEnter={() => setLeftBtnHover(true)}
+        onMouseLeave={() => setLeftBtnHover(false)}
       >
         <ChevronLeftIcon className="md:h-8 md:w-8 h-6 w-6" />
       </button>
       <button
-        className="bg-white absolute right-[-10px] top-1/2 -translate-y-1/2 p-2 rounded-full shadow-lg hover:bg-orange-600 disabled:invisible disabled:cursor-not-allowed md:block hidden"
+        className={`bg-[#215a80] absolute right-[-10px] top-1/2 -translate-y-1/2 p-2 rounded-full shadow-lg disabled:invisible disabled:cursor-not-allowed md:block hidden ${rightBtnHover ? "bg-white text-[#215a80]" : "bg-[#215a80] text-white"}`}
         onClick={scrollNext}
+        onMouseEnter={() => setRightBtnHover(true)}
+        onMouseLeave={() => setRightBtnHover(false)}
         disabled={!nextBtnEnabled}
       >
         <ChevronRightIcon className="md:h-8 md:w-8 h-6 w-6" />
