@@ -3,6 +3,7 @@ import { Nunito } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import QueryProvider from "@/providers/QueryProvider";
 
 const nunito = Nunito({
@@ -40,8 +41,13 @@ export default function RootLayout({
           `}
         </Script>
         <QueryProvider>
-          <Navbar />
-          {children}
+          <div className="flex flex-col min-h-screen">
+            <Navbar />
+            <main className="flex-grow">
+              {children}
+            </main>
+            <Footer />
+          </div>
         </QueryProvider>
       </body>
     </html>
