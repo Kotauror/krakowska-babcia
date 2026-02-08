@@ -137,10 +137,15 @@ export default function Home() {
     <div>
       <Banner />
       {/* Tag Filter Bar */}
-      <div className="flex flex-wrap justify-center sticky md:text-xl text-sm">
+      <div className="flex flex-wrap justify-center sticky md:text-xl text-sm gap-8">
         <Link href="/wycieczki">
         <button className={`bg-[#215a80] text-white px-8 py-2 rounded-full mt-8 hover:cursor-pointer hover:bg-[#27377d] ` + mynerve.className}>
-          ZNAJDŹ SWOJĄ WYCIECZKĘ
+          ZNAJDŹ WYCIECZKĘ
+        </button>
+        </Link>
+        <Link href="/plastyka">
+        <button className={`bg-[#215a80] text-white px-8 py-2 rounded-full mt-8 hover:cursor-pointer hover:bg-[#27377d] ` + mynerve.className}>
+          ZNAJDŹ PROJEKT PLASTYCZNY
         </button>
         </Link>
         {/* {categories.map((category) => (
