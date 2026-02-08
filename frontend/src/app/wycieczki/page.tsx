@@ -48,7 +48,14 @@ function DestinationsContent() {
         const response = await fetch(url);
         const data = await response.json();
 
-        setPosts(data.data);
+        // Filter out posts with "plastyka" category
+        const filteredPosts = data.data.filter((post: any) => {
+          return !post.kategoria?.some(
+            (kat: any) => kat.kategoria_id?.nazwa === "plastyka"
+          );
+        });
+
+        setPosts(filteredPosts);
       } catch (error) {
         setError(error);
       } finally {
@@ -62,9 +69,13 @@ function DestinationsContent() {
           `${process.env.NEXT_PUBLIC_DIRECTUS_URL}items/kategoria`
         );
         const data = await response.json();
-        setCategories(data.data);
-        // Initially select all categories
-        setSelectedCategories(data.data.map((cat: any) => cat.nazwa));
+        // Filter out "plastyka" category
+        const filteredCategories = data.data.filter(
+          (cat: any) => cat.nazwa !== "plastyka"
+        );
+        setCategories(filteredCategories);
+        // Initially select all categories (excluding plastyka)
+        setSelectedCategories(filteredCategories.map((cat: any) => cat.nazwa));
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
@@ -105,7 +116,15 @@ function DestinationsContent() {
 
           const response = await fetch(url);
           const data = await response.json();
-          setPosts(data.data);
+          
+          // Filter out posts with "plastyka" category
+          const filteredPosts = data.data.filter((post: any) => {
+            return !post.kategoria?.some(
+              (kat: any) => kat.kategoria_id?.nazwa === "plastyka"
+            );
+          });
+
+          setPosts(filteredPosts);
         } catch (error) {
           setError(error);
         } finally {

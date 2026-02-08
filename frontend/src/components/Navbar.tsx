@@ -7,6 +7,7 @@ import {
   BookOpenIcon,
   Bars3Icon,
   XMarkIcon,
+  PaintBrushIcon,
 } from "@heroicons/react/24/outline";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -18,6 +19,7 @@ const navigation = [
     href: "/wycieczki",
     icon: BookOpenIcon,
   },
+  { name: "Plastyka", href: "/plastyka", icon: PaintBrushIcon },
   { name: "Mapa Miejsc", href: "/map", icon: MapIcon },
   { name: "O mnie", href: "/about", icon: UserIcon },
 ];

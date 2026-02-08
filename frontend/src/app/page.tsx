@@ -10,8 +10,8 @@ import PostCard from "@/components/PostCard";
 // import { useRouter } from "next/navigation";
 // import { usePosts } from "@/hooks/usePosts";
 // import FilterTag from "@/components/FilterTag";
-import Link from "next/link";
 import { Annie_Use_Your_Telescope } from "next/font/google";
+import Link from "next/link";
 
 
 const annie_use_your_telescope = Annie_Use_Your_Telescope({
@@ -213,6 +213,13 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-8">
               {posts
                 ?.slice(1)
+                .filter((post: Post) => {
+                  // Filter out posts with "plastyka" tag
+                  return !post.kategoria?.some(
+                    (kat: any) => kat.kategoria_id?.nazwa === "plastyka"
+                  );
+                })
+                .slice(0, 12)
                 .map((post: Post) => (
                   <PostCard key={post.tytul} post={post} />
                 ))}
@@ -227,6 +234,62 @@ export default function Home() {
                 </div>
               )}
             </div>
+            {posts
+              ?.slice(1)
+              .filter((post: Post) => {
+                return !post.kategoria?.some(
+                  (kat: any) => kat.kategoria_id?.nazwa === "plastyka"
+                );
+              }).length > 12 && (
+              <div className="text-center pb-8">
+                <Link href="https://www.krakowskababcia.pl/wycieczki">
+                  <button className={`bg-[#215a80] text-white px-8 py-2 rounded-full hover:cursor-pointer hover:bg-[#27377d] ${annie_use_your_telescope.className}`}>
+                    WIĘCEJ WYCIECZEK 
+                  </button>
+                </Link>
+              </div>
+            )}
+          </section>
+
+          <section className="p-8">
+            <h2 className={`text-4xl font-bold mb-6 ${annie_use_your_telescope.className}`}>Plastyka</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-8">
+              {posts
+                ?.filter((post: Post) => {
+                  // Filter posts with "plastyka" tag
+                  return post.kategoria?.some(
+                    (kat: any) => kat.kategoria_id?.nazwa === "plastyka"
+                  );
+                })
+                .slice(0, 12)
+                .map((post: Post) => (
+                  <PostCard key={post.tytul} post={post} />
+                ))}
+              {loading && (
+                <div className="col-span-3">
+                  <div className="animate-pulse h-full w-full bg-gray-200 rounded-lg"></div>
+                </div>
+              )}
+              {error && (
+                <div className="col-span-3">
+                  <div className="text-red-500">Błąd ładowania wpisów.</div>
+                </div>
+              )}
+            </div>
+            {posts
+              ?.filter((post: Post) => {
+                return post.kategoria?.some(
+                  (kat: any) => kat.kategoria_id?.nazwa === "plastyka"
+                );
+              }).length > 12 && (
+              <div className="text-center pb-8">
+                <Link href="/plastyka">
+                  <button className={`bg-[#215a80] text-white px-8 py-2 rounded-full hover:cursor-pointer hover:bg-[#27377d] ${annie_use_your_telescope.className}`}>
+                    WIĘCEJ PROJEKTÓW
+                  </button>
+                </Link>
+              </div>
+            )}
           </section>
         </div>
       </main>
