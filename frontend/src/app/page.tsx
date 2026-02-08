@@ -10,11 +10,11 @@ import PostCard from "@/components/PostCard";
 // import { useRouter } from "next/navigation";
 // import { usePosts } from "@/hooks/usePosts";
 // import FilterTag from "@/components/FilterTag";
-import { Annie_Use_Your_Telescope } from "next/font/google";
+import { Mynerve } from "next/font/google";
 import Link from "next/link";
 
 
-const annie_use_your_telescope = Annie_Use_Your_Telescope({
+const mynerve = Mynerve({
   subsets: ["latin"],
   display: "swap",
   weight: "400",
@@ -139,7 +139,7 @@ export default function Home() {
       {/* Tag Filter Bar */}
       <div className="flex flex-wrap justify-center sticky md:text-xl text-sm">
         <Link href="/wycieczki">
-        <button className={`bg-[#215a80] text-white px-8 py-2 rounded-full mt-8 hover:cursor-pointer hover:bg-[#27377d] ` + annie_use_your_telescope.className}>
+        <button className={`bg-[#215a80] text-white px-8 py-2 rounded-full mt-8 hover:cursor-pointer hover:bg-[#27377d] ` + mynerve.className}>
           ZNAJDŹ SWOJĄ WYCIECZKĘ
         </button>
         </Link>
@@ -200,7 +200,7 @@ export default function Home() {
             )}
             {!loading && featuredPosts.length > 0 && (
               <div className="p-8">
-                  <h2 className={`text-4xl font-bold mb-6 ${annie_use_your_telescope.className}`}>Ulubione Miejsca</h2>
+                  <h2 className={`text-4xl font-bold mb-6 ${mynerve.className}`}>Ulubione Miejsca</h2>
                 <section className="">
     
                   <FeaturedPostsCarousel posts={featuredPosts} />
@@ -209,7 +209,7 @@ export default function Home() {
             )}
 
           <section className="p-8 bg-gray-50">
-            <h2 className={`text-4xl font-bold mb-6 ${annie_use_your_telescope.className}`}>Wycieczki</h2>
+            <h2 className={`text-4xl font-bold mb-6 ${mynerve.className}`}>Wycieczki</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-8">
               {posts
                 ?.slice(1)
@@ -243,7 +243,7 @@ export default function Home() {
               }).length > 12 && (
               <div className="text-center pb-8">
                 <Link href="https://www.krakowskababcia.pl/wycieczki">
-                  <button className={`bg-[#215a80] text-white px-8 py-2 rounded-full hover:cursor-pointer hover:bg-[#27377d] ${annie_use_your_telescope.className}`}>
+                  <button className={`bg-[#215a80] text-white px-8 py-2 rounded-full hover:cursor-pointer hover:bg-[#27377d] ${mynerve.className}`}>
                     WIĘCEJ WYCIECZEK 
                   </button>
                 </Link>
@@ -252,7 +252,7 @@ export default function Home() {
           </section>
 
           <section className="p-8">
-            <h2 className={`text-4xl font-bold mb-6 ${annie_use_your_telescope.className}`}>Plastyka</h2>
+            <h2 className={`text-4xl font-bold mb-6 ${mynerve.className}`}>Plastyka</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-8">
               {posts
                 ?.filter((post: Post) => {
@@ -284,7 +284,7 @@ export default function Home() {
               }).length > 12 && (
               <div className="text-center pb-8">
                 <Link href="/plastyka">
-                  <button className={`bg-[#215a80] text-white px-8 py-2 rounded-full hover:cursor-pointer hover:bg-[#27377d] ${annie_use_your_telescope.className}`}>
+                  <button className={`bg-[#215a80] text-white px-8 py-2 rounded-full hover:cursor-pointer hover:bg-[#27377d] ${mynerve.className}`}>
                     WIĘCEJ PROJEKTÓW
                   </button>
                 </Link>

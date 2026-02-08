@@ -11,7 +11,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { Annie_Use_Your_Telescope } from "next/font/google";
+import { Mynerve } from "next/font/google";
 
 const navigation = [
   {
@@ -24,7 +24,7 @@ const navigation = [
   { name: "O mnie", href: "/about", icon: UserIcon },
 ];
 
-const annie_use_your_telescope = Annie_Use_Your_Telescope({
+const mynerve = Mynerve({
   subsets: ["latin"],
   display: "swap",
   weight: "400",
@@ -56,7 +56,7 @@ export default function Navbar() {
                     pathname === item.href
                       ? "border-blue-500 text-gray-900"
                       : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
-                  } ${annie_use_your_telescope.className}`}
+                  } ${mynerve.className}`}
                 >
                   <item.icon className="h-5 w-5 mr-2" aria-hidden="true" />
                   {item.name.toUpperCase()}
@@ -108,7 +108,7 @@ export default function Navbar() {
                     mobileMenuOpen
                       ? "translate-x-0 opacity-100"
                       : "translate-x-4 opacity-0"
-                  } ${annie_use_your_telescope.className}`}
+                  } ${mynerve.className}`}
                   style={{
                     transitionDelay: mobileMenuOpen ? `${index * 50}ms` : "0ms",
                   }}

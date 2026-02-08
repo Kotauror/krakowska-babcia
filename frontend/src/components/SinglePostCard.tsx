@@ -2,7 +2,7 @@ import { Post } from "@/types";
 import Link from "next/link";
 import { MapPinIcon } from "@heroicons/react/24/outline";
 import { htmlToText } from "html-to-text";
-import { Annie_Use_Your_Telescope } from "next/font/google";
+import { Mynerve } from "next/font/google";
 
 // function removeImagesFromMarkdown(content: string): string {
 //   return content.replace(/!\[.*?\]\(.*?\)/g, "");
@@ -35,7 +35,7 @@ const options = {
   ],
 };
 
-const annie_use_your_telescope = Annie_Use_Your_Telescope({
+const mynerve = Mynerve({
   subsets: ["latin"],
   display: "swap",
   weight: "400",
@@ -45,7 +45,7 @@ function SinglePostCard({ post }: { post: Post }) {
   return (
     <section className="bg-[#f3f5f7] mb-12 containe mx-autor grid grid-cols-1 md:grid-cols-2 justify-between">
       <div className="gap-8 p-8 md:p-16">
-        <h2 className={`text-4xl font-bold mb-6 ${annie_use_your_telescope.className}`}>Najnowszy Wpis</h2>
+        <h2 className={`text-4xl font-bold mb-6 ${mynerve.className}`}>Najnowszy Wpis</h2>
         <div>
           <div className="text-2xl font-bold mb-2">{post.tytul}</div>
           <div className="flex items-center gap-2">

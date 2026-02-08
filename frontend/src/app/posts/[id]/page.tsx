@@ -6,10 +6,10 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { Post } from "@/types";
 import { pl } from "date-fns/locale";
-import { Annie_Use_Your_Telescope } from "next/font/google";
+import { Mynerve } from "next/font/google";
 import { processPostImages } from "@/utils/imageUtils";
 
-const annie_use_your_telescope = Annie_Use_Your_Telescope({
+const mynerve = Mynerve({
   subsets: ["latin"],
   display: "swap",
   weight: "400",
@@ -99,7 +99,7 @@ export default function PostPage({ }: { params: { id: string } }) {
               className="rounded-lg md:p-8 p-4"
               style={{ backgroundColor: "rgba(255, 255, 255, 0.9)" }}
             >
-              <h1 className={`md:text-4xl text-2xl font-bold text-graya-700 mb-4 ${annie_use_your_telescope.className}`}>
+              <h1 className={`md:text-4xl text-2xl font-bold text-graya-700 mb-4 ${mynerve.className}`}>
                 {post.tytul}
               </h1>
               <div className="flex flex-row my-4">

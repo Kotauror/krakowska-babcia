@@ -1,6 +1,6 @@
-import { Annie_Use_Your_Telescope } from "next/font/google";
+import { Mynerve } from "next/font/google";
 
-const annie_use_your_telescope = Annie_Use_Your_Telescope({
+const mynerve = Mynerve({
   subsets: ["latin"],
   display: "swap",
   weight: "400",
@@ -18,9 +18,9 @@ export default function ContentWrapper({
   return (
     <div className="pt-12 space-y-4 min-h-screen bg-light-background">
       <div className="container mx-auto px-4">
-        <div className={`text-center ${annie_use_your_telescope.className}`}>
+        <div className={`text-center ${mynerve.className}`}>
           <h1 className="text-4xl font-bold text-gray-900 mb-4">{header}</h1>
-          <p className="md:text-2xl text-xl text-gray-600 mb-8 ${annie_use_your_telescope.className}">{subheader}</p>
+          <p className="md:text-2xl text-xl text-gray-600 mb-8 ${mynerve.className}">{subheader}</p>
         </div>
         {children}
       </div>
