@@ -137,14 +137,14 @@ export default function Home() {
     <div>
       <Banner />
       {/* Tag Filter Bar */}
-      <div className="flex flex-wrap justify-center sticky md:text-xl text-sm gap-8">
+      <div className="flex flex-wrap justify-center sticky md:text-xl text-sm md:gap-8">
         <Link href="/wycieczki">
-        <button className={`bg-[#215a80] text-white px-8 py-2 rounded-full mt-8 hover:cursor-pointer hover:bg-[#27377d] ` + mynerve.className}>
+        <button className={`bg-[#215a80] text-white px-8 py-2 rounded-full md:mt-8 mt-2 hover:cursor-pointer hover:bg-[#27377d] ` + mynerve.className}>
           ZNAJDŹ WYCIECZKĘ
         </button>
         </Link>
         <Link href="/plastyka">
-        <button className={`bg-[#215a80] text-white px-8 py-2 rounded-full mt-8 hover:cursor-pointer hover:bg-[#27377d] ` + mynerve.className}>
+        <button className={`bg-[#215a80] text-white px-8 py-2 rounded-full md:mt-8 mt-2 hover:cursor-pointer hover:bg-[#27377d] ` + mynerve.className}>
           ZNAJDŹ PROJEKT PLASTYCZNY
         </button>
         </Link>
@@ -205,7 +205,7 @@ export default function Home() {
             )}
             {!loading && featuredPosts.length > 0 && (
               <div className="p-8">
-                  <h2 className={`text-4xl font-bold mb-6 ${mynerve.className}`}>Ulubione Miejsca</h2>
+                  <h2 className={`md:text-4xl text-2xl font-bold mb-6 ${mynerve.className}`}>Ulubione Miejsca</h2>
                 <section className="">
     
                   <FeaturedPostsCarousel posts={featuredPosts} />
@@ -214,7 +214,7 @@ export default function Home() {
             )}
 
           <section className="p-8 bg-gray-50">
-            <h2 className={`text-4xl font-bold mb-6 ${mynerve.className}`}>Wycieczki</h2>
+            <h2 className={`md:text-4xl text-2xl font-bold mb-6 ${mynerve.className}`}>Wycieczki</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-8">
               {posts
                 ?.slice(1)
@@ -257,7 +257,7 @@ export default function Home() {
           </section>
 
           <section className="p-8">
-            <h2 className={`text-4xl font-bold mb-6 ${mynerve.className}`}>Plastyka</h2>
+            <h2 className={`md:text-4xl text-2xl font-bold mb-6 ${mynerve.className}`}>Plastyka</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-8">
               {posts
                 ?.filter((post: Post) => {

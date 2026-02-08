@@ -45,12 +45,12 @@ function SinglePostCard({ post }: { post: Post }) {
   return (
     <section className="bg-[#f3f5f7] mb-12 containe mx-autor grid grid-cols-1 md:grid-cols-2 justify-between">
       <div className="gap-8 p-8 md:p-16">
-        <h2 className={`text-4xl font-bold mb-6 ${mynerve.className}`}>Najnowszy Wpis</h2>
+        <h2 className={`md:text-4xl text-2xl font-bold mb-6 ${mynerve.className}`}>Najnowszy Wpis</h2>
         <div>
-          <div className="text-2xl font-bold mb-2">{post.tytul}</div>
+          <div className="md:text-2xl text-xl font-bold mb-2">{post.tytul}</div>
           <div className="flex items-center gap-2">
             <MapPinIcon className="h-5 w-5" />
-            <div className="text-lg my-1">{post.lokalizacja}</div>
+            <div className="md:text-lg text-base my-1">{post.lokalizacja}</div>
           </div>
           <div className="flex items-center flex-wrap my-2">
             {post.kategoria.map((kategoria) => (
