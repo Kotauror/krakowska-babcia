@@ -6,13 +6,13 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { Post } from "@/types";
 import { pl } from "date-fns/locale";
-import { Mynerve } from "next/font/google";
+import { Fuzzy_Bubbles } from "next/font/google";
 import { processPostImages } from "@/utils/imageUtils";
 
-const mynerve = Mynerve({
+const fuzzy_bubbles = Fuzzy_Bubbles({
   subsets: ["latin"],
   display: "swap",
-  weight: "400",
+  weight: ["400", "700"],
 });
 
 export default function PostPage({ }: { params: { id: string } }) {
@@ -99,7 +99,7 @@ export default function PostPage({ }: { params: { id: string } }) {
               className="rounded-lg md:p-8 p-4"
               style={{ backgroundColor: "rgba(255, 255, 255, 0.9)" }}
             >
-              <h1 className={`md:text-4xl text-2xl font-bold text-graya-700 mb-4 ${mynerve.className}`}>
+              <h1 className={`md:text-4xl text-2xl font-bold text-graya-700 mb-4 ${fuzzy_bubbles.className}`}>
                 {post.tytul}
               </h1>
               <div className="flex flex-row my-4">

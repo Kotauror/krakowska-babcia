@@ -1,9 +1,9 @@
-import { Mynerve } from "next/font/google";
+import { Fuzzy_Bubbles } from "next/font/google";
 
-const mynerve = Mynerve({
+const fuzzy_bubbles = Fuzzy_Bubbles({
   subsets: ["latin"],
   display: "swap",
-  weight: "400",
+  weight: ["400", "700"],
 });
 
 export default function ContentWrapper({
@@ -18,9 +18,9 @@ export default function ContentWrapper({
   return (
     <div className="pt-12 space-y-4 min-h-screen bg-light-background">
       <div className="container mx-auto px-4">
-        <div className={`text-center ${mynerve.className}`}>
+        <div className={`text-center ${fuzzy_bubbles.className}`}>
           <h1 className="text-4xl font-bold text-gray-900 mb-4">{header}</h1>
-          <p className="md:text-2xl text-xl text-gray-600 mb-8 ${mynerve.className}">{subheader}</p>
+          <p className="md:text-2xl text-xl text-gray-600 mb-8 ${fuzzy_bubbles.className}">{subheader}</p>
         </div>
         {children}
       </div>

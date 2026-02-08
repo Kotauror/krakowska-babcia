@@ -10,14 +10,15 @@ import PostCard from "@/components/PostCard";
 // import { useRouter } from "next/navigation";
 // import { usePosts } from "@/hooks/usePosts";
 // import FilterTag from "@/components/FilterTag";
-import { Mynerve } from "next/font/google";
+import { Fuzzy_Bubbles } from "next/font/google";
+import ZigzagDivider from "@/components/ZigzagDivider";
 import Link from "next/link";
 
 
-const mynerve = Mynerve({
+const fuzzy_bubbles = Fuzzy_Bubbles({
   subsets: ["latin"],
   display: "swap",
-  weight: "400",
+  weight: ["400", "700"],
 });
 
 
@@ -136,18 +137,6 @@ export default function Home() {
   return (
     <div>
       <Banner />
-      {/* Tag Filter Bar */}
-      <div className="flex flex-wrap justify-center sticky md:text-xl text-sm md:gap-8">
-        <Link href="/wycieczki">
-        <button className={`bg-[#215a80] text-white px-8 py-2 rounded-full md:mt-8 mt-2 hover:cursor-pointer hover:bg-[#27377d] ` + mynerve.className}>
-          ZNAJDŹ WYCIECZKĘ
-        </button>
-        </Link>
-        <Link href="/plastyka">
-        <button className={`bg-[#215a80] text-white px-8 py-2 rounded-full md:mt-8 mt-2 hover:cursor-pointer hover:bg-[#27377d] ` + mynerve.className}>
-          ZNAJDŹ PROJEKT PLASTYCZNY
-        </button>
-        </Link>
         {/* {categories.map((category) => (
           <FilterTag
             showCheckbox={false}
@@ -157,7 +146,6 @@ export default function Home() {
             onClick={() => router.push(`/wycieczki`)}
           />
         ))} */}
-      </div>
 
       {/* <div className="flex flex-wrap justify-center gap-2 my-4 relative">
         {ALLOWED_TAGS.map((tag) => (
@@ -190,7 +178,7 @@ export default function Home() {
           </div>
         ))}
       </div> */}
-      <main className="mx-auto mt-12">
+      <main className="mx-auto">
         {/* Featured Posts Section */}
         <div className="mx-auto">
           {posts &&
@@ -205,7 +193,7 @@ export default function Home() {
             )}
             {!loading && featuredPosts.length > 0 && (
               <div className="p-8">
-                  <h2 className={`md:text-4xl text-2xl font-bold mb-6 ${mynerve.className}`}>Ulubione Miejsca</h2>
+                  <h2 className={`md:text-4xl text-2xl font-bold mb-6 ${fuzzy_bubbles.className}`}>Ulubione Miejsca</h2>
                 <section className="">
     
                   <FeaturedPostsCarousel posts={featuredPosts} />
@@ -213,8 +201,11 @@ export default function Home() {
               </div>
             )}
 
-          <section className="p-8 bg-gray-50">
-            <h2 className={`md:text-4xl text-2xl font-bold mb-6 ${mynerve.className}`}>Wycieczki</h2>
+          {/* Zigzag divider between sections */}
+          <ZigzagDivider />
+
+          <section className="px-4 md:px-64 py-16 bg-gray-50">
+            <h2 className={`md:text-4xl text-2xl font-bold mb-6 ${fuzzy_bubbles.className}`}>Wycieczki</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-8">
               {posts
                 ?.slice(1)
@@ -248,7 +239,7 @@ export default function Home() {
               }).length > 12 && (
               <div className="text-center pb-8">
                 <Link href="https://www.krakowskababcia.pl/wycieczki">
-                  <button className={`bg-[#215a80] text-white px-8 py-2 rounded-full hover:cursor-pointer hover:bg-[#27377d] ${mynerve.className}`}>
+                  <button className={`bg-[#215a80] text-white px-8 py-2 rounded-full hover:cursor-pointer hover:bg-[#27377d] ${fuzzy_bubbles.className}`}>
                     WIĘCEJ WYCIECZEK 
                   </button>
                 </Link>
@@ -256,8 +247,11 @@ export default function Home() {
             )}
           </section>
 
-          <section className="p-8">
-            <h2 className={`md:text-4xl text-2xl font-bold mb-6 ${mynerve.className}`}>Plastyka</h2>
+          {/* Zigzag divider between sections */}
+          <ZigzagDivider />
+
+          <section className="px-4 md:px-64 py-16 bg-gray-50">
+            <h2 className={`md:text-4xl text-2xl font-bold mb-6 ${fuzzy_bubbles.className}`}>Plastyka</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-8">
               {posts
                 ?.filter((post: Post) => {
@@ -289,7 +283,7 @@ export default function Home() {
               }).length > 12 && (
               <div className="text-center pb-8">
                 <Link href="/plastyka">
-                  <button className={`bg-[#215a80] text-white px-8 py-2 rounded-full hover:cursor-pointer hover:bg-[#27377d] ${mynerve.className}`}>
+                  <button className={`bg-[#215a80] text-white px-8 py-2 rounded-full hover:cursor-pointer hover:bg-[#27377d] ${fuzzy_bubbles.className}`}>
                     WIĘCEJ PROJEKTÓW
                   </button>
                 </Link>

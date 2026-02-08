@@ -11,7 +11,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { Mynerve } from "next/font/google";
+import { Fuzzy_Bubbles } from "next/font/google";
 
 const navigation = [
   {
@@ -24,10 +24,10 @@ const navigation = [
   { name: "O mnie", href: "/about", icon: UserIcon },
 ];
 
-const mynerve = Mynerve({
+const fuzzy_bubbles = Fuzzy_Bubbles({
   subsets: ["latin"],
   display: "swap",
-  weight: "400",
+  weight: ["400", "700"],
 });
 
 export default function Navbar() {
@@ -56,7 +56,7 @@ export default function Navbar() {
                     pathname === item.href
                       ? "border-blue-500 text-gray-900"
                       : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
-                  } ${mynerve.className}`}
+                  } ${fuzzy_bubbles.className}`}
                 >
                   <item.icon className="h-5 w-5 mr-2" aria-hidden="true" />
                   {item.name.toUpperCase()}
@@ -108,7 +108,7 @@ export default function Navbar() {
                     mobileMenuOpen
                       ? "translate-x-0 opacity-100"
                       : "translate-x-4 opacity-0"
-                  } ${mynerve.className}`}
+                  } ${fuzzy_bubbles.className}`}
                   style={{
                     transitionDelay: mobileMenuOpen ? `${index * 50}ms` : "0ms",
                   }}

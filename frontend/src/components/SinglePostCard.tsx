@@ -2,7 +2,7 @@ import { Post } from "@/types";
 import Link from "next/link";
 import { MapPinIcon } from "@heroicons/react/24/outline";
 import { htmlToText } from "html-to-text";
-import { Mynerve } from "next/font/google";
+import { Fuzzy_Bubbles } from "next/font/google";
 
 // function removeImagesFromMarkdown(content: string): string {
 //   return content.replace(/!\[.*?\]\(.*?\)/g, "");
@@ -35,17 +35,17 @@ const options = {
   ],
 };
 
-const mynerve = Mynerve({
+const fuzzy_bubbles = Fuzzy_Bubbles({
   subsets: ["latin"],
   display: "swap",
-  weight: "400",
+  weight: ["400", "700"],
 });
 
 function SinglePostCard({ post }: { post: Post }) {
   return (
-    <section className="bg-[#f3f5f7] mb-12 containe mx-autor grid grid-cols-1 md:grid-cols-2 justify-between">
-      <div className="gap-8 p-8 md:p-16">
-        <h2 className={`md:text-4xl text-2xl font-bold mb-6 ${mynerve.className}`}>Najnowszy Wpis</h2>
+    <section className="bg-[#f3f5f7] containe mx-autor grid grid-cols-1 md:grid-cols-2 justify-between px-4 md:px-64">
+      <div className="gap-8 py-8">
+        <h2 className={`md:text-4xl text-2xl font-bold mb-6 ${fuzzy_bubbles.className}`}>Najnowszy Wpis</h2>
         <div>
           <div className="md:text-2xl text-xl font-bold mb-2">{post.tytul}</div>
           <div className="flex items-center gap-2">
@@ -80,19 +80,23 @@ function SinglePostCard({ post }: { post: Post }) {
           </div>
         </div>
       </div>
-      <div>
+      <div className="py-8 relative">
         <div
-          className="h-full flex items-center justify-center bg-cover bg-center bg-no-repeat"
+          className="h-full w-full flex items-center justify-center bg-cover bg-center bg-no-repeat rounded-lg border-4 border-[#215a80] relative"
           style={{
             backgroundImage: `url(${process.env.NEXT_PUBLIC_DIRECTUS_URL}assets/${post.zdjecie_glowne})`,
+            minHeight: '300px'
           }}
         >
-          {/* <img
-            src={`${process.env.NEXT_PUBLIC_DIRECTUS_URL}assets/${post.zdjecie_glowne}`}
-            alt={post.tytul}
-            className="max-h-70 p-2 object-cover"
-            // onError={() => setImageError(true)}
-          /> */}
+          {/* Child-like tape stickers in corners */}
+          {/* Top-left tape */}
+          <div className="absolute -top-2 -left-2 w-16 h-8 bg-[#ffdaa9] opacity-90 transform -rotate-12 shadow-md" style={{ clipPath: 'polygon(0 0, 100% 0, 90% 100%, 10% 100%)' }}></div>
+          {/* Top-right tape */}
+          <div className="absolute -top-2 -right-2 w-16 h-8 bg-[#b8b257] opacity-90 transform rotate-12 shadow-md" style={{ clipPath: 'polygon(10% 0, 90% 0, 100% 100%, 0 100%)' }}></div>
+          {/* Bottom-left tape */}
+          <div className="absolute -bottom-2 -left-2 w-16 h-8 bg-[#215a80] opacity-90 transform rotate-12 shadow-md" style={{ clipPath: 'polygon(10% 0, 90% 0, 100% 100%, 0 100%)' }}></div>
+          {/* Bottom-right tape */}
+          <div className="absolute -bottom-2 -right-2 w-16 h-8 bg-[#ffdaa9] opacity-90 transform -rotate-12 shadow-md" style={{ clipPath: 'polygon(0 0, 100% 0, 90% 100%, 10% 100%)' }}></div>
         </div>
       </div>
     </section>

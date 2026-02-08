@@ -47,7 +47,7 @@ function PlastykaContent() {
   return (
     <ContentWrapper
       header="Plastyka"
-      subheader="Na dni kiedy nie chce się wyjć z domu"
+      subheader="Na dni kiedy nie chce się wyjść z domu"
     >
       {loading ? (
         <div className="text-center py-12">
